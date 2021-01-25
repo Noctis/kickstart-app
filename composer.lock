@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aeec1df426c691f6e4cc5a810af53f52",
+    "content-hash": "f949ef1bc8410184aacee9b06dc871c8",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -162,7 +162,7 @@
             "dist": {
                 "type": "path",
                 "url": "../kickstart",
-                "reference": "ea1d2ed1796ffa954d9e96ffda9e84fa09efd939"
+                "reference": "7d1202701a8368851b3110bee9b651ee079353a6"
             },
             "require": {
                 "ext-pdo": "*",

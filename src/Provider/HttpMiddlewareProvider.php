@@ -11,7 +11,7 @@ final class HttpMiddlewareProvider implements ServicesProviderInterface
         return [
             DummyGuard::class => [
                 null, [
-                    'dummyParam' => getenv('dummy_param') === 'true',
+                    'dummyParam' => $_ENV['dummy_param'] === 'true',
                 ]
             ],
         ];

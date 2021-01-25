@@ -11,7 +11,7 @@ final class StandardRoutes
     {
         return function (RouteCollector $r): void {
             $r->addGroup(
-                getenv('basepath'),
+                $_ENV['basepath'],
                 function (RouteCollector $r) {
                     $r->get('[{name}]', [
                         DummyAction::class,

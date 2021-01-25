@@ -13,7 +13,7 @@ if ($env === 'dev') {
     ini_set('display_errors', 'On');
     error_reporting(E_ALL ^ E_NOTICE);
 }
-putenv('BASEDIR='. __DIR__);
+$_ENV['BASEDIR'] = __DIR__;
 
 (new Configuration())
     ->load(__DIR__);
