@@ -162,7 +162,7 @@
             "dist": {
                 "type": "path",
                 "url": "../kickstart",
-                "reference": "a826708c8c94ad4ddccb6f51ef4331fe05f17ea6"
+                "reference": "ea1d2ed1796ffa954d9e96ffda9e84fa09efd939"
             },
             "require": {
                 "ext-pdo": "*",

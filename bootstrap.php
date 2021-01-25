@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
+use App\Configuration;
 use App\Provider\DummyServicesProvider;
 use App\Provider\HttpMiddlewareProvider;
-use Noctis\KickStart\Configuration;
 use Noctis\KickStart\ContainerBuilder;
 use Psr\Container\ContainerInterface;
 
