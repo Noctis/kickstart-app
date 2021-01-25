@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+use App\Console\Command\DummyCommand;
+use Symfony\Component\Console\Application;
+
+require_once __DIR__ . '/../bootstrap.php';
+
+$container = get_container($env);
+$app = new Application();
+
+$app->add(
+    $container->get(DummyCommand::class)
+);
+
+$app->run();

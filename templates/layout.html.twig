@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    {% if basepath is defined %}
+        <base href="{{ basepath }}">
+    {% endif %}
+    <title>Oh hai, Marki!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous"
+    >
+    {% block css %}{% endblock %}
+</head>
+<body{% if bgcolor is defined %} style="background-color: {{ bgcolor }}"{% endif %}>
+{% block content %}{% endblock %}
+
+<script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"
+></script>
+{% block js %}{% endblock %}
+</body>
+</html>

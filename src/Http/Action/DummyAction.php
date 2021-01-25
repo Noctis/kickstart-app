@@ -1,0 +1,19 @@
+<?php declare(strict_types=1);
+namespace App\Http\Action;
+
+use App\Http\Request\DummyRequest;
+use Noctis\KickStart\Http\Action\BaseAction;
+use Symfony\Component\HttpFoundation\Response;
+
+final class DummyAction extends BaseAction
+{
+    public function execute(DummyRequest $request): Response
+    {
+        $name = $request->get('name') ?: 'World';
+
+        return $this->render('dummy.html.twig', [
+            'name' => $name,
+            'foo'  => $request->getFoo(),
+        ]);
+    }
+}
