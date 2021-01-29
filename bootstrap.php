@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-use App\Configuration;
+use App\FancyConfiguration;
+use App\Provider\ConfigurationProvider;
 use App\Provider\DummyServicesProvider;
 use App\Provider\HttpMiddlewareProvider;
+use Noctis\KickStart\Configuration\ConfigurationLoader;
 use Noctis\KickStart\ContainerBuilder;
 use Psr\Container\ContainerInterface;
 
@@ -15,14 +17,15 @@ if ($env === 'dev') {
 }
 $_ENV['BASEDIR'] = __DIR__;
 
-(new Configuration())
-    ->load(__DIR__);
+(new ConfigurationLoader())
+    ->load(__DIR__, FancyConfiguration::REQUIREMENTS);
 
 function get_container(string $env): ContainerInterface
 {
     $containerBuilder = new ContainerBuilder(__DIR__, $env);
     /** @todo move adding user services provider to a better place */
     $containerBuilder->addServicesProviders([
+        new ConfigurationProvider(),
         new HttpMiddlewareProvider(),
         new DummyServicesProvider(),
     ]);

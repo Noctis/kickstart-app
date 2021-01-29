@@ -12,8 +12,10 @@
         }
     ],
     "require": {
-        "noctis/kickstart": "*",
-        "vlucas/phpdotenv": "^5.3"
+        "noctis/kickstart": "*"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.2"
     },
     "autoload": {
         "psr-4": {
