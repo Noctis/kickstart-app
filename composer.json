@@ -5,16 +5,13 @@
         {
             "type": "path",
             "url": "../kickstart"
-        },
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:NoctisPL/database-lib.git"
         }
     ],
     "require": {
         "noctis/kickstart": "*"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "symfony/var-dumper": "^5.2"
     },
     "autoload": {
