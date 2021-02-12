@@ -23,38 +23,32 @@ final class FancyConfiguration implements FancyConfigurationInterface
 
     public function getBasePath(): string
     {
-        return $this->configuration
-            ->get('basepath');
+        return $this->get('basepath');
     }
 
     public function getDbHost(): string
     {
-        return $this->configuration
-            ->get('db_host');
+        return $this->get('db_host');
     }
 
     public function getDbUser(): string
     {
-        return $this->configuration
-            ->get('db_user');
+        return $this->get('db_user');
     }
 
     public function getDbPass(): string
     {
-        return $this->configuration
-            ->get('db_pass');
+        return $this->get('db_pass');
     }
 
     public function getDbPort(): int
     {
-        return (int)$this->configuration
-            ->get('db_port');
+        return (int)$this->get('db_port');
     }
 
     public function getDummyParam(): bool
     {
-        return $this->configuration
-            ->get('dummy_param') === 'true';
+        return $this->get('dummy_param') === 'true';
     }
 
     public function get(string $name, $default = null)
