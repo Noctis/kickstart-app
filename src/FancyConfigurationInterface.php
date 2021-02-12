@@ -13,6 +13,8 @@ interface FancyConfigurationInterface extends ConfigurationInterface
 
     public function getDbPass(): string;
 
+    public function getDbName(): string;
+
     public function getDbPort(): int;
 
     public function getDummyParam(): bool;

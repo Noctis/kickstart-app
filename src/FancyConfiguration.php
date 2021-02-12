@@ -41,6 +41,11 @@ final class FancyConfiguration implements FancyConfigurationInterface
         return $this->get('db_pass');
     }
 
+    public function getDbName(): string
+    {
+        return $this->get('db_name');
+    }
+
     public function getDbPort(): int
     {
         return (int)$this->get('db_port');
