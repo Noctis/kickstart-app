@@ -2,6 +2,7 @@
 
 use App\FancyConfiguration;
 use App\Provider\ConfigurationProvider;
+use App\Provider\DatabaseConnectionProvider;
 use App\Provider\DummyServicesProvider;
 use App\Provider\HttpMiddlewareProvider;
 use Noctis\KickStart\Configuration\ConfigurationLoader;
@@ -26,6 +27,7 @@ function get_container(string $env): ContainerInterface
     /** @todo move adding user services provider to a better place */
     $containerBuilder->addServicesProviders([
         new ConfigurationProvider(),
+        new DatabaseConnectionProvider(),
         new HttpMiddlewareProvider(),
         new DummyServicesProvider(),
     ]);

@@ -128,7 +128,7 @@
             "dist": {
                 "type": "path",
                 "url": "../kickstart",
-                "reference": "1329d155e5193d8b5088fc5b7da659b2f772977e"
+                "reference": "c6bd4ba96be2dc3f535c49f8f037fc420dd0116a"
             },
             "require": {
                 "ext-pdo": "*",
