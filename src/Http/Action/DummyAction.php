@@ -2,10 +2,10 @@
 namespace App\Http\Action;
 
 use App\Http\Request\DummyRequest;
-use Noctis\KickStart\Http\Action\BaseAction;
+use Noctis\KickStart\Http\Action\AbstractAction;
 use Symfony\Component\HttpFoundation\Response;
 
-final class DummyAction extends BaseAction
+final class DummyAction extends AbstractAction
 {
     public function execute(DummyRequest $request): Response
     {

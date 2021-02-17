@@ -1,17 +1,16 @@
 <?php declare(strict_types=1);
 namespace App\Repository;
 
+use App\Database\Table\DummyTable;
 use App\Entity\DummyEntity;
 use App\Entity\DummyEntityInterface;
-use Noctis\KickStart\Repository\DatabaseRepository;
+use Noctis\KickStart\Repository\AbstractDatabaseRepository;
 
-final class DummyRepository extends DatabaseRepository implements DummyRepositoryInterface
+final class DummyRepository extends AbstractDatabaseRepository implements DummyRepositoryInterface
 {
-    public const TABLE_NAME = 'dummy';
-
     public function find(int $id): DummyEntityInterface
     {
-        $sql = 'SELECT * FROM '. self::TABLE_NAME .' WHERE id = ?';
+        $sql = 'SELECT * FROM '. DummyTable::NAME .' WHERE id = ?';
 
         /** @psalm-suppress PossiblyNullArgument */
         return $this->createFromRow(

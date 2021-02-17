@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 namespace App\Console\Command;
 
-use Noctis\KickStart\Console\Command\BaseCommand;
+use Noctis\KickStart\Console\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class DummyCommand extends BaseCommand
+final class DummyCommand extends AbstractCommand
 {
     protected static $defaultName = 'dummy:command';
 
