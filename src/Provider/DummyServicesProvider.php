@@ -6,17 +6,18 @@ use App\Repository\DummyRepositoryInterface;
 use App\Service\DummyService;
 use App\Service\DummyServiceInterface;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
+use function DI\autowire;
 
 final class DummyServicesProvider implements ServicesProviderInterface
 {
     /**
-     * @return mixed[]
+     * @inheritDoc
      */
     public function getServicesDefinitions(): array
     {
         return [
-            DummyRepositoryInterface::class => DummyRepository::class,
-            DummyServiceInterface::class => DummyService::class,
+            DummyRepositoryInterface::class => autowire(DummyRepository::class),
+            DummyServiceInterface::class => autowire(DummyService::class),
         ];
     }
 }
