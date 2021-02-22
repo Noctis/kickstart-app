@@ -12,9 +12,9 @@ final class FancyConfiguration implements FancyConfigurationInterface
         $this->configuration = $configuration;
     }
 
-    public function getBasePath(): string
+    public function getBaseHref(): string
     {
-        return $this->get('basepath');
+        return $this->get('basehref');
     }
 
     public function getDbHost(): string

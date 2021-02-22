@@ -9,14 +9,14 @@ if ($env === 'dev') {
     ini_set('display_errors', 'On');
     error_reporting(E_ALL ^ E_NOTICE);
 }
-$_ENV['BASEDIR'] = __DIR__;
 
 (new ConfigurationLoader())
     ->load(__DIR__, [
-        'basepath'    => 'required',
+        'basehref'    => 'required',
         'db_host'     => 'required',
         'db_user'     => 'required',
         'db_pass'     => 'required',
         'db_port'     => 'required,int',
         'dummy_param' => 'required,bool',
     ]);
+$_ENV['basepath'] = __DIR__;

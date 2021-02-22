@@ -12,7 +12,7 @@ final class StandardRoutes implements HttpRoutesProviderInterface
     {
         return function (RouteCollector $r): void {
             $r->addGroup(
-                $_ENV['basepath'],
+                $_ENV['basehref'],
                 function (RouteCollector $r) {
                     $r->get('[{name}]', [
                         DummyAction::class,

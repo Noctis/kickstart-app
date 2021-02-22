@@ -5,7 +5,7 @@ use Noctis\KickStart\Configuration\ConfigurationInterface;
 
 interface FancyConfigurationInterface extends ConfigurationInterface
 {
-    public function getBasePath(): string;
+    public function getBaseHref(): string;
 
     public function getDbHost(): string;
 
