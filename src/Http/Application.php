@@ -5,6 +5,7 @@ use App\Provider\ConfigurationProvider;
 use App\Provider\DatabaseConnectionProvider;
 use App\Provider\DummyServicesProvider;
 use App\Provider\HttpMiddlewareProvider;
+use App\Provider\RepositoryProvider;
 use Noctis\KickStart\Http\AbstractHttpApplication;
 
 final class Application extends AbstractHttpApplication
@@ -18,6 +19,7 @@ final class Application extends AbstractHttpApplication
                 new DatabaseConnectionProvider(),
                 new HttpMiddlewareProvider(),
                 new DummyServicesProvider(),
+                new RepositoryProvider(),
             ]
         );
     }

@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 namespace App\Provider;
 
-use App\Service\DummyService;
-use App\Service\DummyServiceInterface;
+use App\Repository\DummyRepository;
+use App\Repository\DummyRepositoryInterface;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
 use function DI\autowire;
 
-final class DummyServicesProvider implements ServicesProviderInterface
+final class RepositoryProvider implements ServicesProviderInterface
 {
     /**
      * @inheritDoc
@@ -14,7 +14,7 @@ final class DummyServicesProvider implements ServicesProviderInterface
     public function getServicesDefinitions(): array
     {
         return [
-            DummyServiceInterface::class => autowire(DummyService::class),
+            DummyRepositoryInterface::class => autowire(DummyRepository::class),
         ];
     }
 }
