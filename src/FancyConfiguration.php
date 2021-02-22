@@ -17,27 +17,27 @@ final class FancyConfiguration implements FancyConfigurationInterface
         return $this->get('basehref');
     }
 
-    public function getDbHost(): string
+    public function getDBHost(): string
     {
         return $this->get('db_host');
     }
 
-    public function getDbUser(): string
+    public function getDBUser(): string
     {
         return $this->get('db_user');
     }
 
-    public function getDbPass(): string
+    public function getDBPass(): string
     {
         return $this->get('db_pass');
     }
 
-    public function getDbName(): string
+    public function getDBName(): string
     {
         return $this->get('db_name');
     }
 
-    public function getDbPort(): int
+    public function getDBPort(): int
     {
         return (int)$this->get('db_port');
     }

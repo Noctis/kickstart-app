@@ -7,15 +7,15 @@ interface FancyConfigurationInterface extends ConfigurationInterface
 {
     public function getBaseHref(): string;
 
-    public function getDbHost(): string;
+    public function getDBHost(): string;
 
-    public function getDbUser(): string;
+    public function getDBUser(): string;
 
-    public function getDbPass(): string;
+    public function getDBPass(): string;
 
-    public function getDbName(): string;
+    public function getDBName(): string;
 
-    public function getDbPort(): int;
+    public function getDBPort(): int;
 
     public function getDummyParam(): bool;
 }

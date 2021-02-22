@@ -23,15 +23,15 @@ final class DatabaseConnectionProvider implements ServicesProviderInterface
                     return Factory::fromArray([
                         sprintf(
                             'mysql:dbname=%s;host=%s;port=%s',
-                            $configuration->getDbName(),
-                            $configuration->getDbHost(),
-                            $configuration->getDbPort()
+                            $configuration->getDBName(),
+                            $configuration->getDBHost(),
+                            $configuration->getDBPort()
                         ),
-                        $configuration->getDbUser(),
-                        $configuration->getDbPass()
+                        $configuration->getDBUser(),
+                        $configuration->getDBPass()
                     ]);
                 } catch (ConstructorFailed $ex) {
-                    die('Could not connect to DB: '. $ex->getMessage());
+                    die('Could not connect to primary DB: '. $ex->getMessage());
                 }
             },
         ];
