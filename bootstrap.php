@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-use App\FancyConfiguration;
 use Noctis\KickStart\Configuration\ConfigurationLoader;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -13,4 +12,11 @@ if ($env === 'dev') {
 $_ENV['BASEDIR'] = __DIR__;
 
 (new ConfigurationLoader())
-    ->load(__DIR__, FancyConfiguration::REQUIREMENTS);
+    ->load(__DIR__, [
+        'basepath'    => 'required',
+        'db_host'     => 'required',
+        'db_user'     => 'required',
+        'db_pass'     => 'required',
+        'db_port'     => 'required,int',
+        'dummy_param' => 'required,bool',
+    ]);

@@ -5,15 +5,6 @@ use Noctis\KickStart\Configuration\ConfigurationInterface;
 
 final class FancyConfiguration implements FancyConfigurationInterface
 {
-    public const REQUIREMENTS = [
-        'basepath'    => 'required',
-        'db_host'     => 'required',
-        'db_user'     => 'required',
-        'db_pass'     => 'required',
-        'db_port'     => 'required,int',
-        'dummy_param' => 'required,bool',
-    ];
-
     private ConfigurationInterface $configuration;
 
     public function __construct(ConfigurationInterface $configuration)
