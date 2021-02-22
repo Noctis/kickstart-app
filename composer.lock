@@ -128,7 +128,7 @@
             "dist": {
                 "type": "path",
                 "url": "../kickstart",
-                "reference": "c6bd4ba96be2dc3f535c49f8f037fc420dd0116a"
+                "reference": "cda75a272774c77924efeccc26ce040151ce78dd"
             },
             "require": {
                 "ext-pdo": "*",
@@ -2094,6 +2094,7 @@
                 "ua-parser/uap-php": "<3.8",
                 "usmanhalalit/pixie": "<1.0.3|>=2,<2.0.2",
                 "verot/class.upload.php": "<=1.0.3|>=2,<=2.0.4",
+                "vrana/adminer": "<4.7.9",
                 "wallabag/tcpdf": "<6.2.22",
                 "willdurand/js-translation-bundle": "<2.1.1",
                 "yii2mod/yii2-cms": "<1.9.2",
@@ -2165,7 +2166,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-10T03:02:31+00:00"
+            "time": "2021-02-16T17:17:25+00:00"
         },
         {
             "name": "symfony/var-dumper",

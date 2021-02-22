@@ -4,8 +4,9 @@ namespace App\Http\Routes;
 use App\Http\Action\DummyAction;
 use App\Http\Middleware\Guard\DummyGuard;
 use FastRoute\RouteCollector;
+use Noctis\KickStart\Http\Routes\HttpRoutesProviderInterface;
 
-final class StandardRoutes
+final class StandardRoutes implements HttpRoutesProviderInterface
 {
     public function get(): callable
     {
