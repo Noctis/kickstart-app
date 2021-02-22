@@ -16,6 +16,7 @@ if ($env === 'dev') {
         'db_host'     => 'required',
         'db_user'     => 'required',
         'db_pass'     => 'required',
+        'db_name'     => 'required',
         'db_port'     => 'required,int',
         'dummy_param' => 'required,bool',
     ]);
