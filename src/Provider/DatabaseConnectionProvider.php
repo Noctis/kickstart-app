@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace App\Provider;
 
-use App\FancyConfigurationInterface;
+use App\Configuration\FancyConfigurationInterface;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
 use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\Exception\ConstructorFailed;

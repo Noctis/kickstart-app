@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace App;
+namespace App\Configuration;
 
 use Noctis\KickStart\Configuration\ConfigurationInterface;
 

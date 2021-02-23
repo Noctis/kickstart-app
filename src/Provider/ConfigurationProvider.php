@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 namespace App\Provider;
 
-use App\FancyConfiguration;
-use App\FancyConfigurationInterface;
+use App\Configuration\FancyConfiguration;
+use App\Configuration\FancyConfigurationInterface;
 use Noctis\KickStart\Configuration\ConfigurationInterface;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
 use Psr\Container\ContainerInterface;
