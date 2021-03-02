@@ -12,6 +12,7 @@ if ($env === 'dev') {
 
 (new ConfigurationLoader())
     ->load(__DIR__, [
+        'debug'       => 'required,bool',
         'basehref'    => 'required',
         'db_host'     => 'required',
         'db_user'     => 'required',

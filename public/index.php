@@ -6,7 +6,6 @@ use App\Http\Routes\StandardRoutes;
 require_once __DIR__ . '/../bootstrap.php';
 
 $app = new Application(
-    $env,
     new StandardRoutes()
 );
 $app->run();
