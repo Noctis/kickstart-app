@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace App\Http\Middleware\Guard;
 
+use Noctis\KickStart\Configuration\ConfigurationInterface;
 use Noctis\KickStart\Http\Helper\HttpRedirectionTrait;
 use Noctis\KickStart\Http\Middleware\Guard\GuardMiddlewareInterface;
 use Noctis\KickStart\Http\Middleware\RequestHandlerInterface;
@@ -14,8 +15,9 @@ final class DummyGuard implements GuardMiddlewareInterface
 
     private bool $dummyParam;
 
-    public function __construct(bool $dummyParam)
+    public function __construct(ConfigurationInterface $configuration, bool $dummyParam)
     {
+        $this->configuration = $configuration;
         $this->dummyParam = $dummyParam;
     }
 
