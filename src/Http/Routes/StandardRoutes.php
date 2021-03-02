@@ -4,7 +4,7 @@ namespace App\Http\Routes;
 use App\Http\Action\DummyAction;
 use App\Http\Middleware\Guard\DummyGuard;
 use FastRoute\RouteCollector;
-use Noctis\KickStart\Http\Routes\HttpRoutesProviderInterface;
+use Noctis\KickStart\Http\Routing\HttpRoutesProviderInterface;
 
 final class StandardRoutes implements HttpRoutesProviderInterface
 {
