@@ -3,13 +3,13 @@ namespace App\Http\Middleware\Guard;
 
 use Noctis\KickStart\Configuration\ConfigurationInterface;
 use Noctis\KickStart\Http\Helper\HttpRedirectionTrait;
-use Noctis\KickStart\Http\Middleware\Guard\GuardMiddlewareInterface;
+use Noctis\KickStart\Http\Middleware\AbstractMiddleware;
 use Noctis\KickStart\Http\Middleware\RequestHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-final class DummyGuard implements GuardMiddlewareInterface
+final class DummyGuard extends AbstractMiddleware
 {
     use HttpRedirectionTrait;
 
@@ -25,6 +25,6 @@ final class DummyGuard implements GuardMiddlewareInterface
     {
         // inspect $request, do stuff, maybe return a RedirectResponse instance, via $this->redirect()?
 
-        return $handler->handle($request);
+        return parent::process($request, $handler);
     }
 }
