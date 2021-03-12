@@ -14,7 +14,14 @@ final class FancyConfiguration implements FancyConfigurationInterface
 
     public function getBaseHref(): string
     {
-        return $this->get('basehref');
+        $baseHref = $this->get('basehref');
+
+        // Remove trailing slash ("/"), if applicable
+        if ($baseHref[-1] === '/') {
+            $baseHref = substr($baseHref, 0, -1);
+        }
+
+        return $baseHref;
     }
 
     public function getDBHost(): string
