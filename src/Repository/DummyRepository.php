@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Database\Table\DummyTable;
@@ -10,7 +13,7 @@ final class DummyRepository extends AbstractDatabaseRepository implements DummyR
 {
     public function find(int $id): DummyEntityInterface
     {
-        $sql = 'SELECT * FROM '. DummyTable::NAME .' WHERE id = ?';
+        $sql = 'SELECT * FROM ' . DummyTable::NAME . ' WHERE id = ?';
 
         /** @psalm-suppress PossiblyNullArgument */
         return $this->createFromRow(

@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 namespace App\Provider;
 
 use App\Configuration\FancyConfigurationInterface;
@@ -31,7 +34,7 @@ final class DatabaseConnectionProvider implements ServicesProviderInterface
                         $configuration->getDBPass()
                     ]);
                 } catch (ConstructorFailed $ex) {
-                    die('Could not connect to primary DB: '. $ex->getMessage());
+                    die('Could not connect to primary DB: ' . $ex->getMessage());
                 }
             },
         ];
