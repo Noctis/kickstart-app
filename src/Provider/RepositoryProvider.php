@@ -4,7 +4,6 @@ namespace App\Provider;
 use App\Repository\DummyRepository;
 use App\Repository\DummyRepositoryInterface;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
-use function DI\autowire;
 
 final class RepositoryProvider implements ServicesProviderInterface
 {
@@ -14,7 +13,7 @@ final class RepositoryProvider implements ServicesProviderInterface
     public function getServicesDefinitions(): array
     {
         return [
-            DummyRepositoryInterface::class => autowire(DummyRepository::class),
+            DummyRepositoryInterface::class => DummyRepository::class,
         ];
     }
 }
