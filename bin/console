@@ -6,10 +6,7 @@ use App\Console\Command\DummyCommand;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-$app = new Application(
-    $env,
-    [
-        DummyCommand::class
-    ]
-);
+$app = new Application([
+    DummyCommand::class
+]);
 $app->run();
