@@ -13,6 +13,7 @@ final class DummyGuard extends AbstractMiddleware
 {
     use HttpRedirectionTrait;
 
+    private ConfigurationInterface $configuration;
     private bool $dummyParam;
 
     public function __construct(ConfigurationInterface $configuration, bool $dummyParam)
