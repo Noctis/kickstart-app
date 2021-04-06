@@ -28,11 +28,9 @@ final class StandardRoutes implements HttpRoutesProviderInterface
             $r->addGroup(
                 $baseHref,
                 function (RouteCollector $r) {
-                    $r->get('/[{name}]', [
+                    $r->get('/', [
                         DummyAction::class,
-                        [
-                            DummyGuard::class,
-                        ],
+                        [DummyGuard::class]
                     ]);
                 }
             );
