@@ -1,9 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use App\Http\Application;
-use App\Http\Routes\StandardRoutes;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-$app = new Application(StandardRoutes::class);
+$app = new Application(
+    require_once __DIR__ . '/../src/Http/Routing/routes.php'
+);
 $app->run();
