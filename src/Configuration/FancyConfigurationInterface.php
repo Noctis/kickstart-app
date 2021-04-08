@@ -8,8 +8,6 @@ use Noctis\KickStart\Configuration\ConfigurationInterface;
 
 interface FancyConfigurationInterface extends ConfigurationInterface
 {
-    public function getBaseHref(): string;
-
     public function getDBHost(): string;
 
     public function getDBUser(): string;

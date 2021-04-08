@@ -4,29 +4,10 @@ declare(strict_types=1);
 
 namespace App\Configuration;
 
-use Noctis\KickStart\Configuration\ConfigurationInterface;
+use Noctis\KickStart\Configuration\Configuration;
 
-final class FancyConfiguration implements FancyConfigurationInterface
+final class FancyConfiguration extends Configuration implements FancyConfigurationInterface
 {
-    private ConfigurationInterface $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
-    }
-
-    public function getBaseHref(): string
-    {
-        $baseHref = $this->get('basehref');
-
-        // Remove trailing slash ("/"), if applicable
-        if ($baseHref[-1] === '/') {
-            $baseHref = substr($baseHref, 0, -1);
-        }
-
-        return $baseHref;
-    }
-
     public function getDBHost(): string
     {
         return $this->get('db_host');
@@ -55,23 +36,5 @@ final class FancyConfiguration implements FancyConfigurationInterface
     public function getDummyParam(): bool
     {
         return $this->get('dummy_param') === 'true';
-    }
-
-    public function get(string $name, $default = null)
-    {
-        return $this->configuration
-            ->get($name, $default);
-    }
-
-    public function set(string $name, mixed $value): void
-    {
-        $this->configuration
-            ->set($name, $value);
-    }
-
-    public function has(string $name): bool
-    {
-        return $this->configuration
-            ->has($name);
     }
 }
