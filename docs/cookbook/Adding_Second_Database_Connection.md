@@ -1,4 +1,4 @@
-# Adding Second Database Connection
+# Adding a Second Database Connection
 
 There are some situations where an application needs to use more than one7 database connection at a time. Here's how
 to add a second database connection to your application, for a specific repository.
