@@ -6,6 +6,7 @@ namespace App\Provider;
 
 use App\Http\Middleware\Guard\DummyGuard;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
+
 use function DI\autowire;
 
 final class HttpMiddlewareProvider implements ServicesProviderInterface
@@ -19,7 +20,7 @@ final class HttpMiddlewareProvider implements ServicesProviderInterface
             DummyGuard::class => autowire(DummyGuard::class)
                 ->constructorParameter(
                     'dummyParam',
-                    $_ENV['dummy_param'] === 'true'
+                    true
                 ),
         ];
     }

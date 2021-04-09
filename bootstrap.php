@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use Noctis\KickStart\Configuration\ConfigurationLoader;
 
@@ -12,13 +14,12 @@ if ($env === 'dev') {
 
 (new ConfigurationLoader())
     ->load(__DIR__, [
-        'debug'       => 'required,bool',
-        'basehref'    => 'required',
-        'db_host'     => 'required',
-        'db_user'     => 'required',
-        'db_pass'     => 'required',
-        'db_name'     => 'required',
-        'db_port'     => 'required,int',
-        'dummy_param' => 'required,bool',
+        'debug'    => 'required,bool',
+        'basehref' => 'required',
+        'db_host'  => 'required',
+        'db_user'  => 'required',
+        'db_pass'  => 'required',
+        'db_name'  => 'required',
+        'db_port'  => 'required,int',
     ]);
 $_ENV['basepath'] = __DIR__;

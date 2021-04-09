@@ -32,9 +32,4 @@ final class FancyConfiguration extends Configuration implements FancyConfigurati
     {
         return (int)$this->get('db_port');
     }
-
-    public function getDummyParam(): bool
-    {
-        return $this->get('dummy_param') === 'true';
-    }
 }

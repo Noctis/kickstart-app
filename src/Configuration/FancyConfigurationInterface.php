@@ -17,6 +17,4 @@ interface FancyConfigurationInterface extends ConfigurationInterface
     public function getDBName(): string;
 
     public function getDBPort(): int;
-
-    public function getDummyParam(): bool;
 }
