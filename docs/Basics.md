@@ -21,7 +21,7 @@ An out-of-the-box Kickstart app has the following folder structure:
 |  |  |- Middleware
 |  |  |  \- Guard
 |  |  |- Request
-|  |  \- Routes
+|  |  \- Routing
 |  |- Provider
 |  |- Repository
 |  \- Service
@@ -95,10 +95,9 @@ This folder contains optional classes representing requests, to be passed (as de
 Request class contains generic `get()` method for fetching request's parameters, while a custom one may contain
 parameter-specific ones, e.g. `getDate()`.
 
-### src/Http/Routes
+### src/Http/Routing
 
-This folder contains a class with definitions for the application's HTTP routes and which HTTP actions should handle
-their incoming requests.
+This folder contains a file with a list of route definitions for HTTP actions.
 
 ### src/Provider
 
