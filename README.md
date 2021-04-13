@@ -1,12 +1,12 @@
-#Kickstart-app
+# Kickstart-app
 
-##What is it?
+## What is it?
 
 It's a skeleton/demo application based upon the `noctis/kickstart` package. This is the "user space" part of the 
 Kickstart project. This project contains the files that the user should modify in order to create their own,
 Kickstart-based application.
 
-##OK, so how do I install this thing?
+## OK, so how do I install this thing?
 
 Use Composer to create a new project, based on `kickstart-app`:
 
@@ -17,14 +17,14 @@ composer create-project noctis/kickstart-app app-name --repository='{"type":"vcs
 **IMPORTANT:** replace `app-name` in the command above with whatever name you want. `app-name` is the name of the folder 
 which will be created in the current working directory.
 
-##OK, it installed. Now what?
+## OK, it installed. Now what?
 
 Now you're free to modify/add files in the `app-name` folder (or whatever you changed it to)  to build your application. 
 I've included some demo/dummy files within the project to help you get started. You're free to remove those files 
 altogether if you have no use for them. Instructions on how to do that can be found 
 [here](docs/cookbook/Removing_Dummy_Code.md).
 
-##Application Components
+## Application Components
 
 A fresh `kickstart-app` project comes with a few elements which may or may not seem familiar to you:
 
@@ -121,7 +121,7 @@ database engine of your choice. EasyDB is a simple wrapper around PHP's PDO.
 
 You can read more about Service Providers [here](docs/Service_Providers.md).
 
-### Recipes
+## Recipes
 
 * [Adding a New Database Repository](docs/cookbook/Adding_Database_Repository.md),
 * [Adding a Second Database Connection](docs/cookbook/Adding_Second_Database_Connection.md)

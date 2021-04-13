@@ -1,4 +1,4 @@
-##Adding a new HTTP action
+# Adding a new HTTP action
 
 To add a new HTTP action, one needs to do two things:
 
@@ -10,7 +10,7 @@ Optionally, one can also:
 * create a template (view) for said action,
 * create an HTTP request class for the action, if the action takes any request parameters.
 
-### Creating an HTTP action class
+## Creating an HTTP action class
 
 All HTTP action classes:
 
@@ -39,7 +39,7 @@ final class DummyAction extends AbstractAction
 This HTTP action class is almost complete. The only thing it's missing is the definition of the `execute()` method, but
 we'll get back to that later. For now, lets define a route and assign our action to it.
 
-### Assigning an HTTP action to a route
+## Assigning an HTTP action to a route
 
 By default, all HTTP routes are defined in the `src/Http/Routes/StandardRoutes.php` file, or to be more specific, in the
 `StandardRoutes::get()` method inside it:
@@ -101,7 +101,7 @@ use Noctis\KickStart\Http\Routing\HttpRoutesProviderInterface;
 OK, so now whenever someone tries to visits the root (`/`) of your website, the `DummyAction::execute()` method will
 be called. But, remember the `execute()` method still lacks its definition, i.e. it's empty. Let's fix that.
 
-### Creating a template (view) for an HTTP action
+## Creating a template (view) for an HTTP action
 
 An HTTP action's `execute()` method must always return a `Response` object, so we'll need to create it somehow. The
 `AbstractHttpAction` class which `DummyAction` class extends defines a `render()` method which does just that - creates

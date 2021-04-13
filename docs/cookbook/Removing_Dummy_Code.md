@@ -1,4 +1,4 @@
-## Removing Dummy (Example) Code
+# Removing Dummy (Example) Code
 
 The `Kickstart` app comes with some dummy (example) code, to help one get started working on creating their own
 application, without resorting to constantly going back and forth between the IDE and the documentation.

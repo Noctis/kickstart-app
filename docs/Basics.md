@@ -1,3 +1,5 @@
+# Basics
+
 Kickstart was designed to be a base for two kinds of PHP applications:
 
 * those run from the terminal/command line (CLI), and

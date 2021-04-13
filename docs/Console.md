@@ -1,4 +1,4 @@
-## Console application
+# Console application
 
 Files related to a console (CLI) application can be found in the `bin` and `src/Console` directories.
 
@@ -8,7 +8,7 @@ The `src/Console/Command` folder contains all the possible commands that can be 
 
 Here's how it all works.
 
-### The gist
+## The gist
 
 The moment the following command is run withing the project's base directory:
 ```shell
@@ -21,7 +21,7 @@ The system will then locate the appropriate command file in the `src/Console/Com
 method. `Kickstart` utilizes Symfony's [Console Component](https://symfony.com/doc/5.2/components/console.html) to run 
 the commands.
 
-### How to add a new command
+## How to add a new command
 
 To add a new command, one must:
 
