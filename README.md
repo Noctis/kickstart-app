@@ -11,7 +11,7 @@ allowed to modify in order to create their own Kickstart-based application.
 Use Composer to create a new project, based on `kickstart-app`:
 
 ```shell
-composer create-project noctis/kickstart-app app-name --repository='{"type":"vcs","url":"git@github.com:Noctis\/kickstart.git"}'
+composer create-project noctis/kickstart-app app-name --repository='{"type":"vcs","url":"git@github.com:Noctis\/kickstart-app.git"}'
 ```
 
 **IMPORTANT:** replace `app-name` in the command above with whatever name you want. `app-name` is the name of the folder 
