@@ -1,6 +1,6 @@
 {
     "name": "noctis/kickstart-app",
-    "license": "proprietary",
+    "license": "MIT",
     "repositories": [
         {
             "type": "path",
