@@ -10,7 +10,9 @@
     ],
     "require": {
         "php": "^8.0",
-        "noctis/kickstart": "^2.0"
+        "ext-pdo": "*",
+        "noctis/kickstart": "^2.0",
+        "paragonie/easydb": "^2.11"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",

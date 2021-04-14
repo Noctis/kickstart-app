@@ -18,7 +18,7 @@ interface PostRepositoryInterface
 ```
 
 Now create a new class called `PostRepository`, in the same namespace, extending the 
-`Noctis\KickStart\Repository\AbstractDatabaseRepository` abstract class and implementing the `PostRepositoryInterface`
+`App\Repository\AbstractDatabaseRepository` abstract class and implementing the `PostRepositoryInterface`
 interface:
 
 ```php
@@ -27,8 +27,6 @@ interface:
 declare(strict_types=1);
 
 namespace App\Repository;
-
-use Noctis\KickStart\Repository\AbstractDatabaseRepository;
 
 final class PostRepository extends AbstractDatabaseRepository implements PostRepositoryInterface
 {

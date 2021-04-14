@@ -1,6 +1,6 @@
 # Adding a Second Database Connection
 
-There are some situations where an application needs to use more than one7 database connection at a time. Here's how
+There are some situations where an application needs to use more than one database connection at a time. Here's how
 to add a second database connection to your application, for a specific repository.
 
 Start by adding the second database connection parameters to `.env`:
@@ -60,8 +60,6 @@ Let's assume that the repository you're trying to pass the secondary database co
 declare(strict_types=1);
 
 namespace App\Repository;
-
-use Noctis\KickStart\Repository\AbstractDatabaseRepository;
 
 final class SecondaryRepository extends AbstractDatabaseRepository implements SecondaryRepositoryInterface
 {

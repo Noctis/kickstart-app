@@ -7,7 +7,6 @@ namespace App\Repository;
 use App\Database\Table\DummyTable;
 use App\Entity\DummyEntity;
 use App\Entity\DummyEntityInterface;
-use Noctis\KickStart\Repository\AbstractDatabaseRepository;
 
 final class DummyRepository extends AbstractDatabaseRepository implements DummyRepositoryInterface
 {
