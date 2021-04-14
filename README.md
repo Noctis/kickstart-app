@@ -122,6 +122,10 @@ EasyDB and not a different library, check the [FAQ](docs/FAQ.md).
 
 You can read more about Service Providers [here](docs/Service_Providers.md).
 
+## Folders
+
+You can read more about what each folder in your project's directory is [here](docs/Folders.md).
+
 ## FAQ
 
 Additional questions and answers relating to Kickstart can be found in the [FAQ](docs/FAQ.md).
