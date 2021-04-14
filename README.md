@@ -134,4 +134,5 @@ Additional questions and answers relating to Kickstart can be found in the [FAQ]
 * [Creating a new HTTP Action](docs/cookbook/New_Http_Action.md)
 * [Creating a New Console Command](docs/cookbook/New_Console_Command.md)
 * [Removing the Database Connectivity Functionality](docs/cookbook/Removing_Database_Connectivity.md)
+* [Removing Dummy (Example) Code](docs/cookbook/Removing_Dummy_Code.md)
 * [Removing the HTTP Functionality](docs/cookbook/Removing_Http_Functionality.md)
