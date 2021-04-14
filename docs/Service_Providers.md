@@ -13,8 +13,8 @@ one of the following:
 
 ## Examples
 
-For example, if there is an `\App\Service\DummyServiceInterface` interface defined, a class called 
-`\App\Service\DummyService` which implements it, and you wish for DIC to provide an instance of the latter every time 
+For example, if there is an `App\Service\DummyServiceInterface` interface defined, a class called 
+`App\Service\DummyService` which implements it, and you wish for DIC to provide an instance of the latter every time 
 the former is required, this is how the entry in the array returned by the Service Provider should look like:
 
 ```php
@@ -25,7 +25,7 @@ return [
 ];
 ```
 
-If you wish to define how the `\App\Service\DummyService` instance is created, you can provide a callable (a factory),
+If you wish to define how the `App\Service\DummyService` instance is created, you can provide a callable (a factory),
 the entry in the array could look like this:
 
 ```php

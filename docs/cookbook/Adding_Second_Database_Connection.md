@@ -52,7 +52,7 @@ the Dependency Injection Container:
 ```
 
 Let's assume that the repository you're trying to pass the secondary database connection to is called
-`\App\Repository\SecondaryRepository` and it looks like so:
+`App\Repository\SecondaryRepository` and it looks like so:
 
 ```php
 <?php

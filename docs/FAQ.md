@@ -22,7 +22,7 @@ functionality, [EasyDB](https://github.com/paragonie/easydb) for database connec
 for Dependency Injection, etc. 
 
 I could've created interfaces for those functionalities and vendor-specific providers (implementations) for them, 
-allowing one to choose which vendor package would provide database connectivity, which vendor package would provide 
+allowing you to choose which vendor package would provide database connectivity, which vendor package would provide 
 Dependency Injection, etc., kinda like what 
 [Mezzio (formelly Zend Expressive)](https://docs.mezzio.dev/mezzio/v3/getting-started/quick-start/) does, but I didn't.
 It would require me to perform research about possible functionality providers, which would then allow me to define the 

@@ -1,11 +1,11 @@
 # Creating a new HTTP Action
 
-To add a new HTTP action, one needs to do two things:
+To add a new HTTP action, you need to do two things:
 
 * create an HTTP action class,
 * assign said action to a route.
 
-Optionally, one can also:
+Optionally, you can also:
 
 * create a template (view) for said action,
 * create an HTTP request class for the action, if the action takes any request parameters.
@@ -98,7 +98,7 @@ use FastRoute\RouteCollector;
 use Noctis\KickStart\Http\Routing\HttpRoutesProviderInterface;
 ```
 
-OK, so now whenever someone tries to visits the root (`/`) of your website, the `DummyAction::execute()` method will
+OK, so now whenever someone tries to visit the root (`/`) of your website, the `DummyAction::execute()` method will
 be called. But, remember the `execute()` method still lacks its definition, i.e. it's empty. Let's fix that.
 
 ## Creating a template (view) for an HTTP action

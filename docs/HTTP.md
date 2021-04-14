@@ -38,8 +38,8 @@ Each element of the array, i.e. a **route definition** is an array, consisting o
 * the class name of the HTTP action,
 
 These 3 elements are required in a route definition. The 4th element is optional - it's an array of HTTP middleware, in
-the form of a list of middleware class names. If one does not wish for the route definition to utilize any middleare,
-one should simply omit that last element in the route definition or declare it as an empty array (`[]`).
+the form of a list of middleware class names. If you do not wish for the route definition to utilize any middleware,
+you should simply omit that last element in the route definition or declare it as an empty array (`[]`).
 
 Here's an example of a route definition with no middleware:
 
@@ -60,7 +60,7 @@ a Controller has separate methods for different routes, an HTTP action only has 
 
 There are a couple of requirements every HTTP action class must meet:
 
-* it must extend the `\Noctis\KickStart\Http\Action\AbstractAction` class,
+* it must extend the `Noctis\KickStart\Http\Action\AbstractAction` class,
 * it must have a public method called `execute`, which returns a `Response` object,
 * any of the action's dependencies should be injected through the `execute` method's signature, eg.:
 
@@ -75,15 +75,15 @@ public function execute(DummyRequest $request, DummyService $dummyService): Resp
 
 ## Requests
 
-If the HTTP action needs to get some data from the incoming HTTP request, one may define a request class for said 
+If the HTTP action needs to get some data from the incoming HTTP request, you may define a request class for said 
 action. The request class should be created in the `src/Http/Request` directory and must extend the
-`\Noctis\KickStart\Http\Request\AbstractRequest` class. 
+`Noctis\KickStart\Http\Request\AbstractRequest` class. 
 
-One may find an example of such request class in the `src/Http/Request/DummyRequest.php` file.
+You can find an example of such request class in the `src/Http/Request/DummyRequest.php` file.
 
 ## Responses
 
-Usually one wants the HTTP action to return a response with some generated HTML. To do that, one should call its
+Usually you want the HTTP action to return a response with some generated HTML. To do that, you should call its
 `render()` method at the end of the action's `execute()` method:
 
 ```php
@@ -99,7 +99,7 @@ The `render()` method's first argument is the name of the template file which sh
 rendering engine of choice is [Twig 3.x](https://twig.symfony.com/doc/3.x/). The template file should exist in the
 `templates` directory (next to the `src` dir).
 
-If one wishes to pass some extra arguments to the template file, one can do that through `render()`'s second argument, e.g.:
+If you wish to pass some extra arguments to the template file, you can do that through `render()`'s second argument, e.g.:
 
 ```php
 use Symfony\Component\HttpFoundation\Response;
@@ -112,7 +112,7 @@ public function execute(): Response
 }
 ```
 
-If one wishes to return a redirection response instead, one should call the `redirect()` method, while also slightly
+If you wish to return a redirection response instead, you should call the `redirect()` method, while also slightly
 altering the `execute()`'s signature:
 
 ```php
@@ -128,8 +128,8 @@ public function execute(): RedirectResponse
 
 ## Middleware
 
-If one wishes for a piece of code to be executed before a HTTP action's `execute()` method is called, for example
-to check if a user is actually logged in, one may do so by creating a middleware class and attaching it to the route
+If you wish for a piece of code to be executed before a HTTP action's `execute()` method is called, for example
+to check if a user is actually logged in, you may do so by creating a middleware class and attaching it to the route
 definition.
 
 The middleware defined in the route definition are executed before the HTTP action is called, in the order they have

@@ -4,7 +4,7 @@ A standard `Kickstart` project comes with built-in support for database connecti
 some database credentials are provided in the `.env` file. They don't need to be valid, they just need to be defined.
 But not all applications need a database connection to work properly. Here's what to do to get rid of it.
 
-**WARNING: This guide assumes one has at least basic OOP-in-PHP knowledge. When a file needs to be modified, this guide
+**WARNING: This guide assumes you have at least basic OOP-in-PHP knowledge. When a file needs to be modified, this guide
 will not explicitly state which lines need to be changed and how.**
 
 Edit `bootstrap.php` file and remove the following lines:

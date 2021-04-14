@@ -1,6 +1,6 @@
 # Creating a New Console Command
 
-To add a new command, one must:
+To add a new command, you must:
 
 * create a new class within the `src/Console/Command` directory, which extends the
   `Noctis\KickStart\Console\Command\AbstractCommand` class,
