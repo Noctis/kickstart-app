@@ -1,4 +1,4 @@
-# Kickstart-app
+# Kickstart Application
 
 ## What is it?
 
@@ -58,7 +58,7 @@ db_port=3306
 
 Here's a rundown of what all these options mean:
 
-### debug
+### `debug`
 
 Setting this option to `false` changes two things:
 
@@ -76,7 +76,7 @@ This option should be set to `false` in production environments, and set to `tru
 **If you're making changes to your templates/views and they're not showing up in the browser - either clear the cache,
 by deleting the contents of the `var/cache/templates` directory, or set the `debug` option in `.env` to `true`.**
 
-### basehref
+### `basehref`
 
 This is the URI of where the application is available from the browser. If it's available at, for example:
 `localhost`, the default value of `/` should be used. If it's available at, for example: `localhost/kickstart`, the
@@ -87,7 +87,7 @@ the same! If those values are different, you'll be getting a lot of 404 errors.
 
 For console commands the value of this parameter does not matter.
 
-### db_host, db_user, db_pass, db_name, db_port
+### `db_host`, `db_user`, `db_pass`, `db_name`, `db_port`
 
 Those 5 options are the database connectivity credentials:
 
@@ -101,7 +101,7 @@ Those 5 options are the database connectivity credentials:
 
 You can read more about HTTP actions [here](docs/HTTP.md).
 
-## Console Commands:
+## Console Commands
 
 You can read more about Console Commands [here](docs/Console.md).
 
