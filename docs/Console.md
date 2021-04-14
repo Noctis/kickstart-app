@@ -1,51 +1,28 @@
-# Console application
+# Console Application
 
-Files related to a console (CLI) application can be found in the `bin` and `src/Console` directories.
+Files related to a console (CLI) commands can be found in the `bin` and `src/Console` directories of your project. The 
+`bin` folder contains the `console` file which is the "entry point" for the defined console commands, while the 
+`src/Console/Command` folder contains all the possible commands that can be run. 
 
-The `bin` folder contains the `console` file which is the "entry" point for all defined console commands.
-
-The `src/Console/Command` folder contains all the possible commands that can be run.
+The fact that a console command class exists does not mean that it can be run. It needs to be enabled, by adding a
+reference to it in the `bin/console` file.
 
 Here's how it all works.
 
 ## The gist
 
-The moment the following command is run withing the project's base directory:
+The moment the following command is executed within the project's base directory:
 ```shell
 php bin/console command:name
 ```
 
-The `command:name` should be replaced by an appropriate command name. Each console command must have its own, unique one.
+the system will check all the enabled console commands (see inside `bin/console`) and if a command with a matching name - in
+this example: `command:name` - is found, that commands `execute()` method will be called. Each command must have its own,
+unique name.
 
-The system will then locate the appropriate command file in the `src/Console/Command` directory and call its `execute()`
-method. `Kickstart` utilizes Symfony's [Console Component](https://symfony.com/doc/5.2/components/console.html) to run 
-the commands.
+Kickstart utilizes Symfony's [Console Component](https://symfony.com/doc/5.2/components/console.html) to run the console
+commands.
 
-## How to add a new command
+## Recipes
 
-To add a new command, one must:
-
-* create a new class within the `src/Console/Command` directory, which extends the 
-  `\Noctis\KickStart\Console\Command\AbstractCommand` class,
-* define a name for it by adding a static `$defaultName` variable in the new class, e.g.:
-  ```php
-  protected static $defaultName = 'dummy:command';
-  ```
-* register the new class in the `bin/console` file, by adding its class name to the array passed to the 
-  `Application`'s constructor:
-  ```php
-  [...]
-
-  use App\Console\Command\DummyCommand;
-
-  [...]
-
-  $app = new Application([
-      DummyCommand::class
-  ]);
-  ```
-
-To run the command, one should execute the following command:
-```shell
-php bin/console dummy:command
-```
+* [Creating a New Console Command](cookbook/New_Console_Command.md)
