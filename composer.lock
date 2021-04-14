@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ff57dfb0a0111a2dc44f243aaa41bd2",
+    "content-hash": "3896cd74c4b567ae28a67fef938065c2",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -125,10 +125,16 @@
         {
             "name": "noctis/kickstart",
             "version": "dev-future/v2",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:Noctis/kickstart.git",
+                "reference": "27a81bc7e8723f7bc3ba76c620ef9544bc93b609"
+            },
             "dist": {
-                "type": "path",
-                "url": "../kickstart",
-                "reference": "094165711e6a8d06f50ce82e670bf6282f1b720b"
+                "type": "zip",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/27a81bc7e8723f7bc3ba76c620ef9544bc93b609",
+                "reference": "27a81bc7e8723f7bc3ba76c620ef9544bc93b609",
+                "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
@@ -149,6 +155,7 @@
                 "symfony/var-dumper": "^5.2",
                 "vimeo/psalm": "^4.4"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -170,9 +177,11 @@
                 "MIT"
             ],
             "description": "The base system part of the Kickstart project.",
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/Noctis/kickstart/tree/future/v2",
+                "issues": "https://github.com/Noctis/kickstart/issues"
+            },
+            "time": "2021-04-14T08:43:09+00:00"
         },
         {
             "name": "opis/closure",

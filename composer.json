@@ -4,13 +4,13 @@
     "license": "MIT",
     "repositories": [
         {
-            "type": "path",
-            "url": "../kickstart"
+            "type": "vcs",
+            "url": "git@github.com:Noctis/kickstart.git"
         }
     ],
     "require": {
         "php": "^8.0",
-        "noctis/kickstart": "*"
+        "noctis/kickstart": "^2.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
