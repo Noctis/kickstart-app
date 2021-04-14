@@ -1,5 +1,6 @@
 {
     "name": "noctis/kickstart-app",
+    "description": "The user application part of the Kickstart project.",
     "license": "MIT",
     "repositories": [
         {
