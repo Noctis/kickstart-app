@@ -1,4 +1,4 @@
-# Removing HTTP Functionality
+# Removing the HTTP Functionality
 
 Not all applications need to be available through the Web browser. If your application has no need for any HTTP
 functionality, and you wish to prune any code related to it from your codebase, here's how you can do it.

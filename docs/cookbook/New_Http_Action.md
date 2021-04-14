@@ -1,4 +1,4 @@
-# Adding a new HTTP action
+# Creating a new HTTP Action
 
 To add a new HTTP action, one needs to do two things:
 

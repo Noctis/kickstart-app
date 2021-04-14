@@ -1,4 +1,4 @@
-# Creating a custom HTTP request class
+# Creating a Custom HTTP Request Class
 
 If your HTTP action needs to read parameters passed to it within the HTTP request, you can add an instance of
 `\Symfony\Component\HttpFoundation\Request` class via the `execute()` method, like so:

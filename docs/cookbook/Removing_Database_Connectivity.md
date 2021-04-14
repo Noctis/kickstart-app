@@ -1,4 +1,4 @@
-# Removing Database Connectivity
+# Removing the Database Connectivity Functionality
 
 A standard `Kickstart` project comes with built-in support for database connectivity. The application won't work until
 some database credentials are provided in the `.env` file. They don't need to be valid, they just need to be defined.
