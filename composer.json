@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^8.0",
+        "composer-runtime-api": "^2",
         "noctis/kickstart": "^2.0",
         "paragonie/easydb": "^2.11",
         "php-di/php-di": "^6.3",
