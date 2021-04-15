@@ -5,8 +5,10 @@
       <option name="CODING_STANDARD" value="PSR12" />
       <option name="EXTENSIONS" value="php,js,css,inc" />
     </inspection_tool>
-    <inspection_tool class="PhpDocSignatureInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
-      <option name="ALLOW_MISSING_PARAMETERS" value="true" />
+    <inspection_tool class="PsalmGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="showInfo" value="true" />
+      <option name="findUnusedCode" value="true" />
+      <option name="findUnusedSuppress" value="true" />
     </inspection_tool>
   </profile>
 </component>
