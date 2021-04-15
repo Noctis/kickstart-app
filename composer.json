@@ -4,6 +4,13 @@
     "type": "project",
     "keywords": ["kickstart", "skeleton app", "base application"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Lucas Czejgis",
+            "email": "lucas.czejgis@gmail.com",
+            "role": "Sole Developer"
+        }
+    ],
     "repositories": [
         {
             "type": "vcs",
