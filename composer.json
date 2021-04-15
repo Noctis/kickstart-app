@@ -11,9 +11,11 @@
     ],
     "require": {
         "php": "^8.0",
-        "ext-pdo": "*",
         "noctis/kickstart": "^2.0",
-        "paragonie/easydb": "^2.11"
+        "paragonie/easydb": "^2.11",
+        "php-di/php-di": "^6.3",
+        "symfony/console": "^5.2",
+        "symfony/http-foundation": "^5.2"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
