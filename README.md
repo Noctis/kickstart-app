@@ -135,6 +135,23 @@ You can read more about Service Providers [here](docs/Service_Providers.md).
 
 You can read more about what each folder in your project's directory is [here](docs/Folders.md).
 
+## Updating
+
+If you need to update the system part of your application, i.e. the `noctis/kickstart` package, just run:
+
+```shell
+composer update noctis/kickstart
+```
+
+Seeing as updating a Kickstart project is not as simple as that, I will do my best to update the `noctis/kickstart-app`
+package (this one) as rarely as possible. When I do release a new version of it, I will provide instructions on how to
+upgrade in a `UPDATING.md` file.
+
+I will also keep the version numbers between both packages consistent. For example, when I make changes to the 
+`noctis/kickstart` package that are incompatible with `noctis/kickstart-app` 2.x, I will release them as version 3.x
+of the former, along with an updated 3.x version of the latter. This way a `composer update` will not break your 
+Kickstart application.
+
 ## FAQ
 
 Additional questions and answers relating to Kickstart can be found in the [FAQ](docs/FAQ.md).
