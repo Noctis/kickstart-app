@@ -2,13 +2,21 @@
 
 ## What is it?
 
-It's a skeleton/demo application based upon the [`noctis/kickstart`](https://github.com/Noctis/kickstart) package. This 
-is the user part of the Kickstart project. It's the part of the Kickstart project containing all the files the user is
-allowed to modify in order to create their own Kickstart-based application. 
+It's a skeleton/demo application part of the Kickstart project. The Kickstart project itself consists of two parts:
+
+* the application part (this one),
+* the system part - the [`noctis/kickstart`](https://github.com/Noctis/kickstart) package.
+
+This application contains all the files the user should be able to modify in order to create their own Kickstart-based 
+application.
+
+## What's it good for?
+
+Kickstart was created to be a base for building micro and small PHP applications, either Web- or CLI-based.  
 
 ## OK, so how do I install this thing?
 
-Use Composer to create a new project, based on `kickstart-app`:
+Use Composer to create a new project, based on `noctis/kickstart-app`:
 
 ```shell
 composer create-project noctis/kickstart-app app-name --repository='{"type":"vcs","url":"git@github.com:Noctis\/kickstart-app.git"}'
@@ -24,9 +32,12 @@ I've included some demo/dummy files within the project to help you get started. 
 altogether if you have no use for them. Instructions on how to do that can be found 
 [here](docs/cookbook/Removing_Dummy_Code.md).
 
+**IMPORTANT:** If you're building a Web-based application, configure your WWW server to serve files from the `public` 
+directory.
+
 ## Application Components
 
-A fresh Kickstart project consists of a couple of elements, some of which may be familiar to you:
+A fresh Kickstart-based project consists of a couple of things:
 
 * Configuration,
 * HTTP Actions (with templates/views),
@@ -37,13 +48,11 @@ A fresh Kickstart project consists of a couple of elements, some of which may be
 
 ## Configuration
 
-The project's configuration can be found in the `.env` file, in its root directory. A fresh project won't have this
-file, but an example file called `.env-example` is provided, which should be copied over as or renamed to `.env` and 
-then edited.
+The project's configuration can be found in the `.env` file, in its root directory.
 
 **NEVER COMMIT THE `.env` FILE IN YOUR PROJECT - IT CONTAINS SENSITIVE INFORMATION WHICH MUST REMAIN PRIVATE!**
 
-This is how the `.env-example` file looks by default:
+This is how the `.env` file looks by default:
 
 ```dotenv
 debug=false
@@ -107,16 +116,16 @@ You can read more about Console Commands [here](docs/Console.md).
 
 ## Database Repositories
 
-`Kickstart` utilizes the Repository pattern, more or less. You call the appropriate methods on a repository object when
+Kickstart utilizes the Repository pattern, more or less. You call the appropriate methods on a repository object when
 you want to fetch or store something from/to the database. 
 
 By default, repository classes can be found in the `src/Repository` folder (the `App\Repository` namespace). All 
 repositories which utilize the database connection extend the `Noctis\KickStart\Repository\AbstractDatabaseRepository` 
 abstract class, which provides a `protected` field called `$db` representing the database connection.
 
-`Kickstart` uses [ParagonIE's EasyDB](https://github.com/paragonie/easydb) package for running queries against the
-database engine of your choice. EasyDB is a simple wrapper around PHP's PDO. If you want to know more on why I chose
-EasyDB and not a different library, check the [FAQ](docs/FAQ.md).
+Kickstart utilizes [ParagonIE's EasyDB](https://github.com/paragonie/easydb) package for running queries against the
+database engine of your choice. EasyDB is a simple wrapper around PHP's PDO, which in my opinion is way easier to use
+than PDI itself. If you want to know more on why I chose EasyDB and not a different library, check the [FAQ](docs/FAQ.md).
 
 ## Service Providers
 
