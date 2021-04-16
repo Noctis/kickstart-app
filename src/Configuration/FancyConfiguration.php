@@ -17,21 +17,25 @@ final class FancyConfiguration implements FancyConfigurationInterface
 
     public function getDBHost(): string
     {
+        /** @var string */
         return $this->get('db_host');
     }
 
     public function getDBUser(): string
     {
+        /** @var string */
         return $this->get('db_user');
     }
 
     public function getDBPass(): string
     {
+        /** @var string */
         return $this->get('db_pass');
     }
 
     public function getDBName(): string
     {
+        /** @var string */
         return $this->get('db_name');
     }
 

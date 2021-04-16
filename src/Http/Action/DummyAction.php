@@ -12,6 +12,7 @@ final class DummyAction extends AbstractAction
 {
     public function execute(DummyRequest $request): Response
     {
+        /** @var string $name */
         $name = $request->get('name') ?: 'World';
 
         return $this->render('dummy.html.twig', [

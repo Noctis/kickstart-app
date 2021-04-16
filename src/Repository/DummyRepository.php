@@ -14,13 +14,16 @@ final class DummyRepository extends AbstractDatabaseRepository implements DummyR
     {
         $sql = 'SELECT * FROM ' . DummyTable::NAME . ' WHERE id = ?';
 
-        /** @psalm-suppress PossiblyNullArgument */
-        return $this->createFromRow(
-            $this->db
-                ->row($sql, $id)
-        );
+        /** @var array<string, string|null> $row */
+        $row = $this->db
+            ->row($sql, $id);
+
+        return $this->createFromRow($row);
     }
 
+    /**
+     * @param array<string, string|null> $row
+     */
     private function createFromRow(array $row): DummyEntityInterface
     {
         return new DummyEntity(

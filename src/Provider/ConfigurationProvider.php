@@ -19,9 +19,10 @@ final class ConfigurationProvider implements ServicesProviderInterface
     {
         return [
             FancyConfigurationInterface::class => function (ContainerInterface $container): FancyConfiguration {
-                return new FancyConfiguration(
-                    $container->get(ConfigurationInterface::class)
-                );
+                /** @var ConfigurationInterface $baseConfiguration */
+                $baseConfiguration = $container->get(ConfigurationInterface::class);
+
+                return new FancyConfiguration($baseConfiguration);
             },
         ];
     }

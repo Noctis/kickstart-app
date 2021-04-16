@@ -21,6 +21,7 @@ final class DatabaseConnectionProvider implements ServicesProviderInterface
         return [
             EasyDB::class => function (ContainerInterface $container): EasyDB {
                 try {
+                    /** @var FancyConfigurationInterface $configuration */
                     $configuration = $container->get(FancyConfigurationInterface::class);
 
                     return Factory::fromArray([
