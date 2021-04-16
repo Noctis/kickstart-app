@@ -39,7 +39,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-beta"
+            "dev-master": "2.0-dev"
         }
     },
     "scripts": {

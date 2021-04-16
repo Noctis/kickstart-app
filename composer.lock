@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d219257bb2796d50285fd06a8ecefba",
+    "content-hash": "dee0296b8671c333dc9ef87677329fce",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -127,7 +127,7 @@
             "version": "dev-future/v2",
             "source": {
                 "type": "git",
-                "url": "git@github.com:Noctis/kickstart.git",
+                "url": "https://github.com/Noctis/kickstart.git",
                 "reference": "6b6d85f086bafd1c1fab761e197e46f2fc09f9f2"
             },
             "dist": {
@@ -160,7 +160,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-future/v2": "2.0-beta"
+                    "dev-future/v2": "2.0-dev"
                 }
             },
             "autoload": {
@@ -193,7 +193,7 @@
                 "source": "https://github.com/Noctis/kickstart/tree/future/v2",
                 "issues": "https://github.com/Noctis/kickstart/issues"
             },
-            "time": "2021-04-16T09:31:14+00:00"
+            "time": "2021-04-16T10:12:41+00:00"
         },
         {
             "name": "opis/closure",
