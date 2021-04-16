@@ -1,11 +1,11 @@
 # Service Providers
 
-Service providers in a `Kickstart` application act as a provider of [autowiring](https://php-di.org/doc/autowiring.html)
-definitions for `Kickstart`'s DIC (Dependency Injection Container) of choice - [PHP-DI 6](https://php-di.org/).
+Service providers in a Kickstart application act as a provider of [autowiring](https://php-di.org/doc/autowiring.html)
+definitions for Kickstart`s DIC (Dependency Injection Container) - [PHP-DI 6](https://php-di.org/).
 
-Each service provider implements the `Noctis\KickStart\Provider\ServicesProviderInterface` interface and has a `get()`
-method which return an array. Each key of this array should be an interface or class name, while each value should be
-one of the following:
+Each Service Provider implements the `Noctis\KickStart\Provider\ServicesProviderInterface` interface and has a `get()`
+method which return an array of definitions. Each key of this array should be an interface or class name, while each 
+value should be one of the following:
 
 * a class name,
 * a callable (i.e. factory), returning an object,
@@ -15,7 +15,8 @@ one of the following:
 
 For example, if there is an `App\Service\DummyServiceInterface` interface defined, a class called 
 `App\Service\DummyService` which implements it, and you wish for DIC to provide an instance of the latter every time 
-the former is required, this is how the entry in the array returned by the Service Provider should look like:
+the former is requested via dependency injection (i.e. via constructor), this is how the entry in the array returned by 
+the Service Provider should look like:
 
 ```php
 return [
@@ -25,8 +26,8 @@ return [
 ];
 ```
 
-If you wish to define how the `App\Service\DummyService` instance is created, you can provide a callable (a factory),
-the entry in the array could look like this:
+If you wish to define how the `App\Service\DummyService` instance is created, you can provide a callable (a factory).
+In that case here's how the entry in the array returned by the Service Provider should look like:
 
 ```php
 use Psr\Container\ContainerInterface;
@@ -52,12 +53,12 @@ Providers within the application (in the `src/Provider` directory) or the system
 
 ## Adding new Service Providers/Deleting existing
 
-How does `Kickstart` know which Service Providers to use? If you create a new Service Provider will the application
+How does Kickstart know which Service Providers to use? If you create a new Service Provider class will the application
 notice it right away? No, it won't. Each Service Provider needs to be registered in the `Application` class.
 
 Kickstart provides two `Application` classes - one for console (CLI) applications, one for HTTP-based applications.
 
-A list of Service Providers in use by any of these can be found in their respective files:
+A list of Service Providers in use by any of these can be found in the respective files:
 
-* `src/Console/Application.php` for console applications,
-* `src/Http/Application.php` for HTTP-based application.
+* `src/Console/Application.php` - for console applications,
+* `src/Http/Application.php` - for HTTP-based application.
