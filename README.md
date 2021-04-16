@@ -29,7 +29,7 @@ Kickstart was created to be a base for building micro and small PHP applications
 To create a new project Kickstart-based project, run the following command and let Composer do its thing:
 
 ```shell
-composer create-project noctis/kickstart-app app-name --repository='{"type":"vcs","url":"git@github.com:Noctis\/kickstart-app.git"}' --stability=dev
+composer create-project noctis/kickstart-app app-name --stability=dev
 ```
 
 **IMPORTANT:** replace `app-name` in the command above with whatever name you want. `app-name` is the name of the folder 
