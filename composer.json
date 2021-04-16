@@ -45,7 +45,9 @@
     "scripts": {
         "post-create-project-cmd": [
             "@php -r \"file_exists('.env') || copy('.env-example', '.env');\""
-        ]
+        ],
+        "psalm": "psalm --config=psalm.xml.dist --shepherd",
+        "phpcs": "phpcs --standard=PSR12"
     },
     "config": {
         "sort-packages": true
