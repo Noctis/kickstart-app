@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dee0296b8671c333dc9ef87677329fce",
+    "content-hash": "2d219257bb2796d50285fd06a8ecefba",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -160,7 +160,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-future/v2": "2.0-dev"
+                    "dev-future/v2": "2.0-beta"
                 }
             },
             "autoload": {
@@ -177,6 +177,13 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "Lucas Czejgis",
+                    "email": "lucas.czejgis@gmail.com",
+                    "role": "Sole Developer"
+                }
+            ],
             "description": "The base system part of the Kickstart project.",
             "keywords": [
                 "application base",
@@ -186,7 +193,7 @@
                 "source": "https://github.com/Noctis/kickstart/tree/future/v2",
                 "issues": "https://github.com/Noctis/kickstart/issues"
             },
-            "time": "2021-04-15T13:52:15+00:00"
+            "time": "2021-04-16T09:31:14+00:00"
         },
         {
             "name": "opis/closure",
