@@ -1,13 +1,14 @@
 # Creating a Custom HTTP Request Class
 
 If your HTTP action needs to read parameters passed to it through the HTTP request, you can add an instance of a request
-object (represented by the `Symfony\Component\HttpFoundation\Request` class) into the `execute()` method, like so:
+object - represented by an instance of the `Noctis\KickStart\Http\Request\Request` class - into the `execute()` method,
+like so:
 
 ```php
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Noctis\KickStart\Http\Request\Request;
+use Psr\Http\Message\ResponseInterface;
 
-public function execute(Request $request): Response
+public function execute(Request $request): ResponseInterface
 {
     //...
 }
@@ -42,7 +43,7 @@ into the URL, requires a specific HTTP route definition - we'll get to that late
 ## Query Parameters
 
 Suppose your HTTP action is called `DummyAction`. Let's start by creating a class called `DummyRequest` class in the
-`App\Http\Request` namespace, extending the abstract `Noctis\KickStart\Http\Request\AbstractRequest` class:
+`App\Http\Request` namespace, extending the `Noctis\KickStart\Http\Request\Request` class:
 
 ```php
 <?php
@@ -51,9 +52,9 @@ declare(strict_types=1);
 
 namespace App\Http\Request;
 
-use Noctis\KickStart\Http\Request\AbstractRequest;
+use Noctis\KickStart\Http\Request\Request;
 
-final class DummyRequest extends AbstractRequest
+final class DummyRequest extends Request
 {
 }
 ```
@@ -68,9 +69,9 @@ declare(strict_types=1);
 namespace App\Http\Request;
 
 use DateTimeImmutable;
-use Noctis\KickStart\Http\Request\AbstractRequest;
+use Noctis\KickStart\Http\Request\Request;
 
-final class DummyRequest extends AbstractRequest
+final class DummyRequest extends Request
 {
     public function getDate(): DateTimeImmutable
     {
@@ -90,11 +91,11 @@ namespace App\Http\Action;
 
 use App\Http\Request\DummyRequest;
 use Noctis\KickStart\Http\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Http\Message\ResponseInterface;
 
 final class DummyAction extends AbstractAction
 {
-    public function execute(DummyRequest $request): Response
+    public function execute(DummyRequest $request): ResponseInterface
     {
         //...
     }
@@ -113,7 +114,9 @@ parameter? How do you get that `13` from the request, what method should you cal
 The name part is up to you. Let's name it `productID`. Add the following method to the `DummyRequest` class:
 
 ```php
-final class DummyRequest extends AbstractRequest
+use Noctis\KickStart\Http\Request\Request;
+
+final class DummyRequest extends Request
 {
     //...
     

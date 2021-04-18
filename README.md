@@ -181,3 +181,4 @@ Additional questions and answers relating to Kickstart can be found in the [FAQ]
 * [Removing the Database Connectivity Functionality](docs/cookbook/Removing_Database_Connectivity.md)
 * [Removing Dummy (Example) Code](docs/cookbook/Removing_Dummy_Code.md)
 * [Removing the HTTP Functionality](docs/cookbook/Removing_Http_Functionality.md)
+* [Sending Files in Response](docs/cookbook/Sending_Files.md)

@@ -3,12 +3,12 @@
 To add a new HTTP action, you need to do two things:
 
 * create an HTTP action class,
-* assign said action to a route.
+* add a route definition, referencing the action class.
 
 Optionally, you can also:
 
 * create a template (view) for said action,
-* create an HTTP request class for the action, if the action takes any request parameters.
+* create a custom HTTP request class for the action, if the action takes any request parameters.
 
 ## Creating an HTTP action class
 
@@ -16,9 +16,9 @@ All HTTP action classes:
 
 * reside in the `src/Http/Action` folder,
 * extend the `Noctis\KickStart\Http\Action\AbstractAction` abstract class,
-* contain a method named `execute` which returns a `Response` type object.
+* contain a method named `execute` which returns an implementation of `Psr\Http\Message\ResponseInterface` interface.
 
-Let's start by creating a file named `DummyAction` in the `src/Http/Action` folder:
+Let's start by creating a file named `FormAction` in the `src/Http/Action` folder:
 
 ```php
 <?php
@@ -26,99 +26,77 @@ Let's start by creating a file named `DummyAction` in the `src/Http/Action` fold
 namespace App\Http\Action;
 
 use Noctis\KickStart\Http\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Http\Message\ResponseInterface;
 
-final class DummyAction extends AbstractAction
+final class EditAction extends AbstractAction
 {
-    public function execute(): Response
+    public function execute(): ResponseInterface
     {
     }
 }
 ```
 
 This HTTP action class is almost complete. The only thing it's missing is the definition of the `execute()` method, but
-we'll get back to that later. For now, lets define a route and assign our action to it.
+we'll get back to that later. For now, lets create a route definition and reference our action class in it:
 
-## Assigning an HTTP action to a route
+## Adding a Route Definition With HTTP Action Reference
 
-By default, all HTTP routes are defined in the `src/Http/Routes/StandardRoutes.php` file, or to be more specific, in the
-`StandardRoutes::get()` method inside it:
-
-```php
-public function get(): callable
-{
-    return function (RouteCollector $r): void {
-        $baseHref = $this->configuration
-            ->getBaseHref();
-
-        $r->addGroup(
-            $baseHref,
-            function (RouteCollector $r) {
-            }
-        );
-    };
-}
-```
-
-Kickstart uses the [`nikic/fast-route`](https://github.com/nikic/FastRoute) package for defining routes and routing itself.
-
-Let's say we want our action (`DummyAction`) to be executed when someone visits the root page of our website (`/`).
-Here's what should you add to `StandardRoutes::get()` method and where:
-
-```php
-public function get(): callable
-{
-    return function (RouteCollector $r): void {
-        $baseHref = $this->configuration
-            ->getBaseHref();
-
-        $r->addGroup(
-            $baseHref,
-            function (RouteCollector $r) {
-                $r->get('/', DummyAction::class);
-            }
-        );
-    };
-}
-```
-
-If your IDE does not do it by default, remember to import the `DummyAction` class at the top of the 
-`StandardRoutes.php` file:
+By default, all HTTP route definitions can be found in the `src/Http/Routing/routes.php` file:
 
 ```php
 <?php
 
 declare(strict_types=1);
 
-namespace App\Http\Routes;
-
-use App\Configuration\FancyConfigurationInterface;
 use App\Http\Action\DummyAction;
-use FastRoute\RouteCollector;
-use Noctis\KickStart\Http\Routing\HttpRoutesProviderInterface;
+use App\Http\Middleware\Guard\DummyGuard;
+
+return [
+    ['GET', '/', DummyAction::class, [DummyGuard::class]],
+];
 ```
 
-OK, so now whenever someone tries to visit the root (`/`) of your website, the `DummyAction::execute()` method will
-be called. But, remember the `execute()` method still lacks its definition, i.e. it's empty. Let's fix that.
+Kickstart uses the [FastRoute](https://github.com/nikic/FastRoute) package for defining routes and for routing itself.
 
-## Creating a template (view) for an HTTP action
+Let's say we want our action (`FormAction`) to be executed when someone visits the `/form` URL in our website. Add the
+following line to the array within the `routes.php` file:
 
-An HTTP action's `execute()` method must always return a `Response` object, so we'll need to create it somehow. The
-`AbstractHttpAction` class which `DummyAction` class extends defines a `render()` method which does just that - creates
-a `Response` object.
+```php
+<?php
 
-What the `render()` method does, it takes the given template (view) file name, generates HTML from it and wraps it in a
-`Response` object. Let's create a simple template file, make `DummyAction::execute()` method render it and return the
-generated response.
+declare(strict_types=1);
 
-First, create an empty file named `dummy.html.twig` in the `templates` folder. Next, put some HTML in it:
+use App\Http\Action\DummyAction;
+use App\Http\Action\FormAction;
+use App\Http\Middleware\Guard\DummyGuard;
+
+return [
+    ['GET', '/', DummyAction::class, [DummyGuard::class]],
+    ['GET', '/form', FormAction::class],
+];
+```
+
+OK, now whenever someone tries to visit the `/form` URL of your website, the `FormAction::execute()` method will be 
+called. But... remember that the action's `execute()` method still lacks its definition, i.e. it's empty. Let's fix that.
+
+## Creating a Template (view) For An HTTP Action
+
+An HTTP action's `execute()` method must always return an object implementing the  `Psr\Http\Message\ResponseInterface` 
+interface, so we'll need to create it somehow. The `AbstractAction` class which `FormAction` class extends has a 
+`render()` method which does just that - creates a `Laminas\Diactoros\Response\HtmlResponse` object.
+
+What the `render()` method does is, it takes the given template (view) file name, generates HTML from it and wraps it in 
+a `HtmlResponse` object. Let's create a simple template file, make `FormAction::execute()` method render it and return 
+the generated response.
+
+First, create an empty file named `form.html.twig` in the `templates` folder. Next, put some HTML in it:
 
 ```twig
 {% extends "layout.html.twig" %}
 
 {% block content %}
     <div class="container">
-        Hello, Guest. What is foo?
+        <!-- HTML goes here -->
     </div>
 {% endblock %}
 ```
@@ -126,19 +104,18 @@ First, create an empty file named `dummy.html.twig` in the `templates` folder. N
 Next, let's finish implementing the `execute()` method:
 
 ```php
-public function execute(DummyRequest $request): Response
+use Psr\Http\Message\ResponseInterface;
+
+public function execute(): ResponseInterface
 {
-    return $this->render('dummy.html.twig');
+    return $this->render('form.html.twig');
 }
 ```
 
-If everything has been done correctly, you should see "_Hello, Guest. What is foo?_" when you visit the root (`/`) of
-your website.
-
-The route is defined (`/`), pointing to `DummyAction::execute()` method, which renders the `templates/dummy.html.twig`
+The route is defined (`/form`), pointing to `FormAction::execute()` method, which renders the `templates/form.html.twig`
 file and returns the generated HTML.
 
-Here's how the `DummyAction` class should look like, in full:
+Here's how the `FormAction` class should look like, in full:
 
 ```php
 <?php
@@ -147,15 +124,14 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
-use App\Http\Request\DummyRequest;
 use Noctis\KickStart\Http\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Http\Message\ResponseInterface;
 
-final class DummyAction extends AbstractAction
+final class FormAction extends AbstractAction
 {
-    public function execute(DummyRequest $request): Response
+    public function execute(): ResponseInterface
     {
-        return $this->render('dummy.html.twig');
+        return $this->render('form.html.twig');
     }
 }
 ```

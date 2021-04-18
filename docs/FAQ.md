@@ -8,7 +8,7 @@ Two reasons:
 * it was created by the [Paragon Initiative Enterprises](https://paragonie.com/), which means it has an added layer of
   security on top of itself.
   
-### OK, it's lightweight & secure, great, but writing more complex SQL queries "by hand" is a pain in the A!
+### OK, it's lightweight & secure, great, but writing more complex SQL queries "by hand" is a pain in the A.!
 
 Yes, it is. EasyDB ain't that great when you need to build your SQL query based on a number of variables, I agree. If
 you need the flexibility that [Doctrine](https://www.doctrine-project.org/) or [Laravel's Eloquent](https://laravel.com/)
@@ -17,9 +17,10 @@ provide, I'd suggest you skip Kickstart and go for something like [Symfony](http
 
 ## Why is Kickstart [vendor-locked](https://en.wikipedia.org/wiki/Vendor_lock-in) to specific 3rd party components?
 
-Kickstart uses Symfony's [components](https://symfony.com/doc/current/components/index.html) for Console & HTTP
-functionality, [EasyDB](https://github.com/paragonie/easydb) for database connectivity, [PHP-DI](https://php-di.org/)
-for Dependency Injection, etc. 
+Kickstart uses Laminas' [components](https://docs.laminas.dev/components/) for HTTP functionality, Symfony's 
+[components](https://symfony.com/doc/current/components/index.html) for Console functionality, 
+[EasyDB](https://github.com/paragonie/easydb) for database connectivity, [PHP-DI](https://php-di.org/) for 
+Dependency Injection, etc. 
 
 I could've created interfaces for those functionalities and vendor-specific providers (implementations) for them, 
 allowing you to choose which vendor package would provide database connectivity, which vendor package would provide 

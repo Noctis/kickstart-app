@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware\Guard;
 
-use Noctis\KickStart\Http\Helper\HttpRedirectionTrait;
 use Noctis\KickStart\Http\Middleware\AbstractMiddleware;
-use Noctis\KickStart\Http\Middleware\RequestHandlerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 final class DummyGuard extends AbstractMiddleware
 {
-    use HttpRedirectionTrait;
-
     private bool $dummyParam;
 
-    public function __construct(bool $dummyParam)
+    public function __construct(ResponseFactoryInterface $responseFactory, bool $dummyParam)
     {
+        parent::__construct($responseFactory);
+
         $this->dummyParam = $dummyParam;
     }
 
-    public function process(Request $request, RequestHandlerInterface $handler): Response
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // inspect $request, do stuff, maybe return a RedirectResponse instance, via $this->redirect()?
+        // inspect $request, do stuff, maybe return a RedirectResponse instance?
 
         return parent::process($request, $handler);
     }

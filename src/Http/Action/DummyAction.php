@@ -6,11 +6,11 @@ namespace App\Http\Action;
 
 use App\Http\Request\DummyRequest;
 use Noctis\KickStart\Http\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Http\Message\ResponseInterface;
 
 final class DummyAction extends AbstractAction
 {
-    public function execute(DummyRequest $request): Response
+    public function execute(DummyRequest $request): ResponseInterface
     {
         /** @var string $name */
         $name = $request->get('name') ?: 'World';
