@@ -7,6 +7,7 @@ namespace App\Console;
 use App\Provider\ConfigurationProvider;
 use App\Provider\DatabaseConnectionProvider;
 use App\Provider\DummyServicesProvider;
+use App\Provider\RepositoryProvider;
 use Noctis\KickStart\Console\AbstractConsoleApplication;
 
 final class Application extends AbstractConsoleApplication
@@ -19,6 +20,7 @@ final class Application extends AbstractConsoleApplication
                 new ConfigurationProvider(),
                 new DatabaseConnectionProvider(),
                 new DummyServicesProvider(),
+                new RepositoryProvider(),
             ]
         );
     }
