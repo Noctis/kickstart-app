@@ -33,11 +33,6 @@
             "App\\": "src/"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0-dev"
-        }
-    },
     "scripts": {
         "post-create-project-cmd": [
             "@php -r \"file_exists('.env') || copy('.env-example', '.env');\""
