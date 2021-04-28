@@ -5,11 +5,6 @@
 [![Type Coverage](https://shepherd.dev/github/Noctis/kickstart-app/coverage.svg)](https://shepherd.dev/github/Noctis/kickstart-app)
 [![License](https://poser.pugx.org/noctis/kickstart-app/license)](//packagist.org/packages/noctis/kickstart-app)
 
-**DISCLAIMER:** Kickstart 2.0 is, for now, still in beta. I expect to release a final, stable version later in April 
-2021. There's a 1.x version in the repository, but I would advise you not to install it.
-
-This note will be removed once Kickstart 2.0 goes stable.
-
 ## What is it?
 
 It's a skeleton/demo application part of the Kickstart project. The Kickstart project itself consists of two parts:
