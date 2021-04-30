@@ -8,6 +8,8 @@ You have two options:
 * use the `Noctis\KickStart\File\File` class, provided by Kickstart, or
 * create a custom file class, extending the aforementioned `File` class.
 
+## Sending an Existing File
+
 Here's an example of a custom file class, for PNG files:
 
 ```php
@@ -51,3 +53,31 @@ final class SendFileAction extends AbstractAction
     }
 }
 ```
+
+## Sending an In-Memory File
+
+Suppose you want to send an in-memory file to the browser, i.e. a file which does not exist physically on the disk (or
+whatever storage device you use). In such case, you should use the `Noctis\KickStart\File\InMemoryFile`.
+
+Here's an example of a custom file class, for an in-memory CSV file:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\File;
+
+use Noctis\KickStart\File\FileInterface;
+use Noctis\KickStart\File\InMemoryFile;
+
+final class CsvFile extends InMemoryFile implements FileInterface
+{
+    public function __construct(string $fileName, string $csv)
+    {
+        parent::__construct($fileName, $csv, 'text/csv; charset=UTF-8');
+    }
+}
+```
+
+An instance of such a class can be passed to the HTTP action's `sendFile()` method.
