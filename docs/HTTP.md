@@ -195,4 +195,4 @@ If you wish to learn more about PHP middleware, you will find more information a
 * [Custom HTTP Request](cookbook/Custom_Http_Request.md)
 * [Removing HTTP Functionality](cookbook/Removing_Http_Functionality.md)
 * [Sending Files in Response](cookbook/Sending_Files.md)
-
+* [Registering a Custom Twig Function](cookbook/Custom_Twig_Function.md)
