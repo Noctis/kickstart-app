@@ -73,24 +73,42 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
-use Noctis\KickStart\Http\Action\AbstractAction;
+use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Response\Attachment\AttachmentFactoryInterface;
 use Noctis\KickStart\Http\Response\AttachmentResponse;
 use Noctis\KickStart\Http\Response\Headers\Disposition;
+use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class SendFileAction extends AbstractAction
+final class SendFileAction implements ActionInterface
 {
-    public function execute(AttachmentFactoryInterface $attachmentFactory): AttachmentResponse
+    private AttachmentFactoryInterface $attachmentFactory;
+    private ResponseFactoryInterface $responseFactory;
+    
+    public function __construct(
+        AttachmentFactoryInterface $attachmentFactory, 
+        ResponseFactoryInterface $responseFactory
+    ) {
+        $this->attachmentFactory = $attachmentFactory;
+        $this->responseFactory = $responseFactory;    
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): AttachmentResponse
     {
         $content = 'foo,bar,baz';
-
-        return $this->sendAttachment(
-            $attachmentFactory->createFromContent(
+        $attachment = $this->attachmentFactory
+            ->createFromContent(
                 $content,
                 'text/csv; charset=UTF-8',
                 new Disposition('output.csv')
-            )
-        );
+            );
+
+        return $this->responseFactory
+            ->attachmentResponse($attachment);
     }
 }
 ```
