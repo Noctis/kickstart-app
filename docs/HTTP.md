@@ -118,9 +118,9 @@ The `redirect()` method causes an `302 Found` response to be issued.
 ### Attachment Response
 
 If you wish for your action to return an attachment, i.e. a file which the user's Web browser should attempt to download,
-you should call the `sendFile()` method.
+you should call the `sendAttachment()` method.
 
-This method accepts one argument - an instance of the `Noctis\KickStart\File\File` class or its subclass.
+This method accepts one argument - an instance of the `Noctis\KickStart\Http\Response\Attachment\Attachment` class.
 
 You can learn more about sending files from your HTTP action [here](cookbook/Sending_Files.md).
 
