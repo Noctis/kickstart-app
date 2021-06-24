@@ -1,36 +1,30 @@
 # Sending Files in Response
 
-If you wish to run an [HTTP action](../HTTP.md) and send a file (attachment) in response, for the Web browser to download,
-you can use the `sendFile()` method available in the action class. But, how you do get an instance of
-`Noctis\KickStart\File\FileInterface` that the method asks for?
+If you wish to run an [HTTP action](../HTTP.md) and send a file (attachment) in response, for the Web browser to 
+download, you can use the `sendAttachment()` method available in every HTTP action class. This method needs to be
+provided of an instance of the `Noctis\KickStart\Http\Response\Attachment\Attachment` class.
 
-You have two options:
-* use the `Noctis\KickStart\File\File` class, provided by Kickstart, or
-* create a custom file class, extending the aforementioned `File` class.
+An instance of the aforementioned class can be created from, either: 
 
-## Sending an Existing File
+* an existing file,
+* a string,
+* a file resource.
 
-Here's an example of a custom file class, for PNG files:
+Kickstart offers an attachment factory class, called 
+`Noctis\KickStart\Http\Response\Attachment\AttachmentFactoryInterface`.
 
-```php
-<?php
+## Sending an Existing File as an Attachment
 
-declare(strict_types=1);
+To create an `Attachment` object, representing an existing (on-disk) file, you need to call the `createFromPath()` 
+method of the `AttachmentFactory`, passing 3 parameters:
 
-namespace App\File;
+* an absolute path to the file you wish to send,
+* the MIME type declaration (will be sent to the browser),
+* an `Noctis\KickStart\Http\Response\Headers\Disposition` object, representing the 
+  [`Content-Disposition`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition) HTTP header, 
+  containing the filename that will be sent to the browser. 
 
-use Noctis\KickStart\File\File;
-
-final class PngFile extends File
-{
-    public function __construct(string $filePath)
-    {
-        parent::__construct($filePath, 'image/png');
-    }
-}
-```
-
-And here's an example of how you could use it in your HTTP action:
+Here's an example of an HTTP action, which sends the local `/tmp/result.png` file, under the `result.png` name:
 
 ```php
 <?php
@@ -39,45 +33,102 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
-use App\File\PngFile;
 use Noctis\KickStart\Http\Action\AbstractAction;
-use Noctis\KickStart\Http\Response\FileResponse;
+use Noctis\KickStart\Http\Response\Attachment\AttachmentFactoryInterface;
+use Noctis\KickStart\Http\Response\AttachmentResponse;
+use Noctis\KickStart\Http\Response\Headers\Disposition;
 
 final class SendFileAction extends AbstractAction
 {
-    public function execute(): FileResponse
+    public function execute(AttachmentFactoryInterface $attachmentFactory): AttachmentResponse
     {
-        return $this->sendFile(
-            new PngFile($_ENV['basepath'] . '/var/files/family-picture.png')
+        return $this->sendAttachment(
+            $attachmentFactory->createFromPath(
+                '/tmp/result.png',
+                'image/png',
+                new Disposition('result.png')
+            )
         );
     }
 }
 ```
 
-## Sending an In-Memory File
+## Sending a String as an Attachment
 
-Suppose you want to send an in-memory file to the browser, i.e. a file which does not exist physically on the disk (or
-whatever storage device you use). In such case, you should use the `Noctis\KickStart\File\InMemoryFile`.
+Suppose you want to send a string to the browser, as an attachment. In such case, you should use the 
+`createFromContent()` method of `AttachmentFactory`. This method takes 3 parameters:
 
-Here's an example of a custom file class, for an in-memory CSV file:
+* the string (content) you wish to send,
+* the MIME type declaration (will be sent to the browser),
+* an `Noctis\KickStart\Http\Response\Headers\Disposition` object, representing the
+  [`Content-Disposition`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition) HTTP header,
+  containing the filename that will be sent to the browser.
+
+Here's an example of an HTTP action, which sends a string, as a `output.csv` file:
 
 ```php
 <?php
 
 declare(strict_types=1);
 
-namespace App\File;
+namespace App\Http\Action;
 
-use Noctis\KickStart\File\FileInterface;
-use Noctis\KickStart\File\InMemoryFile;
+use Noctis\KickStart\Http\Action\AbstractAction;
+use Noctis\KickStart\Http\Response\Attachment\AttachmentFactoryInterface;
+use Noctis\KickStart\Http\Response\AttachmentResponse;
+use Noctis\KickStart\Http\Response\Headers\Disposition;
 
-final class CsvFile extends InMemoryFile implements FileInterface
+final class SendFileAction extends AbstractAction
 {
-    public function __construct(string $fileName, string $csv)
+    public function execute(AttachmentFactoryInterface $attachmentFactory): AttachmentResponse
     {
-        parent::__construct($fileName, $csv, 'text/csv; charset=UTF-8');
+        $content = 'foo,bar,baz';
+
+        return $this->sendAttachment(
+            $attachmentFactory->createFromContent(
+                $content,
+                'text/csv; charset=UTF-8',
+                new Disposition('output.csv')
+            )
+        );
     }
 }
 ```
 
-An instance of such a class can be passed to the HTTP action's `sendFile()` method.
+## Sending a File Resource as an Attachment
+
+Sometimes, instead of file on the disk, or a string, you might have a resource on your hand.
+
+Here's an example of an HTTP action, which sends a temporary file resource (`php://temp`) to the browser, under the 
+`output.csv` name:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Action;
+
+use Noctis\KickStart\Http\Action\AbstractAction;
+use Noctis\KickStart\Http\Response\Attachment\AttachmentFactoryInterface;
+use Noctis\KickStart\Http\Response\AttachmentResponse;
+use Noctis\KickStart\Http\Response\Headers\Disposition;
+
+final class SendFileAction extends AbstractAction
+{
+    public function execute(AttachmentFactoryInterface $attachmentFactory): AttachmentResponse
+    {
+        $resource = fopen('php://temp', 'w+');
+        fwrite($resource, 'foo,bar,baz');
+        rewind($resource);
+
+        return $this->sendAttachment(
+            $attachmentFactory->createFromResource(
+                $resource,
+                'text/csv; charset=UTF-8',
+                new Disposition('output.csv')
+            )
+        );
+    }
+}
+```
