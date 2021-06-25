@@ -64,4 +64,4 @@ Notice that we're using the `DI\decorate()` method here, which is part of the [P
 Kickstart uses as its Dependency Injection Container. If you wish to know more about how this method can be used, you 
 can read about it [here](https://php-di.org/doc/definition-overriding.html#decorators).
 
-The `Noctis\KickStart\Service\TemplateRendererInterface::registerFunction()` is available in Kickstart 2.0.3 and up.
+The `Noctis\KickStart\Service\TemplateRendererInterface::registerFunction()` is available in Kickstart 2.1.0 and up.
