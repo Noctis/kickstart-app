@@ -118,9 +118,9 @@ The `redirect()` method causes an `302 Found` response to be issued.
 ### Attachment Response
 
 If you wish for your action to return an attachment, i.e. a file which the user's Web browser should attempt to download,
-you should call the `sendFile()` method.
+you should call the `sendAttachment()` method.
 
-This method accepts one argument - an instance of the `Noctis\KickStart\File\File` class or its subclass.
+This method accepts one argument - an instance of the `Noctis\KickStart\Http\Response\Attachment\Attachment` class.
 
 You can learn more about sending files from your HTTP action [here](cookbook/Sending_Files.md).
 
@@ -195,4 +195,4 @@ If you wish to learn more about PHP middleware, you will find more information a
 * [Custom HTTP Request](cookbook/Custom_Http_Request.md)
 * [Removing HTTP Functionality](cookbook/Removing_Http_Functionality.md)
 * [Sending Files in Response](cookbook/Sending_Files.md)
-
+* [Registering a Custom Twig Function](cookbook/Custom_Twig_Function.md)
