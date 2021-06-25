@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "239fd1879c4e3f504ed6a47f02318d95",
+    "content-hash": "cc828f5c2633c63f4a1dd30478734439",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -619,16 +619,16 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "2.0.4",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "c0f0b44eb08d34055c2be5a0e981db327d7d1f77"
+                "reference": "0d0ec0178d090b4ac3fde8768bfe734c6c121eb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/c0f0b44eb08d34055c2be5a0e981db327d7d1f77",
-                "reference": "c0f0b44eb08d34055c2be5a0e981db327d7d1f77",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/0d0ec0178d090b4ac3fde8768bfe734c6c121eb8",
+                "reference": "0d0ec0178d090b4ac3fde8768bfe734c6c121eb8",
                 "shasum": ""
             },
             "require": {
@@ -682,9 +682,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/2.0.4"
+                "source": "https://github.com/Noctis/kickstart/tree/2.1.0"
             },
-            "time": "2021-06-24T14:11:26+00:00"
+            "time": "2021-06-25T10:29:47+00:00"
         },
         {
             "name": "opis/closure",
