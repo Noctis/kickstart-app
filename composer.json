@@ -11,10 +11,16 @@
             "role": "Sole Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../kickstart"
+        }
+    ],
     "require": {
         "php": "^8.0",
         "composer-runtime-api": "^2",
-        "noctis/kickstart": "^2.3",
+        "noctis/kickstart": "^3.0",
         "paragonie/easydb": "^2.11",
         "php-di/php-di": "^6.3",
         "psr/container": "^1.0",
