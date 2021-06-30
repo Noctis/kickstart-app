@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc828f5c2633c63f4a1dd30478734439",
+    "content-hash": "8d5811a28f1f77ca8380d220713010d8",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -619,17 +619,11 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "0d0ec0178d090b4ac3fde8768bfe734c6c121eb8"
-            },
+            "version": "dev-future/v3",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/0d0ec0178d090b4ac3fde8768bfe734c6c121eb8",
-                "reference": "0d0ec0178d090b4ac3fde8768bfe734c6c121eb8",
-                "shasum": ""
+                "type": "path",
+                "url": "../kickstart",
+                "reference": "8fc2c7926759745f993e24b3c03e6a8586e270b1"
             },
             "require": {
                 "composer-runtime-api": "^2",
@@ -659,12 +653,34 @@
                 "vimeo/psalm": "^4.4"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-future/v3": "3.0-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Noctis\\KickStart\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\Acceptance\\": "tests/acceptance/",
+                    "Tests\\Helper\\": "tests/helper",
+                    "Tests\\Unit\\": "tests/unit/"
+                }
+            },
+            "scripts": {
+                "phpunit": [
+                    "phpunit --configuration phpunit.xml.dist"
+                ],
+                "psalm": [
+                    "psalm --config=psalm.xml.dist --shepherd"
+                ],
+                "phpcs": [
+                    "phpcs --standard=PSR12"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -680,11 +696,9 @@
                 "application base",
                 "kickstart"
             ],
-            "support": {
-                "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/2.1.0"
-            },
-            "time": "2021-06-25T10:29:47+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "opis/closure",
