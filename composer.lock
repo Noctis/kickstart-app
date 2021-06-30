@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8d5811a28f1f77ca8380d220713010d8",
+    "content-hash": "61d0d57b15d762848e2a80a81338533e",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -619,11 +619,11 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "dev-future/v3",
+            "version": "dev-feature/core-refactor",
             "dist": {
                 "type": "path",
                 "url": "../kickstart",
-                "reference": "8fc2c7926759745f993e24b3c03e6a8586e270b1"
+                "reference": "279c6fe20411b6a5215b33010c5a46a65f99c235"
             },
             "require": {
                 "composer-runtime-api": "^2",
@@ -4124,6 +4124,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "noctis/kickstart": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
