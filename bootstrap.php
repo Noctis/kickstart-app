@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Dotenv\Dotenv;
+use Noctis\KickStart\Configuration\Configuration;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -20,7 +21,7 @@ $dotenv->required([
 $dotenv->required('debug')->isBoolean();
 $dotenv->required('db_port')->isInteger();
 
-if ($_ENV['debug'] === 'true') {
+if (!Configuration::isProduction()) {
     ini_set('display_errors', 'On');
     error_reporting(E_ALL ^ E_NOTICE);
 }

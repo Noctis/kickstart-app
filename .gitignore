@@ -2,4 +2,6 @@
 /vendor/
 /var/cache/templates/**
 !/var/cache/templates/.empty
+/var/cache/container/**
+!/var/cache/container/.empty
 /.idea/

@@ -46,7 +46,8 @@
             "@php -r \"file_exists('.env') || copy('.env-example', '.env');\""
         ],
         "psalm": "psalm --config=psalm.xml.dist --shepherd",
-        "phpcs": "phpcs --standard=PSR12"
+        "phpcs": "phpcs --standard=PSR12",
+        "refresh": "rm -rf ./var/cache/templates/* && rm -rf var/cache/container/*"
     },
     "config": {
         "sort-packages": true

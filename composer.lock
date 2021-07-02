@@ -623,7 +623,7 @@
             "dist": {
                 "type": "path",
                 "url": "../kickstart",
-                "reference": "bdd78ac7522ac8a744718afe53b74d8d81a85ce7"
+                "reference": "8d286b6637b377762c6b75cb098c95673ec10ace"
             },
             "require": {
                 "composer-runtime-api": "^2",
@@ -642,8 +642,7 @@
                 "psr/http-server-middleware": "^1.0",
                 "symfony/console": "^5.2",
                 "symfony/http-foundation": "^5.2",
-                "twig/twig": "^3.2",
-                "vlucas/phpdotenv": "^5.3"
+                "twig/twig": "^3.2"
             },
             "require-dev": {
                 "phpspec/prophecy-phpunit": "^2.0",
