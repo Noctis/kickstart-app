@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1befbd034950167bbd5691048b92aa53",
+    "content-hash": "6346702df88383dd24eb1bc515a4c92c",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -619,17 +619,11 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "dev-future/v3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "4d4ef0d862acde6fc11b8fbd7e8346c138d2ab25"
-            },
+            "version": "dev-feature/action-as-a-middleware",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/4d4ef0d862acde6fc11b8fbd7e8346c138d2ab25",
-                "reference": "4d4ef0d862acde6fc11b8fbd7e8346c138d2ab25",
-                "shasum": ""
+                "type": "path",
+                "url": "../kickstart",
+                "reference": "936c9ed46885f9a38511bbc0ab83022429c437e2"
             },
             "require": {
                 "composer-runtime-api": "^2",
@@ -668,7 +662,24 @@
                     "Noctis\\KickStart\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\Acceptance\\": "tests/acceptance/",
+                    "Tests\\Helper\\": "tests/helper",
+                    "Tests\\Unit\\": "tests/unit/"
+                }
+            },
+            "scripts": {
+                "phpunit": [
+                    "phpunit --configuration phpunit.xml.dist"
+                ],
+                "psalm": [
+                    "psalm --config=psalm.xml.dist --shepherd"
+                ],
+                "phpcs": [
+                    "phpcs --standard=PSR12"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -684,11 +695,9 @@
                 "application base",
                 "kickstart"
             ],
-            "support": {
-                "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/future/v3"
-            },
-            "time": "2021-07-21T13:16:33+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "opis/closure",
@@ -3517,8 +3526,8 @@
                 "scheb/two-factor-bundle": ">=0,<3.26|>=4,<4.11",
                 "sensiolabs/connect": "<4.2.3",
                 "serluck/phpwhois": "<=4.2.6",
-                "shopware/core": "<=6.3.5.2",
-                "shopware/platform": "<=6.3.5.2",
+                "shopware/core": "<=6.4.1",
+                "shopware/platform": "<=6.4.1",
                 "shopware/production": "<=6.3.5.2",
                 "shopware/shopware": "<=5.6.9",
                 "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
@@ -3553,7 +3562,7 @@
                 "sylius/grid": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
                 "sylius/grid-bundle": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
                 "sylius/resource-bundle": "<1.3.14|>=1.4,<1.4.7|>=1.5,<1.5.2|>=1.6,<1.6.4",
-                "sylius/sylius": "<1.6.9|>=1.7,<1.7.9|>=1.8,<1.8.3",
+                "sylius/sylius": "<1.6.9|>=1.7,<1.7.9|>=1.8,<1.8.3|>=1.9,<1.9.5",
                 "symbiote/silverstripe-multivaluefield": ">=3,<3.0.99",
                 "symbiote/silverstripe-queuedjobs": ">=3,<3.0.2|>=3.1,<3.1.4|>=4,<4.0.7|>=4.1,<4.1.2|>=4.2,<4.2.4|>=4.3,<4.3.3|>=4.4,<4.4.3|>=4.5,<4.5.1|>=4.6,<4.6.4",
                 "symbiote/silverstripe-versionedfiles": "<=2.0.3",
@@ -4114,6 +4123,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "noctis/kickstart": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
