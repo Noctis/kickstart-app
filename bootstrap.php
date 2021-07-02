@@ -6,12 +6,6 @@ use Dotenv\Dotenv;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$env = 'dev';
-if ($env === 'dev') {
-    ini_set('display_errors', 'On');
-    error_reporting(E_ALL ^ E_NOTICE);
-}
-
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 $dotenv->required([
@@ -25,5 +19,10 @@ $dotenv->required([
 ]);
 $dotenv->required('debug')->isBoolean();
 $dotenv->required('db_port')->isInteger();
+
+if ($_ENV['debug'] === 'true') {
+    ini_set('display_errors', 'On');
+    error_reporting(E_ALL ^ E_NOTICE);
+}
 
 $_ENV['basepath'] = __DIR__;
