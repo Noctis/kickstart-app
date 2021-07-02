@@ -19,12 +19,13 @@ $containerBuilder
     ->registerServicesProvider(new HttpMiddlewareProvider())
     ->registerServicesProvider(new DummyServicesProvider())
     ->registerServicesProvider(new RepositoryProvider())
+    ->set(
+        'routes',
+        require_once __DIR__ . '/../src/Http/Routing/routes.php'
+    )
 ;
 $container = $containerBuilder->build();
 
 /** @var WebApplication $app */
 $app = $container->get(WebApplication::class);
-$app->setRoutes(
-    require_once __DIR__ . '/../src/Http/Routing/routes.php'
-);
 $app->run();
