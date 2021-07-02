@@ -13,15 +13,28 @@ secondary_db_name=dbname
 secondary_db_port=3306
 ```
 
-Now declare those 5 new parameters are required by the application, by modifying the `bootstrap.php` file. Add the
-following lines to the array within:
-
+Now declare those 5 new parameters as required by the application, by modifying the `bootstrap.php` file:
 ```php
-'secondary_db_host'  => 'required',
-'secondary_db_user'  => 'required',
-'secondary_db_pass'  => 'required',
-'secondary_db_name'  => 'required',
-'secondary_db_port'  => 'required,int',
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+$dotenv->required([
+    // ...
+    'secondary_db_host',
+    'secondary_db_user',
+    'secondary_db_pass',
+    'secondary_db_name',
+    'secondary_db_port'
+]);
+```
+
+Also, declare that the `secondary_db_port` option's value needs to be an integer (also in `bootstrap.php):
+```php
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+// ...
+
+$dotenv->required('secondary_db_port')->isInteger();
 ```
 
 You could add those new options to the `src/Configuration/FancyConfiguration.php` and 

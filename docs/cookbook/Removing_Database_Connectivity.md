@@ -7,14 +7,13 @@ But not all applications need a database connection to work properly. Here's wha
 **WARNING: This guide assumes you have at least basic OOP-in-PHP knowledge. When a file needs to be modified, this guide
 will not explicitly state which lines need to be changed and how.**
 
-Edit `bootstrap.php` file and remove the following lines:
+Edit `bootstrap.php` file and remove the database credentials options lines, i.e. `db_host`, `db_user`, `db_pass`,
+`db_name` and `db_port`, from the list of required ones.
+
+Remember to also remove this line from `bootstrap.php`:
 
 ```php
-'db_host'     => 'required',
-'db_user'     => 'required',
-'db_pass'     => 'required',
-'db_name'     => 'required',
-'db_port'     => 'required,int',
+$dotenv->required('db_port')->isInteger();
 ```
 
 Now edit the `.env` configuration file (and `.env-example` to be thorough) are remove the above mentioned options. After

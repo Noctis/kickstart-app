@@ -11,10 +11,16 @@ Delete the following directories:
 
 Remove the `src/Provider/HttpMiddlewareProvider.php` file. 
 
-Edit the `bootstrap.php` file and remove the following line from it:
+Edit the `bootstrap.php` file and remove `basehref` from the list of required configuration options:
 
 ```php
-'basehref' => 'required',
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+$dotenv->required([
+    'debug',
+    'basehref',
+    // ...
+]);
 ```
 
 Edit the `.env` file and remove the following lines:

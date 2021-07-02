@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Noctis\KickStart\Configuration\ConfigurationLoader;
+use Dotenv\Dotenv;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -12,14 +12,18 @@ if ($env === 'dev') {
     error_reporting(E_ALL ^ E_NOTICE);
 }
 
-(new ConfigurationLoader())
-    ->load(__DIR__, [
-        'debug'    => 'required,bool',
-        'basehref' => 'required',
-        'db_host'  => 'required',
-        'db_user'  => 'required',
-        'db_pass'  => 'required',
-        'db_name'  => 'required',
-        'db_port'  => 'required,int',
-    ]);
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+$dotenv->required([
+    'debug',
+    'basehref',
+    'db_host',
+    'db_user',
+    'db_pass',
+    'db_name',
+    'db_port'
+]);
+$dotenv->required('debug')->isBoolean();
+$dotenv->required('db_port')->isInteger();
+
 $_ENV['basepath'] = __DIR__;
