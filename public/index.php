@@ -10,20 +10,20 @@ use App\Provider\RepositoryProvider;
 use Noctis\KickStart\Configuration\Configuration;
 use Noctis\KickStart\Http\ContainerBuilder;
 use Noctis\KickStart\Http\WebApplication;
+use Noctis\KickStart\Provider\RoutingProvider;
 
 require_once __DIR__ . '/../bootstrap.php';
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder
+    ->registerServicesProvider(new RoutingProvider(
+        require_once __DIR__ . '/../src/Http/Routing/routes.php'
+    ))
     ->registerServicesProvider(new ConfigurationProvider())
     ->registerServicesProvider(new DatabaseConnectionProvider())
     ->registerServicesProvider(new HttpMiddlewareProvider())
     ->registerServicesProvider(new DummyServicesProvider())
     ->registerServicesProvider(new RepositoryProvider())
-    ->set(
-        'routes',
-        require_once __DIR__ . '/../src/Http/Routing/routes.php'
-    )
 ;
 if (Configuration::isProduction()) {
     $containerBuilder->enableCompilation($_ENV['basepath'] . '/var/cache/container');
