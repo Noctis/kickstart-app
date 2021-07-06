@@ -26,7 +26,9 @@ $containerBuilder
     ->registerServicesProvider(new RepositoryProvider())
 ;
 if (Configuration::isProduction()) {
-    $containerBuilder->enableCompilation($_ENV['basepath'] . '/var/cache/container');
+    /** @var string */
+    $basePath = Configuration::get('basepath');
+    $containerBuilder->enableCompilation($basePath . '/var/cache/container');
 }
 
 $container = $containerBuilder->build();
