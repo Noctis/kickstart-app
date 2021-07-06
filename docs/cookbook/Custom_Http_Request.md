@@ -80,7 +80,7 @@ final class DummyRequest extends Request
 }
 ```
 
-Now let's make an object of `DummyRequest` class the dependency of the `DummyAction` HTTP action:
+Lastly, let's make an object of `DummyRequest` class the dependency of the `DummyAction` HTTP action:
 
 ```php
 <?php
@@ -114,6 +114,10 @@ parameter? How do you get that `13` from the request, what method should you cal
 The name part is up to you. Let's name it `productID`. Add the following method to the `DummyRequest` class:
 
 ```php
+<?php
+
+declare(strict_types=1);
+
 use Noctis\KickStart\Http\Request\Request;
 
 final class DummyRequest extends Request
@@ -133,7 +137,7 @@ called `productID`.
 Open `src/Http/Routing/routes.php` and add/modify the appropriate route definition:
 
 ```php
-['GET', '/product/{productID:\d+}/details', DummyAction::class],
+['GET', '/product/{productID:\d+}/details', \App\Http\Action\DummyAction::class],
 ```
 
 Now this route will expect a numeric (`\d+`) value within the URL, between the `product/` and `/details` parts.

@@ -2,8 +2,10 @@
 
 Files related to an HTTP application can be found in the `public`, `src/Http` and `templates` folders.
 
-The `public` folder contains the `index.php` file, which acts as an "entry" point for every incoming HTTP request 
-(TODO: link to an article about the "Front Controller" design pattern) and in 99% of cases should not be modified.
+The `public` folder contains the `index.php` file, which acts as an 
+["entry" point](https://martinfowler.com/eaaCatalog/frontController.html) for every incoming HTTP request. Should you
+wish to change the list of used [service providers](Service_Providers.md) for your Web-based application, this is the 
+file you should be modifying. 
 
 The `src/Http` folder contains the "meat" of an HTTP application. Here you will find a couple of things:
 
@@ -12,19 +14,24 @@ The `src/Http` folder contains the "meat" of an HTTP application. Here you will 
 * HTTP middleware, located in the `src/Http/Middleware/Guard` folder,
 * HTTP routes definitions, in the `src/Http/Routing/routes.php` file.
 
-The `templates` folder contains the template files, a.k.a. views.
+The `templates` folder, in the root directory of your project, contains the template files, a.k.a. views.
 
 Here's how it all ties together.
 
 ## The Gist
 
 Once a browser sends an HTTP request, the WWW server will forward it to the `public/index.php` file. This file will call
-Kickstart's router and pass it the requested URL, along with any query params. The router will check if the URL matches 
-any of the routes defined in the `src/Http/Routing/routes.php` file. If it finds a matching route definition there, 
-the `execute()` method of the referenced HTTP action class will be called. 
+Kickstart's request handler and pass it an object representing the request. The request handler will use Kickstart's
+router to check which of the routes defined in the `src/Http/Routing/routes.php` file matches the requested path. If a 
+matching route definition is found, the `execute()` method of the HTTP action class, referenced in the matching route 
+definition class, will be called. 
+
+The action will generate an object representing the HTTP response. That object will be returned to the request handler,
+which will emit it to the Web browser, that made the original request.
 
 If there were any middleware declared in the route definition, those will be called, in order, prior to calling the 
-action. In the end, the action generates a response, which is then sent back to the browser.
+action. A middleware may generate and return its own response object. In such case, the action class' `execute()`
+method will not be called.
 
 ## Routes Definitions
 
@@ -56,12 +63,13 @@ And here's an example of a route definition with one middleware:
 ## HTTP Actions
 
 Every defined route should have an HTTP action class defined. These are like the ever popular Controllers, except where 
-a Controller has separate methods for different routes, an HTTP action only has one method, called `execute()`.
+a Controller has multiple methods, each for different routes, an HTTP action only has one method - `execute()`.
 
 There are a couple of requirements every HTTP action class must meet:
 
 * it must extend the `Noctis\KickStart\Http\Action\AbstractAction` abstract class,
-* it must have a public method called `execute`, which returns an instance of `ResponseInterface` (or its subclass),
+* it must have a public method called `execute`, which returns an instance of a class implementing the
+  `\Psr\Http\Message\ResponseInterface` interface,
 * if the action has dependencies, they should be injected through the `execute()` method's signature, e.g.:
 
 ```php
@@ -88,8 +96,8 @@ You can find an example of a custom request class in the `src/Http/Request/Dummy
 ## Responses
 
 HTTP action's `execute()` method must return an instance of a class implementing the
-`Psr\Http\Message\ResponseInterface\ResponseInterface` interface. The `Noctis\KickStart\Http\Action\AbstractAction` 
-abstract class which every HTTP action class extends provides you with a couple of methods which produce such a 
+`Psr\Http\Message\ResponseInterface` interface. The `Noctis\KickStart\Http\Action\AbstractAction` 
+abstract class, which every HTTP action class extends, provides you with a couple of methods which produce such a 
 `ResponseInterface` object.
 
 ### HTML Response
@@ -97,7 +105,8 @@ abstract class which every HTTP action class extends provides you with a couple 
 If you wish to return HTML as response, you should call the action's `render()` method. The method takes up to two 
 arguments:
 
-* the first argument is the name of the Twig template file, as it is in the `templates` directory, e.g. `dummy.html.twig`
+* the first argument is the name of the Twig template file, as it is in the `templates` directory, e.g. 
+  `dummy.html.twig`,
 * the second argument is the optional list of parameters which should be passed to said Twig template.
 
 You can learn more about Twig templates from 
@@ -113,7 +122,7 @@ to two arguments:
   with `http://` or `https://`,
 * the second argument is an optional list of parameters which will be added to the given URL as its query string.
 
-The `redirect()` method causes an `302 Found` response to be issued.
+The `redirect()` method causes an `302 Found` response to be sent to the Web browser.
 
 ### Attachment Response
 
@@ -122,7 +131,7 @@ you should call the `sendAttachment()` method.
 
 This method accepts one argument - an instance of the `Noctis\KickStart\Http\Response\Attachment\Attachment` class.
 
-You can learn more about sending files from your HTTP action [here](cookbook/Sending_Files.md).
+You can learn more about sending attachments from your HTTP action [here](cookbook/Sending_Attachments.md).
 
 ## Flash Messages
 
@@ -182,9 +191,10 @@ Currently, only a single message, represented as a string value, can be kept as 
 If you wish for a piece of code to be executed before HTTP action's `execute()` method is called, for example to check 
 if a user is actually logged in, you may do so by creating a middleware class and attaching it to the route definition.
 
-The middlewares defined in the route definition are executed before the HTTP action is called, in the order they have
-been defined in the route definition. A middleware **may** generate response object and return it. In such case, the HTTP
-action will NOT be called, and the response generated by the middleware object will be returned to the browser.
+The middlewares defined in the route definition are executed before the HTTP action's `execute()` method is called, in 
+the order they have been defined in the route definition. A middleware **may** generate response object and return it. 
+In such case, the action's `execute()` method will NOT be called, and the response generated by the middleware object 
+will be returned to the Web browser.
 
 If you wish to learn more about PHP middleware, you will find more information about it 
 [here](https://phil.tech/2016/why-care-about-php-middleware/).
@@ -194,5 +204,5 @@ If you wish to learn more about PHP middleware, you will find more information a
 * [Adding a new HTTP Action](cookbook/New_Http_Action.md)
 * [Custom HTTP Request](cookbook/Custom_Http_Request.md)
 * [Removing HTTP Functionality](cookbook/Removing_Http_Functionality.md)
-* [Sending Files in Response](cookbook/Sending_Files.md)
+* [Sending Attachments in Response](cookbook/Sending_Attachments.md)
 * [Registering a Custom Twig Function](cookbook/Custom_Twig_Function.md)

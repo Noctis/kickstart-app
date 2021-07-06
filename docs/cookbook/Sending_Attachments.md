@@ -1,8 +1,8 @@
 # Sending Files in Response
 
-If you wish to run an [HTTP action](../HTTP.md) and send a file (attachment) in response, for the Web browser to 
+If you wish to execute an [HTTP action](../HTTP.md) and send an attachment (a file) in response, for the Web browser to 
 download, you can use the `sendAttachment()` method available in every HTTP action class. This method needs to be
-provided of an instance of the `Noctis\KickStart\Http\Response\Attachment\Attachment` class.
+provided an instance of the `Noctis\KickStart\Http\Response\Attachment\Attachment` class.
 
 An instance of the aforementioned class can be created from, either: 
 

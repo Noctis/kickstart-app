@@ -8,22 +8,23 @@ To add a new command, you must:
   ```php
   protected static $defaultName = 'dummy:command';
   ```
-* register the new command in the `bin/console` file, by adding a reference its class name to the array passed to the
-  `Application`'s constructor:
+* register the new command in the `bin/console` file, by including an instance of it, in the array passed to the
+  `ConsoleApplication`'s `setCommands()` method:
   ```php
-  [...]
-
   use App\Console\Command\DummyCommand;
-
-  [...]
-
-  $app = new Application([
-      //...
-      DummyCommand::class
+  use Noctis\KickStart\Console\ConsoleApplication;
+  
+  // ...
+  
+  /** @var ConsoleApplication $app */
+  $app = $container->get(ConsoleApplication::class);
+  $app->setCommands([
+      $container->get(DummyCommand::class)
   ]);
+  $app->run();
   ```
 
-To run the new command, execute the following command:
+To run the new command, execute the following command in your CLI, in the root folder of your application:
 ```shell
 php bin/console dummy:command
 ```
