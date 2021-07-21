@@ -9,8 +9,7 @@ You can register your custom Twig function through a DIC decorator. Here's how y
 ## Registering Through a DIC Decorator
 
 To do this, you need to either edit one of your existing [service providers](../Service_Providers.md), or create a new
-one. In the latter case, remember to register it in the `src\Http\Application.php` 
-(and/or `src/Console/Application.php`) file. 
+one. In the latter case, remember to register it in the `bin/console` and/or `public/index.php` files.
 
 What you want to do, is to create a DIC decorator for the `Noctis\KickStart\Service\TemplateRendererInterface` 
 interface.

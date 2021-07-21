@@ -8,14 +8,12 @@ Delete the following directories:
 * `public`
 * `src/Http`
 * `templates`
+* `var/cache/templates`
 
 Remove the `src/Provider/HttpMiddlewareProvider.php` file. 
 
-Edit the `bootstrap.php` file and remove the following line from it:
-
-```php
-'basehref' => 'required',
-```
+Edit the `bootstrap.php` file and remove `basehref` from the list of required configuration options 
+(`$dotenv->required()`).
 
 Edit the `.env` file and remove the following lines:
 
