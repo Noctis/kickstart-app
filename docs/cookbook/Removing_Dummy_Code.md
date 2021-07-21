@@ -1,11 +1,11 @@
 # Removing Dummy (Example) Code
 
-The `Kickstart` app comes with some dummy (example) code, to help you get started working on creating their own
+The `Kickstart` app comes with some dummy (example) code, to help you get started working on creating your own
 application, without resorting to constantly going back and forth between the IDE and the documentation.
 
-The dummy code can be safely removed, without breaking the application. Here's how to do it.
-
 Some files can be removed outright, while some have to be modified, by removing the references to the deleted ones.
+
+The dummy code can be safely removed, without breaking the application. Here's how to do it.
 
 **WARNING: This guide assumes you have at least basic OOP-in-PHP knowledge. When a file needs to be modified, this guide 
 will not explicitly state which lines need to be changed and how.**
@@ -27,11 +27,11 @@ Done. Now the services-related things. Delete the following files:
 There are still some references to the `DummyServicesProvider` class. Modify the following files, by removing said
 references:
 
-* `src/Console/Application.php`
-* `src/Http/Application.php`
+* `bin/console`
+* `public/index.php`
 
-Once that's done, we can remove the `DummyCommand` from the application. To do that, remove the 
-`src/Console/Command/DummyCommand.php` file and removed references to the removed class from the `bin/console` file.
+Once that's done, you can remove the `DummyCommand` from the application. To do that, remove the 
+`src/Console/Command/DummyCommand.php` file and remove references to the that class from the `bin/console` file.
 
 Now for HTTP-related things - there's going be a few. Start by deleting the following files:
 
@@ -39,7 +39,7 @@ Now for HTTP-related things - there's going be a few. Start by deleting the foll
 * `src/Http/Middleware/Guard/DummyGuard.php`
 * `src/Http/Request/DummyRequest.php`
 * `templates/dummy.html.twig`
-* `templates/layout.html.twig`
+* `templates/layout.html.twig` (optionally)
 
 Next remove the route referring to `DummyAction` and `DummyGuard` classes in the `src/Http/Routing/routes.php` file.
 
