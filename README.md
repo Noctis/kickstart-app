@@ -79,21 +79,31 @@ Here's a rundown of what each of these options mean:
 
 ### `debug`
 
-Setting this option to `false` changes two things:
+Setting this option to `false` changes three things:
 
 * PHP error messages are hidden,
-* templates (views) are cached; any changes made to them will NOT be visible upon refreshing the page in the browser.
+* templates (views) are cached; any changes made to them will NOT be visible upon refreshing the page in the browser,
+* the DIC (dependency injection container) will be 
+  [compiled & saved into a file](https://php-di.org/doc/performances.html#deployment-in-production) 
+  (in `var/cache/container` by default), which will increase the application's performance, but at the cost of the DIC 
+  ignoring any changes in dependency injection's configuration from here on out.
 
 Setting this option to `true` causes:
 
 * PHP error messages to be displayed,
 * templates (views) are not cached; any changes made to them will immediately be visible upon refreshing the page in the
-  browser.
+  browser,
+* the DIC will notice any changes made to the dependency injection configuration, at the cost of slightly worse
+  application's performance.
 
 **This option should be set to `false` in production environments, and set to `true` during development.**
 
 **If you're making changes to your templates/views and they're not showing up in your browser - either clear the cache,
 by deleting the contents of the `var/cache/templates` directory, or set the `debug` option in `.env` to `true`.**
+
+**If you're making changes to [service providers](docs/Service_Providers.md) or classes' constructors (dependency 
+injection) and the DIC (dependency injection container) fails to see them, clear the contents of the 
+`var/cache/container` directory or set the `debug` option in `.env` file to `true`**  
 
 ### `basehref`
 
@@ -179,4 +189,4 @@ Additional questions and answers relating to Kickstart can be found in the [FAQ]
 * [Removing the Database Connectivity Functionality](docs/cookbook/Removing_Database_Connectivity.md)
 * [Removing Dummy (Example) Code](docs/cookbook/Removing_Dummy_Code.md)
 * [Removing the HTTP Functionality](docs/cookbook/Removing_Http_Functionality.md)
-* [Sending Files in Response](docs/cookbook/Sending_Files.md)
+* [Sending Attachments in Response](docs/cookbook/Sending_Attachments.md)

@@ -13,42 +13,80 @@ secondary_db_name=dbname
 secondary_db_port=3306
 ```
 
-Now declare those 5 new parameters are required by the application, by modifying the `bootstrap.php` file. Add the
-following lines to the array within:
-
+Now declare those 5 new parameters as required by the application, by modifying the `bootstrap.php` file:
 ```php
-'secondary_db_host'  => 'required',
-'secondary_db_user'  => 'required',
-'secondary_db_pass'  => 'required',
-'secondary_db_name'  => 'required',
-'secondary_db_port'  => 'required,int',
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+$dotenv->required([
+    // ...
+    'secondary_db_host',
+    'secondary_db_user',
+    'secondary_db_pass',
+    'secondary_db_name',
+    'secondary_db_port'
+]);
+```
+
+Also, declare that the `secondary_db_port` option's value needs to be an integer (also in `bootstrap.php`):
+```php
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+// ...
+
+$dotenv->required('secondary_db_port')->isInteger();
 ```
 
 You could add those new options to the `src/Configuration/FancyConfiguration.php` and 
-`src/Configuration/FancyConfiguration.php` files, but I'd say it's not worth the hassle.
+`src/Configuration/FancyConfiguration.php` files, but personally I don't think it's worth the hassle.
 
 Now, edit the `src/Provider/DatabaseConnectionProvider.php` file and add a factory for the new database connection to
 the Dependency Injection Container:
 
 ```php
-'secondary_db_connection' => function (ContainerInterface $container): EasyDB {
-    try {
-        $configuration = $container->get(FancyConfigurationInterface::class);
+<?php
 
-        return Factory::fromArray([
-            sprintf(
-                'mysql:dbname=%s;host=%s;port=%s',
-                $configuration->get('secondary_db_name'),
-                $configuration->get('secondary_db_host'),
-                $configuration->get('secondary_db_port')
-            ),
-            $configuration->get('secondary_db_user'),
-            $configuration->get('secondary_db_pass')
-        ]);
-    } catch (ConstructorFailed $ex) {
-        die('Could not connect to secondary DB: ' . $ex->getMessage());
+declare(strict_types=1);
+
+namespace App\Provider;
+
+use App\Configuration\FancyConfigurationInterface;
+use Noctis\KickStart\Provider\ServicesProviderInterface;
+use ParagonIE\EasyDB\EasyDB;
+use ParagonIE\EasyDB\Exception\ConstructorFailed;
+use ParagonIE\EasyDB\Factory;
+use Psr\Container\ContainerInterface;
+
+final class DatabaseConnectionProvider implements ServicesProviderInterface
+{
+    /**
+     * @inheritDoc
+     */
+    public function getServicesDefinitions(): array
+    {
+        return [
+             // ...
+             'secondary_db_connection' => function (ContainerInterface $container): EasyDB {
+                try {
+                    $configuration = $container->get(FancyConfigurationInterface::class);
+            
+                    return Factory::fromArray([
+                        sprintf(
+                            'mysql:dbname=%s;host=%s;port=%s',
+                            $configuration->get('secondary_db_name'),
+                            $configuration->get('secondary_db_host'),
+                            $configuration->get('secondary_db_port')
+                        ),
+                        $configuration->get('secondary_db_user'),
+                        $configuration->get('secondary_db_pass')
+                    ]);
+                } catch (ConstructorFailed $ex) {
+                    die('Could not connect to secondary DB: ' . $ex->getMessage());
+                }
+            },
+        ];
     }
-},
+}
 ```
 
 Let's assume that the repository you're trying to pass the secondary database connection to is called
@@ -76,7 +114,6 @@ should receive an instance of the secondary database connection from DIC, instea
 declare(strict_types=1);
 
 namespace App\Provider;
-
 
 use App\Repository\SecondaryRepository;
 use App\Repository\SecondaryRepositoryInterface;

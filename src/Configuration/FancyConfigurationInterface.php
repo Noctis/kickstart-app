@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Configuration;
 
-use Noctis\KickStart\Configuration\ConfigurationInterface;
-
-interface FancyConfigurationInterface extends ConfigurationInterface
+interface FancyConfigurationInterface
 {
     public function getDBHost(): string;
 
