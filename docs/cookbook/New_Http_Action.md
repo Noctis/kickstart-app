@@ -50,9 +50,10 @@ declare(strict_types=1);
 
 use App\Http\Action\DummyAction;
 use App\Http\Middleware\Guard\DummyGuard;
+use Noctis\KickStart\Http\Routing\Route;
 
 return [
-    ['GET', '/', DummyAction::class, [DummyGuard::class]],
+    new Route('GET', '/', DummyAction::class, [DummyGuard::class]),
 ];
 ```
 
@@ -67,10 +68,11 @@ following line to the array within the `routes.php` file:
 declare(strict_types=1);
 
 use App\Http\Action\FormAction;
+use Noctis\KickStart\Http\Routing\Route;
 
 return [
     // ...
-    ['GET', '/form', FormAction::class],
+    new Route('GET', '/form', FormAction::class),
 ];
 ```
 

@@ -12,7 +12,7 @@ The `src/Http` folder contains the "meat" of an HTTP application. Here you will 
 * HTTP actions, located in the `src/Http/Action` folder,
 * custom HTTP requests, located in the `src/Http/Request` folder,
 * HTTP middleware, located in the `src/Http/Middleware/Guard` folder,
-* HTTP routes definitions, in the `src/Http/Routing/routes.php` file.
+* HTTP routes list, in the `src/Http/Routing/routes.php` file.
 
 The `templates` folder, in the root directory of your project, contains the template files, a.k.a. views.
 
@@ -22,9 +22,9 @@ Here's how it all ties together.
 
 Once a browser sends an HTTP request, the WWW server will forward it to the `public/index.php` file. This file will call
 Kickstart's request handler and pass it an object representing the request. The request handler will use Kickstart's
-router to check which of the routes defined in the `src/Http/Routing/routes.php` file matches the requested path. If a 
-matching route definition is found, the `execute()` method of the HTTP action class, referenced in the matching route 
-definition class, will be called. 
+router to check which of the routes in the `src/Http/Routing/routes.php` file matches the requested path. If a 
+matching route is found, the `execute()` method of the HTTP action class, referenced in the matching route will be 
+called. 
 
 The action will generate an object representing the HTTP response. That object will be returned to the request handler,
 which will emit it to the Web browser, that made the original request.
@@ -33,31 +33,45 @@ If there were any middleware declared in the route definition, those will be cal
 action. A middleware may generate and return its own response object. In such case, the action class' `execute()`
 method will not be called.
 
-## Routes Definitions
+## Routes
 
-Routes definitions are kept in the `src/Http/Routing/routes.php` file. It's a simple PHP file, which returns an array of 
-**route definitions**.
+A list of routes can be found in the `src/Http/Routing/routes.php` file. It's a simple PHP file, which returns an array 
+of `Noctis\KickStart\Http\Routing\Route` objects.
 
-Each element of the array, i.e. a route definition is an array, consisting of 3 or 4 elements:
+The `Route`'s constructor can take either 3 or 4 arguments:
 
 * the HTTP method name - currently only `GET` and `POST` values are supported,
 * the URI, e.g. `/`, `/foo` or `/product/show`,
 * the class name of the HTTP action,
 
-These 3 elements are required in a route definition. The 4th element is optional - it's an array of HTTP middleware, in
-the form of a list of middleware class names. If you do not wish for the route definition to utilize any middleware,
-you should simply omit that last element in the route definition or declare it as an empty array (`[]`).
+The 4th element is optional - it's an array of HTTP middleware, in the form of a list of middleware class names, all
+extending the `Noctis\KickStart\Http\Middleware\AbstractMiddleware` abstract class. If you do not wish for the route to 
+utilize any middleware, you should simply omit that last constructor argument or declare it as an empty array (`[]`).
 
 Here's an example of a route definition with no middleware:
 
 ```php
-['GET', '/', DummyAction::class],
+use App\Http\Action\DummyAction;
+use App\Http\Middleware\Guard\DummyGuard;
+use Noctis\KickStart\Http\Routing\Route;
+
+// ...
+return [
+    new Route('GET', '/', DummyAction::class),
+];
 ```
 
 And here's an example of a route definition with one middleware:
 
 ```php
-['GET', '/', DummyAction::class, [DummyGuard::class]],
+use App\Http\Action\DummyAction;
+use App\Http\Middleware\Guard\DummyGuard;
+use Noctis\KickStart\Http\Routing\Route;
+
+// ...
+return [
+    new Route('GET', '/', DummyAction::class, [DummyGuard::class]),
+];
 ```
 
 ## HTTP Actions

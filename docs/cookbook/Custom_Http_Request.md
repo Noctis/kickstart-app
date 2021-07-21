@@ -137,7 +137,15 @@ called `productID`.
 Open `src/Http/Routing/routes.php` and add/modify the appropriate route definition:
 
 ```php
-['GET', '/product/{productID:\d+}/details', \App\Http\Action\DummyAction::class],
+use App\Http\Action\DummyAction;
+use App\Http\Middleware\Guard\DummyGuard;
+use Noctis\KickStart\Http\Routing\Route;
+
+// ...
+return [
+    // ...
+    new Route('GET', '/product/{productID:\d+}/details', DummyAction::class),
+];
 ```
 
 Now this route will expect a numeric (`\d+`) value within the URL, between the `product/` and `/details` parts.

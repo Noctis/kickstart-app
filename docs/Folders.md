@@ -103,7 +103,7 @@ parameter-specific ones, e.g. `getDate()`.
 
 ### src/Http/Routing
 
-This folder contains the `routes.php` file with a list of route definitions for HTTP actions.
+This folder contains the `routes.php` file with a list of routes for HTTP actions.
 
 ### src/Provider
 

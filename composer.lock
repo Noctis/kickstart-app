@@ -623,7 +623,7 @@
             "dist": {
                 "type": "path",
                 "url": "../kickstart",
-                "reference": "1f0b656f6bb7d9b50122c9b3b7d1cdbd48507c82"
+                "reference": "e7cee43ee78804847e2b8020acc627fbc87a64b4"
             },
             "require": {
                 "composer-runtime-api": "^2",
