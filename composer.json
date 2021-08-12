@@ -45,7 +45,7 @@
         "sort-packages": true
     },
     "extra": {
-        "app-version": "2.1.0"
+        "app-version": "2.1.1"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
