@@ -225,50 +225,95 @@ Sometimes you may wish to redirect the user to a different action and display a 
 want that message to only be displayed once, just after the redirection. This is where something called "Flash Message"
 comes into play.
 
-A flash message is saved in the user's session and will remain there until it is retrieved, at which point it is removed 
-from the session (forgotten).
+A flash message is saved in the current session and will remain there until it is retrieved, at which point it will be
+removed from the session (forgotten).
 
-To store a flash message in the current session, call the `setFlashMessage()` method in your action:
+To store a flash message in the current session, use the `setFlashMessage()` method of the 
+`Noctis\KickStart\Http\Helpers\FlashMessageHelper` class, in your action:
 
 ```php
-use Psr\Http\Message\ResponseInterface;
+<?php
 
-public function execute(): ResponseInterface
+declare(strict_types=1);
+
+namespace App\Http\Action;
+
+use Noctis\KickStart\Http\Action\ActionInterface;
+use Noctis\KickStart\Http\Helpers\FlashMessageHelperInterface;
+use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+final class FooAction implements ActionInterface
 {
-    //...
-    $this->setFlashMessage('Information has been saved.');
-    //...
+    private FlashMessageHelperInterface $flashMessageHelper;
+    private ResponseFactoryInterface $responseFactory;
+
+    public function __construct(
+        FlashMessageHelperInterface $flashMessageHelper,
+        ResponseFactoryInterface $responseFactory
+    ) {
+        $this->flashMessageHelper = $flashMessageHelper;
+        $this->responseFactory = $responseFactory;
+    }
+
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $this->flashMessageHelper
+            ->setFlashMessage('Information has been saved.');
+
+        return $this->responseFactory
+            ->redirectionResponse('bar');
+    }
 }
 ```
 
-To retrieve the flash message (erasing it from memory), call the `getFlashMessage()` method in your action:
+To retrieve the flash message (erasing it from memory), call the `getFlashMessage()` method of the
+`Noctis\KickStart\Http\Helpers\FlashMessageHelper` class, in your action:
 
 ```php
-use Psr\Http\Message\ResponseInterface;
+<?php
 
-public function execute(): ResponseInterface
+declare(strict_types=1);
+
+namespace App\Http\Action;
+
+use Noctis\KickStart\Http\Action\ActionInterface;
+use Noctis\KickStart\Http\Helpers\FlashMessageHelperInterface;
+use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+final class BarAction implements ActionInterface
 {
-    //...
-    $message = $this->getFlashMessage();
-    //...
+    private FlashMessageHelperInterface $flashMessageHelper;
+    private ResponseFactoryInterface $responseFactory;
+
+    public function __construct(
+        FlashMessageHelperInterface $flashMessageHelper,
+        ResponseFactoryInterface $responseFactory
+    ) {
+        $this->flashMessageHelper = $flashMessageHelper;
+        $this->responseFactory = $responseFactory;
+    }
+
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $message = $this->flashMessageHelper
+            ->getFlashMessage();
+
+        return $this->responseFactory
+            ->htmlResponse('bar.html.twig', ['message' => $message]);
+    }
 }
+
 ```
 
 If you wish to retrieve the current flash message, but you want it to remain in the session for one more fetch,
-call `getFlashMessage()` with the value `true`:
-
-```php
-use Psr\Http\Message\ResponseInterface;
-
-public function execute(): ResponseInterface
-{
-    //...
-    $message = $this->getFlashMessage(true);
-    //...
-}
-```
-
-Doing this will cause the flash message to be saved for one more future retrieval.
+call `getFlashMessage()` with the value `true`. Doing this will cause the flash message to be saved for one more 
+future retrieval.
 
 Currently, only a single message, represented as a string value, can be kept as a flash message.
 
