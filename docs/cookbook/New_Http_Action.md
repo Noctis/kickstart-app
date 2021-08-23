@@ -194,5 +194,5 @@ final class FormAction implements ActionInterface
 }
 ```
 
-The route is defined (`/form`), pointing to `FormAction::execute()` method, which renders the `templates/form.html.twig`
+The route is defined (`/form`), pointing to `FormAction::process()` method, which renders the `templates/form.html.twig`
 file and returns the generated HTML.
