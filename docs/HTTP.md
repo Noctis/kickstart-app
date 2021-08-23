@@ -45,8 +45,14 @@ The `Route`'s constructor can take either 3 or 4 arguments:
 * the class name of the HTTP action,
 
 The 4th element is optional - it's an array of HTTP middleware, in the form of a list of middleware class names, all
-extending the `Noctis\KickStart\Http\Middleware\AbstractMiddleware` abstract class. If you do not wish for the route to 
-utilize any middleware, you should simply omit that last constructor argument or declare it as an empty array (`[]`).
+implementing the `Psr\Http\Server\MiddlewareInterface` (see: [PSR-15](https://www.php-fig.org/psr/psr-15/))
+interface.
+
+Kickstart offers the `Noctis\KickStart\Http\Middleware\AbstractMiddleware` abstract class which implements the 
+aforementioned interface, and offers a basic pass-through implementation of the `process()` method.
+
+If you do not wish for the route to utilize any middleware, you should simply omit that last constructor argument or 
+declare it as an empty array (`[]`).
 
 Here's an example of a route definition with no middleware:
 
