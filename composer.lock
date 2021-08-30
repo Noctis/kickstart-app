@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d608a457ecced007966721e898d754f4",
+    "content-hash": "3337bb6c329f90862009f8d1211c13d9",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -621,39 +621,39 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "193b5253898902e462aeb192ae976991855c076e"
+                "reference": "10a3fb760ee2100e44969b2dd8d3922fb4f79842"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/193b5253898902e462aeb192ae976991855c076e",
-                "reference": "193b5253898902e462aeb192ae976991855c076e",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/10a3fb760ee2100e44969b2dd8d3922fb4f79842",
+                "reference": "10a3fb760ee2100e44969b2dd8d3922fb4f79842",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2",
                 "ext-filter": "*",
                 "fig/http-message-util": "^1.1",
-                "laminas/laminas-diactoros": "^2.5",
+                "laminas/laminas-diactoros": "^2.6",
                 "laminas/laminas-httphandlerrunner": "^1.4",
-                "laminas/laminas-session": "^2.10",
+                "laminas/laminas-session": "^2.11",
                 "nikic/fast-route": "^1.3",
                 "php": "^8.0",
                 "php-di/php-di": "^6.3",
-                "psr/container": "^1.0",
+                "psr/container": "^1.1",
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.0",
                 "psr/http-server-handler": "^1.0",
                 "psr/http-server-middleware": "^1.0",
-                "symfony/console": "^5.2",
-                "symfony/http-foundation": "^5.2",
-                "twig/twig": "^3.2"
+                "symfony/console": "^5.3",
+                "symfony/http-foundation": "^5.3",
+                "twig/twig": "^3.3"
             },
             "require-dev": {
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "^3.5",
-                "symfony/var-dumper": "^5.2",
-                "vimeo/psalm": "^4.4"
+                "squizlabs/php_codesniffer": "^3.6",
+                "symfony/var-dumper": "^5.3",
+                "vimeo/psalm": "^4.9"
             },
             "type": "library",
             "extra": {
@@ -686,7 +686,7 @@
                 "issues": "https://github.com/Noctis/kickstart/issues",
                 "source": "https://github.com/Noctis/kickstart/tree/future/v3"
             },
-            "time": "2021-08-30T13:43:03+00:00"
+            "time": "2021-08-30T14:02:53+00:00"
         },
         {
             "name": "opis/closure",
