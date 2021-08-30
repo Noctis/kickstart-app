@@ -1,16 +1,15 @@
 # Creating a Custom HTTP Request Class
 
-If your HTTP action needs to read parameters passed to it through the HTTP request, you can add an instance of a request
-object - represented by an instance of the `Noctis\KickStart\Http\Request\Request` class - into the `execute()` method,
-like so:
+If your HTTP action needs to read parameters passed to it through the HTTP request, you can inject an instance of a 
+request object - represented by an instance of the `Noctis\KickStart\Http\Request\Request` class - into an HTTP action, 
+through its constructor.
 
 ```php
-use Noctis\KickStart\Http\Request\Request;
-use Psr\Http\Message\ResponseInterface;
+private DummyRequest $request;
 
-public function execute(Request $request): ResponseInterface
+public function __construct(DummyRequest $request)
 {
-    //...
+    $this->request = $request;
 }
 ```
 
@@ -90,14 +89,26 @@ declare(strict_types=1);
 namespace App\Http\Action;
 
 use App\Http\Request\DummyRequest;
-use Noctis\KickStart\Http\Action\AbstractAction;
+use Noctis\KickStart\Http\Action\ActionInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class DummyAction extends AbstractAction
+final class DummyAction implements ActionInterface
 {
-    public function execute(DummyRequest $request): ResponseInterface
+    private DummyRequest $request;
+
+    public function __construct(DummyRequest $request)
     {
-        //...
+        $this->request = $request;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        // ...
     }
 }
 ```
