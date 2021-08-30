@@ -1,10 +1,12 @@
 # Sending Files in Response
 
 If you wish to execute an [HTTP action](../HTTP.md) and send an attachment (a file) in response, for the Web browser to 
-download, you can use the `sendAttachment()` method available in every HTTP action class. This method needs to be
+download, that action's `proccess()` method needs to return an instance of 
+`Noctis\KickStart\Http\Response\AttachmentResponse` class. You can create such an object using the 
+`attachmentResponse()` method of the `Noctis\KickStart\Http\Response\ResponseFactory` class. This method needs to be
 provided an instance of the `Noctis\KickStart\Http\Response\Attachment\Attachment` class.
 
-An instance of the aforementioned class can be created from, either: 
+An instance of the `Attachment` class can be created from, either: 
 
 * an existing file,
 * a string,
@@ -33,22 +35,41 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
-use Noctis\KickStart\Http\Action\AbstractAction;
+use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Response\Attachment\AttachmentFactoryInterface;
-use Noctis\KickStart\Http\Response\AttachmentResponse;
 use Noctis\KickStart\Http\Response\Headers\Disposition;
+use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class SendFileAction extends AbstractAction
+final class SendFileAction implements ActionInterface
 {
-    public function execute(AttachmentFactoryInterface $attachmentFactory): AttachmentResponse
+    private AttachmentFactoryInterface $attachmentFactory;
+    private ResponseFactoryInterface $responseFactory;
+
+    public function __construct(
+        AttachmentFactoryInterface $attachmentFactory,
+        ResponseFactoryInterface $responseFactory
+    ) {
+        $this->attachmentFactory = $attachmentFactory;
+        $this->responseFactory = $responseFactory;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        return $this->sendAttachment(
-            $attachmentFactory->createFromPath(
+        $attachment = $this->attachmentFactory
+            ->createFromPath(
                 '/tmp/result.png',
                 'image/png',
                 new Disposition('result.png')
-            )
-        );
+            );
+
+        return $this->responseFactory
+            ->attachmentResponse($attachment);
     }
 }
 ```
@@ -73,24 +94,42 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
-use Noctis\KickStart\Http\Action\AbstractAction;
+use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Response\Attachment\AttachmentFactoryInterface;
 use Noctis\KickStart\Http\Response\AttachmentResponse;
 use Noctis\KickStart\Http\Response\Headers\Disposition;
+use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class SendFileAction extends AbstractAction
+final class SendFileAction implements ActionInterface
 {
-    public function execute(AttachmentFactoryInterface $attachmentFactory): AttachmentResponse
+    private AttachmentFactoryInterface $attachmentFactory;
+    private ResponseFactoryInterface $responseFactory;
+    
+    public function __construct(
+        AttachmentFactoryInterface $attachmentFactory, 
+        ResponseFactoryInterface $responseFactory
+    ) {
+        $this->attachmentFactory = $attachmentFactory;
+        $this->responseFactory = $responseFactory;    
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): AttachmentResponse
     {
         $content = 'foo,bar,baz';
-
-        return $this->sendAttachment(
-            $attachmentFactory->createFromContent(
+        $attachment = $this->attachmentFactory
+            ->createFromContent(
                 $content,
                 'text/csv; charset=UTF-8',
                 new Disposition('output.csv')
-            )
-        );
+            );
+
+        return $this->responseFactory
+            ->attachmentResponse($attachment);
     }
 }
 ```
@@ -109,26 +148,45 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
-use Noctis\KickStart\Http\Action\AbstractAction;
+use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Response\Attachment\AttachmentFactoryInterface;
-use Noctis\KickStart\Http\Response\AttachmentResponse;
 use Noctis\KickStart\Http\Response\Headers\Disposition;
+use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class SendFileAction extends AbstractAction
+final class SendFileAction implements ActionInterface
 {
-    public function execute(AttachmentFactoryInterface $attachmentFactory): AttachmentResponse
+    private AttachmentFactoryInterface $attachmentFactory;
+    private ResponseFactoryInterface $responseFactory;
+
+    public function __construct(
+        AttachmentFactoryInterface $attachmentFactory,
+        ResponseFactoryInterface $responseFactory
+    ) {
+        $this->attachmentFactory = $attachmentFactory;
+        $this->responseFactory = $responseFactory;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $resource = fopen('php://temp', 'w+');
         fwrite($resource, 'foo,bar,baz');
         rewind($resource);
 
-        return $this->sendAttachment(
-            $attachmentFactory->createFromResource(
+        $attachment = $this->attachmentFactory
+            ->createFromResource(
                 $resource,
                 'text/csv; charset=UTF-8',
                 new Disposition('output.csv')
-            )
-        );
+            );
+
+        return $this->responseFactory
+            ->attachmentResponse($attachment);
     }
 }
 ```
