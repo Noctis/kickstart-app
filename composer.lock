@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6346702df88383dd24eb1bc515a4c92c",
+    "content-hash": "1befbd034950167bbd5691048b92aa53",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -619,11 +619,17 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "dev-feature/action-as-a-middleware",
+            "version": "dev-future/v3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Noctis/kickstart.git",
+                "reference": "803dad2c9c793330f03f0b6197f158240a5c98ce"
+            },
             "dist": {
-                "type": "path",
-                "url": "../kickstart",
-                "reference": "9d243cb0641b0385ae011e38b40889049cdcf386"
+                "type": "zip",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/803dad2c9c793330f03f0b6197f158240a5c98ce",
+                "reference": "803dad2c9c793330f03f0b6197f158240a5c98ce",
+                "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2",
@@ -662,24 +668,7 @@
                     "Noctis\\KickStart\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\Acceptance\\": "tests/acceptance/",
-                    "Tests\\Helper\\": "tests/helper",
-                    "Tests\\Unit\\": "tests/unit/"
-                }
-            },
-            "scripts": {
-                "phpunit": [
-                    "phpunit --configuration phpunit.xml.dist"
-                ],
-                "psalm": [
-                    "psalm --config=psalm.xml.dist --shepherd"
-                ],
-                "phpcs": [
-                    "phpcs --standard=PSR12"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -695,9 +684,11 @@
                 "application base",
                 "kickstart"
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/Noctis/kickstart/issues",
+                "source": "https://github.com/Noctis/kickstart/tree/future/v3"
+            },
+            "time": "2021-08-30T12:43:45+00:00"
         },
         {
             "name": "opis/closure",
@@ -4123,7 +4114,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "noctis/kickstart": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
