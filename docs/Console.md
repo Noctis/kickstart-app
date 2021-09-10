@@ -9,7 +9,7 @@ reference to it in the `bin/console` file.
 
 Here's how it all works.
 
-## The gist
+## The Gist
 
 The moment the following command is executed within the project's base directory:
 ```shell
@@ -23,6 +23,17 @@ unique name.
 Kickstart utilizes Symfony's [Console Component](https://symfony.com/doc/5.2/components/console.html) to run the console
 commands.
 
+## Command Lazy Loading (since version 2.2.0).
+
+Starting with Kickstart 2.2.0, all console commands are 
+[lazy-loaded](https://symfony.com/doc/5.2/console/lazy_commands.html). It means that an instance of a command class will
+be created (instantiated) only when that specific command is called, via `php bin/console`. To do this, Kickstart
+uses the Symfony's 
+[`ContainerCommandLoader` class](https://symfony.com/doc/5.2/console/lazy_commands.html#containercommandloader). If you
+wish to utilize a different command loader, like your own, you can use the `setCommandLoaderFactory()` method. You can 
+read more about how to do that [here](cookbook/Custom_Console_Command_Loader.md).
+
 ## Recipes
 
 * [Creating a New Console Command](cookbook/New_Console_Command.md)
+* [Custom Console Command Loader](cookbook/Custom_Console_Command_Loader.md)
