@@ -88,8 +88,7 @@ You can find an example of a custom request class in the `src/Http/Request/Dummy
 The `Request` object offers the following methods:
 
 * `getFiles()` - returns an array of uploaded files (instances of `Psr\Http\Message\UploadedFileInterface`, if there 
-  were any,
-* `getSessionID` - returns the current session's ID.
+  were any.
 
 ## Responses
 
