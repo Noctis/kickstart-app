@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab4d89d1f9e3274d3ef6969db2f19b3c",
+    "content-hash": "b35c4e15045ebe3c67a511186cb7dadb",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -619,16 +619,16 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "2.2.0",
+            "version": "dev-future/v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "711401600ea00e2bc329bf0af3b87faf99f0fc5d"
+                "reference": "573c8e5eca3cfa3af21e56021f843baeac63b989"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/711401600ea00e2bc329bf0af3b87faf99f0fc5d",
-                "reference": "711401600ea00e2bc329bf0af3b87faf99f0fc5d",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/573c8e5eca3cfa3af21e56021f843baeac63b989",
+                "reference": "573c8e5eca3cfa3af21e56021f843baeac63b989",
                 "shasum": ""
             },
             "require": {
@@ -659,6 +659,11 @@
                 "vimeo/psalm": "^4.4"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-future/v2.3.0": "2.3.0-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Noctis\\KickStart\\": "src/"
@@ -682,9 +687,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/2.2.0"
+                "source": "https://github.com/Noctis/kickstart/tree/future/v2.3.0"
             },
-            "time": "2021-09-10T12:54:26+00:00"
+            "time": "2021-09-13T10:10:55+00:00"
         },
         {
             "name": "opis/closure",
@@ -4135,6 +4140,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "noctis/kickstart": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
