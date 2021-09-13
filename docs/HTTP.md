@@ -85,6 +85,12 @@ action. The request class should be created in the `src/Http/Request` directory 
 
 You can find an example of a custom request class in the `src/Http/Request/DummyRequest.php` file.
 
+The `Request` object offers the following methods:
+
+* `getFiles()` - returns an array of uploaded files (instances of `Psr\Http\Message\UploadedFileInterface`, if there 
+  were any,
+* `getSessionID` - returns the current session's ID.
+
 ## Responses
 
 HTTP action's `execute()` method must return an instance of a class implementing the
