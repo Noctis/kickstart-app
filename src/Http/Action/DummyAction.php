@@ -8,6 +8,9 @@ use App\Http\Request\DummyRequest;
 use Noctis\KickStart\Http\Action\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * @psalm-suppress DeprecatedClass
+ */
 final class DummyAction extends AbstractAction
 {
     public function execute(DummyRequest $request): ResponseInterface
