@@ -14,6 +14,9 @@ final class DummyGuard extends AbstractMiddleware
 {
     private bool $dummyParam;
 
+    /**
+     * @psalm-suppress DeprecatedClass
+     */
     public function __construct(ResponseFactoryInterface $responseFactory, bool $dummyParam)
     {
         parent::__construct($responseFactory);

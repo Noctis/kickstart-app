@@ -85,6 +85,11 @@ action. The request class should be created in the `src/Http/Request` directory 
 
 You can find an example of a custom request class in the `src/Http/Request/DummyRequest.php` file.
 
+The `Request` object offers the following methods:
+
+* `getFiles()` - returns an array of uploaded files (instances of `Psr\Http\Message\UploadedFileInterface`, if there 
+  were any.
+
 ## Responses
 
 HTTP action's `execute()` method must return an instance of a class implementing the
@@ -196,3 +201,5 @@ If you wish to learn more about PHP middleware, you will find more information a
 * [Removing HTTP Functionality](cookbook/Removing_Http_Functionality.md)
 * [Sending Files in Response](cookbook/Sending_Files.md)
 * [Registering a Custom Twig Function](cookbook/Custom_Twig_Function.md)
+* [Registering a Twig Extension](cookbook/Registering_Twig_Extension.md)
+* 
