@@ -170,9 +170,12 @@ Additional questions and answers relating to Kickstart can be found in the [FAQ]
 
 * [Adding a New Database Repository](docs/cookbook/Adding_Database_Repository.md),
 * [Adding a Second Database Connection](docs/cookbook/Adding_Second_Database_Connection.md)
+* [Custom Console Command Loader](docs/cookbook/Custom_Console_Command_Loader.md)
 * [Creating a Custom HTTP Request Class](docs/cookbook/Custom_Http_Request.md)
-* [Creating a new HTTP Action](docs/cookbook/New_Http_Action.md)
+* [Registering a Custom Twig Function](docs/cookbook/Custom_Twig_Function.md)
 * [Creating a New Console Command](docs/cookbook/New_Console_Command.md)
+* [Creating a New HTTP Action](docs/cookbook/New_Http_Action.md)
+* [Registering a Twig Extension](docs/cookbook/Registering_Twig_Extension.md)
 * [Removing the Database Connectivity Functionality](docs/cookbook/Removing_Database_Connectivity.md)
 * [Removing Dummy (Example) Code](docs/cookbook/Removing_Dummy_Code.md)
 * [Removing the HTTP Functionality](docs/cookbook/Removing_Http_Functionality.md)
