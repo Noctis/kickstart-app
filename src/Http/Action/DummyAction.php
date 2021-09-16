@@ -7,19 +7,19 @@ namespace App\Http\Action;
 use App\Http\Request\DummyRequest;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
-use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class DummyAction implements ActionInterface
 {
     private DummyRequest $request;
-    private ResponseFactoryInterface $responseFactory;
+    private HtmlResponseFactoryInterface $htmlResponseFactory;
 
-    public function __construct(DummyRequest $request, ResponseFactoryInterface $responseFactory)
+    public function __construct(DummyRequest $request, HtmlResponseFactoryInterface $htmlResponseFactory)
     {
         $this->request = $request;
-        $this->responseFactory = $responseFactory;
+        $this->htmlResponseFactory = $htmlResponseFactory;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): HtmlResponse
@@ -29,8 +29,8 @@ final class DummyAction implements ActionInterface
             ->get('name') ?: 'World';
 
         /** @psalm-suppress DeprecatedMethod */
-        return $this->responseFactory
-            ->htmlResponse('dummy.html.twig', [
+        return $this->htmlResponseFactory
+            ->render('dummy.html.twig', [
                 'name' => $name,
                 'foo'  => $this->request
                     ->getFoo(),
