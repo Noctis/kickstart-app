@@ -10,7 +10,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 $dotenv->required([
-    'debug',
+    'APP_ENV',
     'basehref',
     'db_host',
     'db_user',
@@ -18,7 +18,6 @@ $dotenv->required([
     'db_name',
     'db_port'
 ]);
-$dotenv->required('debug')->isBoolean();
 $dotenv->required('db_port')->isInteger();
 
 if (!Configuration::isProduction()) {
