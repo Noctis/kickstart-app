@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware\Guard;
 
-use Noctis\KickStart\Http\Middleware\AbstractMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-final class DummyGuard extends AbstractMiddleware
+final class DummyGuard implements MiddlewareInterface
 {
     private bool $dummyParam;
 
@@ -22,6 +22,6 @@ final class DummyGuard extends AbstractMiddleware
     {
         // inspect $request, do stuff, maybe return a RedirectResponse instance?
 
-        return parent::process($request, $handler);
+        return $handler->handle($request);
     }
 }
