@@ -89,6 +89,7 @@ use App\Provider\ConfigurationProvider;
 use App\Provider\DatabaseConnectionProvider;
 use App\Provider\DummyServicesProvider;
 use App\Provider\RepositoryProvider;
+use Noctis\KickStart\Configuration\Configuration;
 use Noctis\KickStart\Console\ConsoleApplication;
 use Noctis\KickStart\Console\ContainerBuilder;
 
@@ -101,6 +102,12 @@ $containerBuilder
     ->registerServicesProvider(new DummyServicesProvider())
     ->registerServicesProvider(new RepositoryProvider())
 ;
+if (Configuration::isProduction()) {
+    /** @var string */
+    $basePath = Configuration::get('basepath');
+    $containerBuilder->enableCompilation($basePath . '/var/cache/container');
+}
+
 $container = $containerBuilder->build();
 
 /** @var ConsoleApplication $app */
