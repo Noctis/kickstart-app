@@ -48,9 +48,6 @@ The 4th element is optional - it's an array of HTTP middleware, in the form of a
 implementing the `Psr\Http\Server\MiddlewareInterface` (see: [PSR-15](https://www.php-fig.org/psr/psr-15/))
 interface.
 
-Kickstart offers the `Noctis\KickStart\Http\Middleware\AbstractMiddleware` abstract class which implements the 
-aforementioned interface, and offers a basic pass-through implementation of the `process()` method.
-
 If you do not wish for the route to utilize any middleware, you should simply omit that last constructor argument or 
 declare it as an empty array (`[]`).
 
