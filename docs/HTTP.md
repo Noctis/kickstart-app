@@ -130,17 +130,32 @@ The `Request` object offers the following methods:
 ## Responses
 
 HTTP action's `process()` method must return an instance of a class implementing the
-`Psr\Http\Message\ResponseInterface` interface. I recommend you use the
-abstract class which every HTTP action class extends provides you with a couple of methods which produce such a
-`Noctis\KickStart\Http\Response\ResponseFactory` class to create the appropriate response object.
-`ResponseInterface` object.
+`Psr\Http\Message\ResponseInterface` interface. Kickstart comes with a bunch of those, provided by the 
+[`laminas/laminas-diactoros` package](https://docs.laminas.dev/laminas-diactoros/v2/custom-responses/):
+
+* `Laminas\Diactoros\Response\HtmlResponse` - for HTML responses,
+* `Laminas\Diactoros\Response\RedirectResponse` - for an HTTP redirection response,
+* `Laminas\Diactoros\Response\TextResponse` - for a text response,
+* `Laminas\Diactoros\Response\EmptyResponse` - for a response with no body (HTTP headers only),
+* etc.
+
+Plus, one additional response, for [sending attachments](cookbook/Sending_Attachments.md):
+`Noctis\KickStart\Http\Response\AttachmentResponse`.
+
+To create a response of your choice, you can use of the following response factories:
+
+* `Noctis\KickStart\Http\Response\Factory\AttachmentResponseFactory` - for creating an `AttachmentResponse`,
+* `Noctis\KickStart\Http\Response\Factory\HtmlResponseFactory` - for creating an `HtmlResponse`,
+* `Noctis\KickStart\Http\Response\Factory\NotFoundResponseFactory` - for creating an 404 response, with (`TextResponse`) 
+  or without (`EmptyResponse`) additional text message.
+* `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory` - for creating a `RedirectResponse` response.
 
 You can find examples on how to use it, below.
 
 ### HTML Response
 
-If you wish to return HTML as response, you should call the `ResponseFactory`'s `render()` method. The method takes up 
-to two arguments:
+If you wish to return HTML as response, you should call the `render()` method of the `HtmlResponseFactory`. This method 
+takes up to two arguments:
 
 * the first argument is the name of the Twig template file, as it is in the `templates` directory, e.g. 
   `dummy.html.twig`,
@@ -150,21 +165,25 @@ You can learn more about Twig templates from
 [Twig's Official Documentation](https://twig.symfony.com/doc/3.x/templates.html).
 
 ```php
+<?php
+
+declare(strict_types=1);
+
 namespace App\Http\Action;
 
 use Laminas\Diactoros\Response\HtmlResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
-use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class DummyAction implements ActionInterface
 {
-    private ResponseFactoryInterface $responseFactory;
+    private HtmlResponseFactoryInterface $htmlResponseFactory;
 
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
     {
-        $this->responseFactory = $responseFactory;
+        $this->htmlResponseFactory = $htmlResponseFactory;
     }
 
     /**
@@ -172,8 +191,8 @@ final class DummyAction implements ActionInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): HtmlResponse
     {
-        return $this->responseFactory
-            ->htmlResponse('dummy.html.twig', [
+        return $this->htmlResponseFactory
+            ->render('dummy.html.twig', [
                 'foo' => 'bar',
             ]);
     }
@@ -182,32 +201,36 @@ final class DummyAction implements ActionInterface
 
 ### Redirection Response
 
-If you wish for the action to return an HTTP redirection, you should call the `ResponseFactory`'s `redirect()` method. 
-This method takes up to two arguments:
+If you wish for the action to return an HTTP redirection, you should call the `toPath()` method of the 
+`RedirectResponseFactory`. This method takes up to two arguments:
 
 * the first argument is the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you
   wish to redirect the user to a URL outside of your site, i.e. to a different domain, pass in the full URL, starting 
   with `http://` or `https://`,
 * the second argument is an optional list of parameters which will be added to the given URL as its query string.
 
-The `redirect()` method causes an HTTP `302 Found` response to be sent to the Web browser.
+The `toPath()` method returns a `302 Found` redirection response.
 
 ```php
+<?php
+
+declare(strict_types=1);
+
 namespace App\Http\Action;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
-use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class DummyAction implements ActionInterface
 {
-    private ResponseFactoryInterface $responseFactory;
+    private RedirectResponseFactoryInterface $redirectResponseFactory;
 
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(RedirectResponseFactoryInterface $redirectResponseFactory)
     {
-        $this->responseFactory = $responseFactory;
+        $this->redirectResponseFactory = $redirectResponseFactory;
     }
 
     /**
@@ -215,8 +238,8 @@ final class DummyAction implements ActionInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse
     {
-        return $this->responseFactory
-            ->redirectionResponse('sign-in');
+        return $this->redirectResponseFactory
+            ->toPath('sign-in');
     }
 }
 ```
@@ -224,9 +247,7 @@ final class DummyAction implements ActionInterface
 ### Attachment Response
 
 If you wish for your action to return an attachment, i.e. a file which the user's Web browser should attempt to download,
-you should call the `ResponseFactory`'s `attachmentResponse()` method.
-
-This method accepts one argument - an instance of the `Noctis\KickStart\Http\Response\Attachment\Attachment` class.
+you should call one of the methods available in the `AttachmentResponseFactory`.
 
 You can learn more about sending attachments from your HTTP action [here](cookbook/Sending_Attachments.md).
 
@@ -249,33 +270,33 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
-use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
 use Noctis\KickStart\Http\Service\FlashMessageServiceInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class FooAction implements ActionInterface
 {
     private FlashMessageServiceInterface $flashMessageService;
-    private ResponseFactoryInterface $responseFactory;
+    private RedirectResponseFactoryInterface $redirectResponseFactory;
 
     public function __construct(
         FlashMessageServiceInterface $flashMessageService,
-        ResponseFactoryInterface $responseFactory
+        RedirectResponseFactoryInterface $redirectResponseFactory
     ) {
         $this->flashMessageService = $flashMessageService;
-        $this->responseFactory = $responseFactory;
+        $this->redirectResponseFactory = $redirectResponseFactory;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse
     {
         $this->flashMessageService
             ->setFlashMessage('info', 'Information has been saved.');
 
-        return $this->responseFactory
-            ->redirectionResponse('bar');
+        return $this->redirectResponseFactory
+            ->toPath('bar');
     }
 }
 ```
@@ -290,36 +311,37 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
+use Laminas\Diactoros\Response\HtmlResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
-use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
 use Noctis\KickStart\Http\Service\FlashMessageServiceInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class BarAction implements ActionInterface
 {
     private FlashMessageServiceInterface $flashMessageService;
-    private ResponseFactoryInterface $responseFactory;
+    private HtmlResponseFactoryInterface $htmlResponseFactory;
 
     public function __construct(
         FlashMessageServiceInterface $flashMessageService,
-        ResponseFactoryInterface $responseFactory
+        HtmlResponseFactoryInterface $htmlResponseFactory
     ) {
         $this->flashMessageService = $flashMessageService;
-        $this->responseFactory = $responseFactory;
+        $this->htmlResponseFactory = $htmlResponseFactory;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): HtmlResponse
     {
         $message = $this->flashMessageService
             ->getFlashMessage('info');
 
-        return $this->responseFactory
-            ->htmlResponse('bar.html.twig', ['message' => $message]);
+        return $this->htmlResponseFactory
+            ->render('bar.html.twig', [
+                'message' => $message
+            ]);
     }
 }
-
 ```
 
 If you wish to retrieve the current flash message, but you want it to remain in the session for one more fetch,

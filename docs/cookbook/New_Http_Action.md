@@ -91,9 +91,9 @@ that.
 ## Creating a Template (View) For an HTTP Action
 
 An HTTP action's `process()` method must always return an object implementing the  `Psr\Http\Message\ResponseInterface` 
-interface, so we'll need to create it somehow. The `Noctis\KickStart\Http\Response\ResponseFactory` class offers a 
-`render()` method which does just that - creates a `Laminas\Diactoros\Response\HtmlResponse` object, which implements
-the `Psr\Http\Message\ResponseInterface` interface.
+interface, so we'll need to create it somehow. The `Noctis\KickStart\Http\Response\Factory\HtmlResponseFactory` class 
+offers a `render()` method which does just that - creates a `Laminas\Diactoros\Response\HtmlResponse` object, which 
+implements the `Psr\Http\Message\ResponseInterface` interface.
 
 What the `render()` method does is, it takes the given template (view) file, generates HTML from it and wraps it in 
 a `HtmlResponse` object. Let's create a simple template file, make `FormAction::process()` method render it and return 
@@ -111,25 +111,29 @@ First, create an empty file named `form.html.twig` in the `templates` folder. Ne
 {% endblock %}
 ```
 
-Next, let's finish implementing the `process()` method. First, let's make sure than an instance of `ResponseFactory` is
-injected into our action via its constructor:
+Next, let's finish implementing the `process()` method. First, let's make sure than an instance of `HtmlResponseFactory` 
+is injected into our action via its constructor:
 
 ```php
+<?php
+
+declare(strict_types=1);
+
 namespace App\Http\Action;
 
 use Noctis\KickStart\Http\Action\ActionInterface;
-use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class FormAction implements ActionInterface
 {
-    private ResponseFactoryInterface $responseFactory;
+    private HtmlResponseFactoryInterface $htmlResponseFactory;
 
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(HtmlResponseFactoryInterface $responseFactory)
     {
-        $this->responseFactory = $responseFactory;
+        $this->htmlResponseFactory = $responseFactory;
     }
 
     /**
@@ -140,7 +144,6 @@ final class FormAction implements ActionInterface
         // TODO: Implement process() method.
     }
 }
-
 ```
 
 Now lets put some "meat" on the `process()` method's bones:
@@ -151,7 +154,7 @@ Now lets put some "meat" on the `process()` method's bones:
  */
 public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
 {
-    return $this->responseFactory
+    return $this->htmlResponseFactory
         ->render('form.html.twig');
 }
 ```
@@ -169,18 +172,18 @@ declare(strict_types=1);
 namespace App\Http\Action;
 
 use Noctis\KickStart\Http\Action\ActionInterface;
-use Noctis\KickStart\Http\Response\ResponseFactoryInterface;
+use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class FormAction implements ActionInterface
 {
-    private ResponseFactoryInterface $responseFactory;
+    private HtmlResponseFactoryInterface $htmlResponseFactory;
 
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
     {
-        $this->responseFactory = $responseFactory;
+        $this->htmlResponseFactory = $htmlResponseFactory;
     }
 
     /**
@@ -188,7 +191,7 @@ final class FormAction implements ActionInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $this->responseFactory
+        $this->htmlResponseFactory
             ->render('form.html.twig');
     }
 }
