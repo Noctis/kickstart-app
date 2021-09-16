@@ -106,7 +106,7 @@ $container = $containerBuilder->build();
 /** @var ConsoleApplication $app */
 $app = $container->get(ConsoleApplication::class);
 $app->setCommands([
-    $container->get(DummyCommand::class)
+    DummyCommand::class
 ]);
 $app->run();
 ```

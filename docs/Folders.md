@@ -60,11 +60,11 @@ application. This file (along with `.htaccess`) is an example of the "Front Cont
 
 ### src/Configuration
 
-This folder contains the `FancyConfiguration` class which extends Kickstart's base `Configuration` class. Both allow one 
-to access application's configuration, defined in the `.env` file.
+This folder contains the `FancyConfiguration` class acts as a wrapper for Kickstart's base `Configuration` class. Both 
+allow one to access application's configuration, defined in the `.env` file.
 
 The difference between `FancyConfiguration` and the base `Configuration` classes is that the former allows you to define 
-option-specific getter methods, like `getDbHost()`, while the latter offers just the basic ones, eg. `get('db_host')`.
+option-specific getter methods, like `getDbHost()`, while the latter offers just the generic getters, i.e. `get()`.
 
 ### src/Console/Command
 
