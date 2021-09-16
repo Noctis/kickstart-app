@@ -65,7 +65,8 @@ The project's configuration can be found in the `.env` file, in its root directo
 This is how the `.env` file looks by default:
 
 ```dotenv
-debug=false
+# Valid values: prod, dev
+APP_ENV=dev
 # "/" for root-dir, "/foo" (without trailing slash) for sub-dir
 basehref=/
 db_host=localhost
@@ -77,9 +78,14 @@ db_port=3306
 
 Here's a rundown of what each of these options mean:
 
-### `debug`
+### `APP_ENV`
 
-Setting this option to `false` changes three things:
+This option can take one of two values:
+
+* `prod`, or
+* `dev`.
+
+Setting it to `prod` changes three things:
 
 * PHP error messages are hidden,
 * templates (views) are cached; any changes made to them will NOT be visible upon refreshing the page in the browser,
@@ -88,7 +94,7 @@ Setting this option to `false` changes three things:
   (in `var/cache/container` by default), which will increase the application's performance, but at the cost of the DIC 
   ignoring any changes in dependency injection's configuration from here on out.
 
-Setting this option to `true` causes:
+Setting it to `dev` causes:
 
 * PHP error messages to be displayed,
 * templates (views) are not cached; any changes made to them will immediately be visible upon refreshing the page in the
@@ -96,14 +102,14 @@ Setting this option to `true` causes:
 * the DIC will notice any changes made to the dependency injection configuration, at the cost of slightly worse
   application's performance.
 
-**This option should be set to `false` in production environments, and set to `true` during development.**
+**This option should be set to `prod` in production environments, and set to `dev` during development.**
 
 **If you're making changes to your templates/views and they're not showing up in your browser - either clear the cache,
-by deleting the contents of the `var/cache/templates` directory, or set the `debug` option in `.env` to `true`.**
+by deleting the contents of the `var/cache/templates` directory, or set the `APP_ENV` option in `.env` to `dev`.**
 
 **If you're making changes to [service providers](docs/Service_Providers.md) or classes' constructors (dependency 
 injection) and the DIC (dependency injection container) fails to see them, clear the contents of the 
-`var/cache/container` directory or set the `debug` option in `.env` file to `true`**  
+`var/cache/container` directory or set the `APP_ENV` option in `.env` file to `dev`**  
 
 ### `basehref`
 
