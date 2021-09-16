@@ -28,7 +28,6 @@ final class DummyAction implements ActionInterface
         $name = $this->request
             ->get('name') ?: 'World';
 
-        /** @psalm-suppress DeprecatedMethod */
         return $this->htmlResponseFactory
             ->render('dummy.html.twig', [
                 'name' => $name,
