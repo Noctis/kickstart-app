@@ -187,7 +187,6 @@ Additional questions and answers relating to Kickstart can be found in the [FAQ]
 * [Adding a New Database Repository](docs/cookbook/Adding_Database_Repository.md),
 * [Adding a Second Database Connection](docs/cookbook/Adding_Second_Database_Connection.md)
 * [Custom Console Command Loader](docs/cookbook/Custom_Console_Command_Loader.md)
-* [Creating a Custom HTTP Request Class](docs/cookbook/Custom_Http_Request.md)
 * [Registering a Custom Twig Function](docs/cookbook/Custom_Twig_Function.md)
 * [Creating a New Console Command](docs/cookbook/New_Console_Command.md)
 * [Creating a New HTTP Action](docs/cookbook/New_Http_Action.md)
