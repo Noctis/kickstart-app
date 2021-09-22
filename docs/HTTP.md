@@ -98,31 +98,33 @@ There are a couple of requirements every HTTP action class must meet:
   ```
 * if the action has dependencies, they should be injected through the action's constructor, e.g.:
   ```php
-  use App\Http\Request\DummyRequest;
   use App\Service\DummyServiceInterface;
+  use Noctis\KickStart\Http\Helper\RequestHelperInterface;
 
-  private DummyRequest $request;
   private DummyServiceInterface $dummyService;
 
-  public function __construct(DummyRequest $request, DummyServiceInterface $dummyService)
+  public function __construct(RequestHelperInterface $requestHelper, DummyServiceInterface $dummyService)
   {
-      $this->request = $request;
+      $this->requestHelper = $requestHelper;
       $this->dummyService = $dummyService
   }
   ```
 
 ## Requests
 
-If the HTTP action needs to get some data from the incoming HTTP request, you may define a custom request class for said 
-action. The request class should be created in the `src/Http/Request` directory and must extend the
-`Noctis\KickStart\Http\Request\Request` class. 
+If the HTTP action needs to get some data from the incoming HTTP request, the following methods are available in the
+`$request` object, in the action's `process()` method:
 
-You can find an example of a custom request class in the `src/Http/Request/DummyRequest.php` file.
-
-The `Request` object offers the following methods:
-
-* `getFiles()` - returns an array of uploaded files (instances of `Psr\Http\Message\UploadedFileInterface`, if there 
-  were any.
+* `getQueryParams()` - returns an array of parameters passed in the query string; usually available when the request was 
+  sent using HTTP's `GET` method (equivalent of PHP's `$_GET` super-global),
+* `getParsedBody()` - returns an array of parameters passed in the request's body; available when the request was sent
+  using the HTTP's `POST` method (equivalent of PHP's `$_POST` super-global),
+* `getAttribute()` - returns an attribute of the given name, from the request. Request attributes can be set by:
+  * Kickstart's router - [FastRoute](https://github.com/nikic/FastRoute), if named requested params were used in the
+    route definition (see: `src/Http/Routing/routes.php` file),
+  * HTTP middleware, e.g. [`middlewares/client-ip`](https://github.com/middlewares/client-ip).
+* `getUploadedFiles()` - returns an array of uploaded files, i.e. instances of 
+  `Psr\Http\Message\UploadedFileInterface` objects (sorta equivalent of PHP's `$_FILES` super-global).
 
 ## Responses
 
@@ -361,9 +363,7 @@ If you wish to learn more about PHP middleware, you will find more information a
 ## Recipes
 
 * [Adding a new HTTP Action](cookbook/New_Http_Action.md)
-* [Custom HTTP Request](cookbook/Custom_Http_Request.md)
 * [Removing HTTP Functionality](cookbook/Removing_Http_Functionality.md)
 * [Sending Attachments in Response](cookbook/Sending_Attachments.md)
 * [Registering a Custom Twig Function](cookbook/Custom_Twig_Function.md)
 * [Registering a Twig Extension](cookbook/Registering_Twig_Extension.md)
-* 
