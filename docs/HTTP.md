@@ -99,15 +99,15 @@ There are a couple of requirements every HTTP action class must meet:
 * if the action has dependencies, they should be injected through the action's constructor, e.g.:
   ```php
   use App\Service\DummyServiceInterface;
-  use Noctis\KickStart\Http\Helper\RequestHelperInterface;
 
   private DummyServiceInterface $dummyService;
 
-  public function __construct(RequestHelperInterface $requestHelper, DummyServiceInterface $dummyService)
+  public function __construct(DummyServiceInterface $dummyService)
   {
-      $this->requestHelper = $requestHelper;
       $this->dummyService = $dummyService
   }
+  
+  // ...
   ```
 
 ## Requests
@@ -125,6 +125,112 @@ If the HTTP action needs to get some data from the incoming HTTP request, the fo
   * HTTP middleware, e.g. [`middlewares/client-ip`](https://github.com/middlewares/client-ip).
 * `getUploadedFiles()` - returns an array of uploaded files, i.e. instances of 
   `Psr\Http\Message\UploadedFileInterface` objects (sorta equivalent of PHP's `$_FILES` super-global).
+
+If you wish to have your own, additional methods available in the request object, please refer to the ["Custom HTTP
+Requests" article](Custom_Http_Requests.md).
+
+### Named Route Parameters
+
+Kickstart utilizes the [FastRoute](https://github.com/nikic/FastRoute) library for HTTP routing. FastRoute allows you
+to define [named route parameters](https://github.com/nikic/FastRoute#defining-routes), as part of the route definition, 
+for example:
+
+```php
+// src/Http/Routing/routes.php
+
+use App\Http\Action\DummyAction;
+use App\Http\Middleware\Guard\DummyGuard;
+use Noctis\KickStart\Http\Routing\Route;
+
+// ...
+return [
+    // ...
+    new Route('GET', '/product/{productID:\d+}/details', DummyAction::class),
+];
+```
+
+Now, when a matching URL is used, for example: `/product/13/details`, the value `13` will be available in the request
+object, under the `productID` name. To retrieve it, call the `getAttribute()` method on the request object:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Action;
+
+use Noctis\KickStart\Http\Action\ActionInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+final class DummyAction implements ActionInterface
+{
+    /**
+     * @inheritDoc
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $productID = $request->getAttribute('productID');
+    }
+}
+```
+
+You could also take advantage of Kickstart's [custom HTTP requests](Custom_Http_Requests.md) functionality and create a
+custom HTTP request class, with a dedicated method for fetching the route parameter, for example:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Request;
+
+use Noctis\KickStart\Http\Request\AbstractRequest;
+
+final class DummyRequest extends AbstractRequest
+{
+    public function getProductID(): int
+    {
+        return (int)$this->getAttribute('productID');
+    }
+}
+```
+
+Then, in your action you'd do something like this:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Action;
+
+use App\Http\Request\DummyRequest;
+use Noctis\KickStart\Http\Action\ActionInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+final class DummyAction implements ActionInterface
+{
+    private DummyRequest $request;
+
+    public function __construct(DummyRequest $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $productID = $this->request
+            ->getProductID();
+    }
+}
+```
 
 ## Responses
 
