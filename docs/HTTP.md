@@ -30,8 +30,8 @@ The action will generate an object representing the HTTP response. That object w
 which will emit it to the Web browser, that made the original request.
 
 If there were any middleware declared in the route definition, those will be called, in order, prior to calling the 
-action. A middleware may generate and return its own response object. In such case, the action class' `process()`
-method will not be called.
+action. A middleware may generate and return its own response object. In such case, any further middlewares & the action
+itself will not be called.
 
 ## Routes
 
@@ -64,7 +64,7 @@ return [
 ];
 ```
 
-And here's an example of a route definition with one middleware:
+And here's an example of a route definition with one middleware - `App\Http\Middleware\Guard\DummyGuard`:
 
 ```php
 use App\Http\Action\DummyAction;
@@ -247,27 +247,59 @@ HTTP action's `process()` method must return an instance of a class implementing
 Plus, one additional response, for [sending attachments](cookbook/Sending_Attachments.md):
 `Noctis\KickStart\Http\Response\AttachmentResponse`.
 
-To create a response of your choice, you can use of the following response factories:
+Kickstart comes with a bunch of response factories (in the `Noctis\KickStart\Http\Response\Factory` namespace), each of 
+which produces a specific type of response:
 
-* `Noctis\KickStart\Http\Response\Factory\AttachmentResponseFactory` - for creating an `AttachmentResponse`,
-* `Noctis\KickStart\Http\Response\Factory\HtmlResponseFactory` - for creating an `HtmlResponse`,
-* `Noctis\KickStart\Http\Response\Factory\NotFoundResponseFactory` - for creating an 404 response, with (`TextResponse`) 
+* `HtmlResponseFactory` - for creating an `HtmlResponse`,
+* `RedirectResponseFactory` - for creating a `RedirectResponse` response.
+* `AttachmentResponseFactory` - for creating an `AttachmentResponse`,
+* `NotFoundResponseFactory` - for creating an 404 response, with (`TextResponse`) 
   or without (`EmptyResponse`) additional text message.
-* `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory` - for creating a `RedirectResponse` response.
 
-You can find examples on how to use it, below.
+Although you can use these factories in your actions directly, the recommended approach is to utilize the following
+traits, available in the `Noctis\KickStart\Http\Helper` namespace, which act as shortcuts for the response factories:
+
+* `RenderTrait` - for using `HtmlResponseFactory` to generate a `HtmlResponse`,
+* `RedirectTrait` - for using the `RedirectResponseFactory` to generate a `RedirectResponse`,
+* `AttachmentTrait` - for using the `AttachmentResponseFactory` to generate a `AttachmentResponse`, or
+* `NotFoundTrait` - for using the `NotFoundResponseFactory` to generate a 404 response, in the form of a `EmptyResponse`
+  or a `TextResponse`.
+
+Each trait requires one of the response factories to be set in a local, private field. You can find examples on how to 
+use those traits below.
 
 ### HTML Response
 
-If you wish to return HTML as response, you should call the `render()` method of the `HtmlResponseFactory`. This method 
-takes up to two arguments:
+To create an HTML response object, include the `Noctis\KickStart\Http\Helper\RenderTrait` trait into your action and
+make sure an instance of the `Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface` is injected into the
+local `$htmlResponseFactory` field:
 
-* the first argument is the name of the Twig template file, as it is in the `templates` directory, e.g. 
-  `dummy.html.twig`,
-* the second argument is the optional list of parameters which should be passed to said Twig template.
+```php
+<?php
 
-You can learn more about Twig templates from 
-[Twig's Official Documentation](https://twig.symfony.com/doc/3.x/templates.html).
+declare(strict_types=1);
+
+namespace App\Http\Action;
+
+use Noctis\KickStart\Http\Action\ActionInterface;
+use Noctis\KickStart\Http\Helper\RenderTrait;
+use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
+
+final class DummyAction implements ActionInterface
+{
+    use RenderTrait;
+
+    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
+    {
+        $this->htmlResponseFactory = $htmlResponseFactory;
+    }
+
+    // ...
+}
+```
+
+You can then use the trait's `render()` method to create an instance of `Laminas\Diactoros\Response\HtmlResponse`. The
+entire action will then look like this:
 
 ```php
 <?php
@@ -278,13 +310,14 @@ namespace App\Http\Action;
 
 use Laminas\Diactoros\Response\HtmlResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
+use Noctis\KickStart\Http\Helper\RenderTrait;
 use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class DummyAction implements ActionInterface
 {
-    private HtmlResponseFactoryInterface $htmlResponseFactory;
+    use RenderTrait;
 
     public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
     {
@@ -296,25 +329,54 @@ final class DummyAction implements ActionInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): HtmlResponse
     {
-        return $this->htmlResponseFactory
-            ->render('dummy.html.twig', [
-                'foo' => 'bar',
-            ]);
+        return $this->render('dummy.html.twig', [
+            'foo' => 'bar',
+        ]);
     }
 }
 ```
 
+The `RenderTrait::render()` method takes up to two arguments:
+
+* the first argument is the name of the Twig template file, as it is in the `templates` directory, e.g. 
+  `dummy.html.twig`,
+* the second argument is the optional list of parameters which should be passed to said Twig template.
+
+You can learn more about Twig templates from 
+[Twig's Official Documentation](https://twig.symfony.com/doc/3.x/templates.html).
+
 ### Redirection Response
 
-If you wish for the action to return an HTTP redirection, you should call the `toPath()` method of the 
-`RedirectResponseFactory`. This method takes up to two arguments:
+To create an HTML redirection object, include the `Noctis\KickStart\Http\Helper\RedirectTrait` trait into your action 
+and make sure an instance of the `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory` is injected into the
+local `$redirectResponseFactory` field:
 
-* the first argument is the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you
-  wish to redirect the user to a URL outside of your site, i.e. to a different domain, pass in the full URL, starting 
-  with `http://` or `https://`,
-* the second argument is an optional list of parameters which will be added to the given URL as its query string.
+```php
+<?php
 
-The `toPath()` method returns a `302 Found` redirection response.
+declare(strict_types=1);
+
+namespace App\Http\Action;
+
+use Noctis\KickStart\Http\Action\ActionInterface;
+use Noctis\KickStart\Http\Helper\RedirectTrait;
+use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
+
+final class DummyAction implements ActionInterface
+{
+    use RedirectTrait;
+
+    public function __construct(RedirectResponseFactoryInterface $redirectResponseFactory)
+    {
+        $this->redirectResponseFactory = $redirectResponseFactory;
+    }
+    
+    // ...
+}
+```
+
+You can then use the trait's `redirect()` method to create an instance of `Laminas\Diactoros\Response\RedirectResponse`. 
+The entire action will then look like this:
 
 ```php
 <?php
@@ -325,34 +387,40 @@ namespace App\Http\Action;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
+use Noctis\KickStart\Http\Helper\RedirectTrait;
 use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class DummyAction implements ActionInterface
 {
-    private RedirectResponseFactoryInterface $redirectResponseFactory;
+    use RedirectTrait;
 
     public function __construct(RedirectResponseFactoryInterface $redirectResponseFactory)
     {
         $this->redirectResponseFactory = $redirectResponseFactory;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse
     {
-        return $this->redirectResponseFactory
-            ->toPath('sign-in');
+        return $this->redirect('sign-in');
     }
 }
 ```
 
+The `RedirectTrait::redirect()` method takes up to two arguments:
+
+* the first argument is the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you
+  wish to redirect the user to a URL outside of your site, i.e. to a different domain, pass in the full URL, starting
+  with `http://` or `https://`,
+* the second argument is an optional list of parameters which will be added to the given URL as its query string.
+
+The `RedirectTrait::redirect()` method returns a `302 Found` HTTP response, with no body.
+
 ### Attachment Response
 
-If you wish for your action to return an attachment, i.e. a file which the user's Web browser should attempt to download,
-you should call one of the methods available in the `AttachmentResponseFactory`.
+If you wish for your action to return an attachment, i.e. a file which the user's Web browser should attempt to 
+download, you should call one of the methods available in the `AttachmentResponseFactory`.
 
 You can learn more about sending attachments from your HTTP action [here](cookbook/Sending_Attachments.md).
 
