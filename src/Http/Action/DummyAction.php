@@ -7,14 +7,16 @@ namespace App\Http\Action;
 use App\Http\Request\DummyRequest;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
+use Noctis\KickStart\Http\Helper\RenderTrait;
 use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class DummyAction implements ActionInterface
 {
+    use RenderTrait;
+
     private DummyRequest $request;
-    private HtmlResponseFactoryInterface $htmlResponseFactory;
 
     public function __construct(DummyRequest $request, HtmlResponseFactoryInterface $htmlResponseFactory)
     {
@@ -28,11 +30,10 @@ final class DummyAction implements ActionInterface
         $name = $this->request
             ->get('name') ?: 'World';
 
-        return $this->htmlResponseFactory
-            ->render('dummy.html.twig', [
-                'name' => $name,
-                'foo'  => $this->request
-                    ->getFoo()
-            ]);
+        return $this->render('dummy.html.twig', [
+            'name' => $name,
+            'foo'  => $this->request
+                ->getFoo()
+        ]);
     }
 }
