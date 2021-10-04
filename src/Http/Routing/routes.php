@@ -7,5 +7,5 @@ use App\Http\Middleware\Guard\DummyGuard;
 use Noctis\KickStart\Http\Routing\Route;
 
 return [
-    new Route('GET', '/', DummyAction::class, [DummyGuard::class]),
+    Route::get('/', DummyAction::class, [DummyGuard::class]),
 ];
