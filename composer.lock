@@ -618,12 +618,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "879a914ba567d1ed5b3490602387e99e9d6633bb"
+                "reference": "50c3a87717b283de58bbee4a6475c6f856755257"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/879a914ba567d1ed5b3490602387e99e9d6633bb",
-                "reference": "879a914ba567d1ed5b3490602387e99e9d6633bb",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/50c3a87717b283de58bbee4a6475c6f856755257",
+                "reference": "50c3a87717b283de58bbee4a6475c6f856755257",
                 "shasum": ""
             },
             "require": {
@@ -684,7 +684,7 @@
                 "issues": "https://github.com/Noctis/kickstart/issues",
                 "source": "https://github.com/Noctis/kickstart/tree/future/v3"
             },
-            "time": "2021-10-03T16:11:14+00:00"
+            "time": "2021-10-04T09:23:08+00:00"
         },
         {
             "name": "opis/closure",
