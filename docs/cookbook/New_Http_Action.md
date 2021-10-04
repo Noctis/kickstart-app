@@ -8,9 +8,10 @@ To add a new HTTP action, you need to do two things:
 Optionally, you can also:
 
 * create a template (view) for said action,
-* create a custom HTTP request class for the action, if the action takes any request parameters.
+* create a [custom HTTP request class](../Custom_Http_Requests.md) for the action, if the action takes any request 
+  parameters.
 
-## Creating an HTTP action class
+## Creating an HTTP Action Class
 
 All HTTP action classes:
 
@@ -47,7 +48,7 @@ final class FormAction implements ActionInterface
 This HTTP action class is almost complete. The only thing that's missing is the definition of the `process()` method, 
 but we'll get back to that later. For now, lets create a route definition and reference our action class in it:
 
-## Adding a Route Definition With an HTTP Action Reference
+## Adding a Route Definition
 
 By default, all HTTP route definitions can be found in the `src/Http/Routing/routes.php` file:
 
@@ -61,7 +62,7 @@ use App\Http\Middleware\Guard\DummyGuard;
 use Noctis\KickStart\Http\Routing\Route;
 
 return [
-    new Route('GET', '/', DummyAction::class, [DummyGuard::class]),
+    Route::get('/', DummyAction::class, [DummyGuard::class]),
 ];
 ```
 
@@ -80,7 +81,7 @@ use Noctis\KickStart\Http\Routing\Route;
 
 return [
     // ...
-    new Route('GET', '/form', FormAction::class),
+    Route::get('/form', FormAction::class),
 ];
 ```
 

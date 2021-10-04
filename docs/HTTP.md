@@ -38,18 +38,18 @@ itself will not be called.
 A list of routes can be found in the `src/Http/Routing/routes.php` file. It's a simple PHP file, which returns an array 
 of `Noctis\KickStart\Http\Routing\Route` objects.
 
-The `Route`'s constructor can take either 3 or 4 arguments:
+The `Route` class offers two static factory methods, `get()` and `post()`, both of which accept up to three arguments,
+with the first two being mandatory:
 
-* the HTTP method name - currently only `GET` and `POST` values are supported,
 * the URI, e.g. `/`, `/foo` or `/product/show`,
 * the class name of the HTTP action,
 
-The 4th element is optional - it's an array of HTTP middleware, in the form of a list of middleware class names, all
+The third argument is optional - it's an array of HTTP middleware, in the form of a list of middleware class names, all
 implementing the `Psr\Http\Server\MiddlewareInterface` (see: [PSR-15](https://www.php-fig.org/psr/psr-15/))
 interface.
 
-If you do not wish for the route to utilize any middleware, you should simply omit that last constructor argument or 
-declare it as an empty array (`[]`).
+If you do not wish for the route to utilize any middleware, you should simply omit the third argument or declare it as 
+an empty array (`[]`).
 
 Here's an example of a route definition with no middleware:
 
@@ -60,7 +60,7 @@ use Noctis\KickStart\Http\Routing\Route;
 
 // ...
 return [
-    new Route('GET', '/', DummyAction::class),
+    Route::get('/', DummyAction::class),
 ];
 ```
 
@@ -73,7 +73,7 @@ use Noctis\KickStart\Http\Routing\Route;
 
 // ...
 return [
-    new Route('GET', '/', DummyAction::class, [DummyGuard::class]),
+    Route::get('/', DummyAction::class, [DummyGuard::class]),
 ];
 ```
 
@@ -145,7 +145,7 @@ use Noctis\KickStart\Http\Routing\Route;
 // ...
 return [
     // ...
-    new Route('GET', '/product/{productID:\d+}/details', DummyAction::class),
+    Route::get('/product/{productID:\d+}/details', DummyAction::class),
 ];
 ```
 
