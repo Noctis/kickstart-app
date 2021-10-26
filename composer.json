@@ -14,7 +14,7 @@
     "require": {
         "php": "^8.0",
         "composer-runtime-api": "^2",
-        "laminas/laminas-diactoros": "^2.6",
+        "laminas/laminas-diactoros": "^2.8",
         "noctis/kickstart": "^3.0@dev",
         "paragonie/easydb": "^2.11",
         "php-di/php-di": "^6.3",
@@ -30,7 +30,7 @@
         "roave/security-advisories": "dev-latest",
         "squizlabs/php_codesniffer": "^3.6",
         "symfony/var-dumper": "^5.3",
-        "vimeo/psalm": "^4.9"
+        "vimeo/psalm": "^4.11"
     },
     "autoload": {
         "psr-4": {
