@@ -169,9 +169,10 @@ If you need to update the system part of your application, i.e. the `noctis/kick
 composer update noctis/kickstart
 ```
 
-Seeing as updating a Kickstart project is not as simple as that, I will do my best to update the `noctis/kickstart-app`
-package (this one) as rarely as possible. When I do release a new version of it, I will provide instructions on how to
-upgrade in a `UPDATING.md` file.
+Seeing as updating a Kickstart-based project is not as simple as that, I will do my best to update the 
+`noctis/kickstart-app` package (this one) as rarely as possible. When I do release a new version of it and specific
+actions are needed to update the application part, you will find a version-specific guide inside the 
+[`docs/upgrading`](docs/upgrading) folder of this project. 
 
 I will also keep the version numbers between both packages consistent. For example, when I make changes to the 
 `noctis/kickstart` package that are incompatible with `noctis/kickstart-app` 2.x, I will release them as version 3.x
