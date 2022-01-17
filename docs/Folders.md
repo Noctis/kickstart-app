@@ -58,14 +58,6 @@ application. This file (along with `.htaccess`) is an example of the "Front Cont
 
 `.htaccess` contains directives for Apache's `mod_rewrite` module.
 
-### src/Configuration
-
-This folder contains the `FancyConfiguration` class acts as a wrapper for Kickstart's base `Configuration` class. Both 
-allow one to access application's configuration, defined in the `.env` file.
-
-The difference between `FancyConfiguration` and the base `Configuration` classes is that the former allows you to define 
-option-specific getter methods, like `getDbHost()`, while the latter offers just the generic getters, i.e. `get()`.
-
 ### src/Console/Command
 
 This folder contains project's commands classes, available through the `bin/console` entry point. Each command should be 

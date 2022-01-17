@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Provider\ConfigurationProvider;
 use App\Provider\DatabaseConnectionProvider;
 use App\Provider\DummyServicesProvider;
 use App\Provider\HttpMiddlewareProvider;
@@ -19,7 +18,6 @@ $containerBuilder
     ->registerServicesProvider(new RoutingProvider(
         require_once __DIR__ . '/../src/Http/Routing/routes.php'
     ))
-    ->registerServicesProvider(new ConfigurationProvider())
     ->registerServicesProvider(new DatabaseConnectionProvider())
     ->registerServicesProvider(new HttpMiddlewareProvider())
     ->registerServicesProvider(new DummyServicesProvider())

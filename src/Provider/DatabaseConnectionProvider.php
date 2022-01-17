@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Provider;
 
-use App\Configuration\FancyConfigurationInterface;
+use Noctis\KickStart\Configuration\Configuration;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
 use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\Exception\ConstructorFailed;
 use ParagonIE\EasyDB\Factory;
-use Psr\Container\ContainerInterface;
 
 final class DatabaseConnectionProvider implements ServicesProviderInterface
 {
@@ -19,20 +18,18 @@ final class DatabaseConnectionProvider implements ServicesProviderInterface
     public function getServicesDefinitions(): array
     {
         return [
-            EasyDB::class => function (ContainerInterface $container): EasyDB {
+            EasyDB::class => function (): EasyDB {
                 try {
-                    /** @var FancyConfigurationInterface $configuration */
-                    $configuration = $container->get(FancyConfigurationInterface::class);
-
+                    /** @psalm-suppress MixedArgument */
                     return Factory::fromArray([
                         sprintf(
                             'mysql:dbname=%s;host=%s;port=%s',
-                            $configuration->getDBName(),
-                            $configuration->getDBHost(),
-                            $configuration->getDBPort()
+                            Configuration::get('db_name'),
+                            Configuration::get('db_host'),
+                            Configuration::get('db_port')
                         ),
-                        $configuration->getDBUser(),
-                        $configuration->getDBPass()
+                        Configuration::get('db_user'),
+                        Configuration::get('db_pass')
                     ]);
                 } catch (ConstructorFailed $ex) {
                     die('Could not connect to primary DB: ' . $ex->getMessage());
