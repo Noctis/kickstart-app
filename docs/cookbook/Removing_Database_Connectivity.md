@@ -30,16 +30,3 @@ Delete the `src/Provider/DatabaseConnectionProvider.php` file and remove the ref
 
 * `bin/console`
 * `public/index.php`
-
-To make things extra clean, edit the following files:
-
-* `src/Configuration/FancyConfiguration.php`
-* `src/Configuration/FancyConfigurationInterface.php`
-
-and remove the following methods from them:
-
-* `getDBHost()`
-* `getDBUser()`
-* `getDBPass()`
-* `getDBName()`
-* `getDBPort()`

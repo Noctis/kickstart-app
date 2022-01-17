@@ -85,7 +85,6 @@ Here's how a default `bin/console` file look like, which already registers a few
 declare(strict_types=1);
 
 use App\Console\Command\DummyCommand;
-use App\Provider\ConfigurationProvider;
 use App\Provider\DatabaseConnectionProvider;
 use App\Provider\DummyServicesProvider;
 use App\Provider\RepositoryProvider;
@@ -97,7 +96,6 @@ require_once __DIR__ . '/../bootstrap.php';
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder
-    ->registerServicesProvider(new ConfigurationProvider())
     ->registerServicesProvider(new DatabaseConnectionProvider())
     ->registerServicesProvider(new DummyServicesProvider())
     ->registerServicesProvider(new RepositoryProvider())
@@ -125,7 +123,6 @@ And here's how the default `public/index.php` file looks like, which also regist
 
 declare(strict_types=1);
 
-use App\Provider\ConfigurationProvider;
 use App\Provider\DatabaseConnectionProvider;
 use App\Provider\DummyServicesProvider;
 use App\Provider\HttpMiddlewareProvider;
@@ -142,7 +139,6 @@ $containerBuilder
     ->registerServicesProvider(new RoutingProvider(
         require_once __DIR__ . '/../src/Http/Routing/routes.php'
     ))
-    ->registerServicesProvider(new ConfigurationProvider())
     ->registerServicesProvider(new DatabaseConnectionProvider())
     ->registerServicesProvider(new HttpMiddlewareProvider())
     ->registerServicesProvider(new DummyServicesProvider())
