@@ -24,12 +24,12 @@ Kickstart was created to be a base for building micro and small PHP applications
 **IMPORTANT:** Kickstart has two major platform requirements:
 
 * PHP 8.0 (or higher),
-* Composer 2.0 (or higher)
+* Composer 2.0 (or higher).
 
-To create a new project Kickstart-based project, run the following command and let Composer do its thing:
+To create a new project Kickstart-based project, run the following command in your CLI and let Composer do its thing:
 
 ```shell
-composer create-project noctis/kickstart-app app-name
+$ composer create-project --no-dev noctis/kickstart-app app-name
 ```
 
 **IMPORTANT:** replace `app-name` in the command above with whatever name you want. `app-name` is the name of the folder 
@@ -166,7 +166,7 @@ You can read more about what each folder in your project's directory is [here](d
 If you need to update the system part of your application, i.e. the `noctis/kickstart` package, just run:
 
 ```shell
-composer update noctis/kickstart
+$ composer update noctis/kickstart
 ```
 
 Seeing as updating a Kickstart-based project is not as simple as that, I will do my best to update the 
