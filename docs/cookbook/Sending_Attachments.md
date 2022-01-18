@@ -127,7 +127,7 @@ final class SendFileAction implements ActionInterface
         return $this->sendFile(
             '/tmp/result.png',
             'image/png',
-            new Disposition('result.png')
+            Disposition::attachment('result.png')
         );
     }
 }
@@ -180,7 +180,7 @@ final class SendContentAction implements ActionInterface
         return $this->sendContent(
             $content,
             'text/csv; charset=UTF-8',
-            new Disposition('output.csv')
+            Disposition::attachment('output.csv')
         );
     }
 }
@@ -237,7 +237,7 @@ final class SendResourceAction implements ActionInterface
         return $this->sendResource(
             $resource,
             'text/csv; charset=UTF-8',
-            new Disposition('output.csv')
+            Disposition::attachment('output.csv')
         );
     }
 }
