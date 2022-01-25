@@ -12,7 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Setup PHP
+      uses: shivammathur/setup-php@2.16.0
+      with:
+        php-version: '8.0'
+        tools: composer-require-checker
+
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -28,6 +35,9 @@ jobs:
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
+
+    - name: Check for implicit requirements
+      run: composer-require-checker
 
     - name: Run Psalm
       run: composer run-script psalm ./src

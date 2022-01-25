@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "~8.0.0",
         "composer-runtime-api": "^2",
         "noctis/kickstart": "^2.3",
         "paragonie/easydb": "^2.11",
@@ -42,7 +42,10 @@
         "phpcs": "phpcs --standard=PSR12"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     },
     "extra": {
         "app-version": "2.3.0"
