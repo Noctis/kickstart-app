@@ -36,6 +36,9 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+    - name: Check for implicit requirements
+      run: composer-require-checker
+
     - name: Run Psalm
       run: composer run-script psalm ./src
 
