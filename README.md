@@ -24,12 +24,12 @@ Kickstart was created to be a base for building micro and small PHP applications
 **IMPORTANT:** Kickstart has two major platform requirements:
 
 * PHP 8.0 (or higher),
-* Composer 2.0 (or higher)
+* Composer 2.0 (or higher).
 
-To create a new project Kickstart-based project, run the following command and let Composer do its thing:
+To create a new project Kickstart-based project, run the following command in your CLI and let Composer do its thing:
 
 ```shell
-composer create-project noctis/kickstart-app app-name
+$ composer create-project --no-dev noctis/kickstart-app app-name
 ```
 
 **IMPORTANT:** replace `app-name` in the command above with whatever name you want. `app-name` is the name of the folder 
@@ -65,7 +65,8 @@ The project's configuration can be found in the `.env` file, in its root directo
 This is how the `.env` file looks by default:
 
 ```dotenv
-debug=false
+# Valid values: prod, dev
+APP_ENV=dev
 # "/" for root-dir, "/foo" (without trailing slash) for sub-dir
 basehref=/
 db_host=localhost
@@ -77,23 +78,38 @@ db_port=3306
 
 Here's a rundown of what each of these options mean:
 
-### `debug`
+### `APP_ENV`
 
-Setting this option to `false` changes two things:
+This option can take one of two values:
+
+* `prod`, or
+* `dev`.
+
+Setting it to `prod` changes three things:
 
 * PHP error messages are hidden,
-* templates (views) are cached; any changes made to them will NOT be visible upon refreshing the page in the browser.
+* templates (views) are cached; any changes made to them will NOT be visible upon refreshing the page in the browser,
+* the DIC (dependency injection container) will be 
+  [compiled & saved into a file](https://php-di.org/doc/performances.html#deployment-in-production) 
+  (in `var/cache/container` by default), which will increase the application's performance, but at the cost of the DIC 
+  ignoring any changes in dependency injection's configuration from here on out.
 
-Setting this option to `true` causes:
+Setting it to `dev` causes:
 
 * PHP error messages to be displayed,
 * templates (views) are not cached; any changes made to them will immediately be visible upon refreshing the page in the
-  browser.
+  browser,
+* the DIC will notice any changes made to the dependency injection configuration, at the cost of slightly worse
+  application's performance.
 
-**This option should be set to `false` in production environments, and set to `true` during development.**
+**This option should be set to `prod` in production environments, and set to `dev` during development.**
 
 **If you're making changes to your templates/views and they're not showing up in your browser - either clear the cache,
-by deleting the contents of the `var/cache/templates` directory, or set the `debug` option in `.env` to `true`.**
+by deleting the contents of the `var/cache/templates` directory, or set the `APP_ENV` option in `.env` to `dev`.**
+
+**If you're making changes to [service providers](docs/Service_Providers.md) or classes' constructors (dependency 
+injection) and the DIC (dependency injection container) fails to see them, clear the contents of the 
+`var/cache/container` directory or set the `APP_ENV` option in `.env` file to `dev`**  
 
 ### `basehref`
 
@@ -150,12 +166,13 @@ You can read more about what each folder in your project's directory is [here](d
 If you need to update the system part of your application, i.e. the `noctis/kickstart` package, just run:
 
 ```shell
-composer update noctis/kickstart
+$ composer update noctis/kickstart
 ```
 
-Seeing as updating a Kickstart project is not as simple as that, I will do my best to update the `noctis/kickstart-app`
-package (this one) as rarely as possible. When I do release a new version of it, I will provide instructions on how to
-upgrade in a `UPDATING.md` file.
+Seeing as updating a Kickstart-based project is not as simple as that, I will do my best to update the 
+`noctis/kickstart-app` package (this one) as rarely as possible. When I do release a new version of it and specific
+actions are needed to update the application part, you will find a version-specific guide inside the 
+[`docs/upgrading`](docs/upgrading) folder of this project. 
 
 I will also keep the version numbers between both packages consistent. For example, when I make changes to the 
 `noctis/kickstart` package that are incompatible with `noctis/kickstart-app` 2.x, I will release them as version 3.x
@@ -168,15 +185,16 @@ Additional questions and answers relating to Kickstart can be found in the [FAQ]
 
 ## Recipes
 
-* [Adding a New Database Repository](docs/cookbook/Adding_Database_Repository.md),
+* [Acquiring Client IP Address](docs/cookbook/Acquiring_Client_IP_Address.md)
+* [Adding a New Database Repository](docs/cookbook/Adding_Database_Repository.md)
 * [Adding a Second Database Connection](docs/cookbook/Adding_Second_Database_Connection.md)
 * [Custom Console Command Loader](docs/cookbook/Custom_Console_Command_Loader.md)
-* [Creating a Custom HTTP Request Class](docs/cookbook/Custom_Http_Request.md)
 * [Registering a Custom Twig Function](docs/cookbook/Custom_Twig_Function.md)
+* [Implementing_Session_Handling.md](docs/cookbook/Implementing_Session_Handling.md)
 * [Creating a New Console Command](docs/cookbook/New_Console_Command.md)
 * [Creating a New HTTP Action](docs/cookbook/New_Http_Action.md)
 * [Registering a Twig Extension](docs/cookbook/Registering_Twig_Extension.md)
 * [Removing the Database Connectivity Functionality](docs/cookbook/Removing_Database_Connectivity.md)
 * [Removing Dummy (Example) Code](docs/cookbook/Removing_Dummy_Code.md)
 * [Removing the HTTP Functionality](docs/cookbook/Removing_Http_Functionality.md)
-* [Sending Files in Response](docs/cookbook/Sending_Files.md)
+* [Sending Attachments in Response](docs/cookbook/Sending_Attachments.md)

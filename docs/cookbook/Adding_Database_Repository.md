@@ -38,8 +38,31 @@ final class PostRepository extends AbstractDatabaseRepository implements PostRep
 ```
 
 Last thing you should do is to register the new repository (and its interface) in the Dependency Injection Container.
-To do that, edit the `src/Provider/RepositoryProvider.php` file and add the following line to the list:
+To do that, edit the `src/Provider/RepositoryProvider.php` file and add the new dependency injection definition to the 
+list:
 
 ```php
-App\Repository\PostRepositoryInterface::class => App\Repository\PostRepository::class,
+<?php
+
+declare(strict_types=1);
+
+namespace App\Provider;
+
+use App\Repository\PostRepository;
+use App\Repository\PostRepositoryInterface;
+use Noctis\KickStart\Provider\ServicesProviderInterface;
+
+final class RepositoryProvider implements ServicesProviderInterface
+{
+    /**
+     * @inheritDoc
+     */
+    public function getServicesDefinitions(): array
+    {
+        return [
+            // ...
+            PostRepositoryInterface::class => PostRepository::class,
+        ];
+    }
+}
 ```

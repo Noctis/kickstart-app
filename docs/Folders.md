@@ -31,6 +31,7 @@ An out-of-the-box Kickstart project has the following folder structure:
 |- templates
 |- var
 |  \- cache
+|     |- container
 |     \- templates
 \- vendor 
 ```
@@ -56,14 +57,6 @@ This folder contains the file `index.php` which is the entry point for executing
 application. This file (along with `.htaccess`) is an example of the "Front Controller" design pattern.
 
 `.htaccess` contains directives for Apache's `mod_rewrite` module.
-
-### src/Configuration
-
-This folder contains the `FancyConfiguration` class which extends Kickstart's base `Configuration` class. Both allow one 
-to access application's configuration, defined in the `.env` file.
-
-The difference between `FancyConfiguration` and the base `Configuration` classes is that the former allows you to define 
-option-specific getter methods, like `getDbHost()`, while the latter offers just the basic ones, eg. `get('db_host')`.
 
 ### src/Console/Command
 
@@ -102,7 +95,7 @@ parameter-specific ones, e.g. `getDate()`.
 
 ### src/Http/Routing
 
-This folder contains the `routes.php` file with a list of route definitions for HTTP actions.
+This folder contains the `routes.php` file with a list of routes for HTTP actions.
 
 ### src/Provider
 
@@ -127,7 +120,10 @@ This folder contains Twig templates, which are usually used to generate HTML, se
 It is recommended to use this folder for storing auto-generated files, which the user will have no interest in, i.e. 
 cache files.
 
-Out-of-the-box the `var/cache` folder is used to store compiled Twig templates, which speeds up generating HTML.
+Out-of-the-box:
+* the `var/cache/container` folder is used to store DIC's (dependency injection container) compiled configuration,
+  which speeds up running the application,
+* the `var/cache/templates` folder is used to store compiled Twig templates, which speeds up generating HTML.
 
 ### vendor
 
