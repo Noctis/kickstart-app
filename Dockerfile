@@ -1,4 +1,7 @@
-FROM php:8-apache
+FROM php:8.0-apache
+
+RUN docker-php-ext-configure pdo_mysql && \
+    docker-php-ext-install -j$(nproc) pdo_mysql
 
 ENV APP_PATH /var/www/kickstart-app
 ENV APP_DOCUMENT_ROOT ${APP_PATH}/public

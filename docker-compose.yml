@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    volumes:
+      - type: bind
+        source: .
+        target: /var/www/kickstart-app
+    ports:
+      - "8008:80"
+    depends_on:
+      - db
+    networks:
+      - kickstart-net
+
+  db:
+    image: mariadb:10.7-focal
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: true
+      MARIADB_USER: dbuser
+      MARIADB_PASSWORD: dbpass
+      MARIADB_DATABASE: dbname
+    ports:
+      - "6033:3306"
+    networks:
+      - kickstart-net
+
+networks:
+  kickstart-net: {}
