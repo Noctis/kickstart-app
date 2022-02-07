@@ -7,6 +7,14 @@ services:
       - type: bind
         source: .
         target: /var/www/kickstart-app
+
+      - type: bind
+        source: ./docker/php/conf.d/xdebug.ini
+        target: /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+      - type: bind
+        source: ./docker/php/conf.d/error_reporting.ini
+        target: /usr/local/etc/php/conf.d/error_reporting.ini
     ports:
       - "8008:80"
     depends_on:
