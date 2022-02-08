@@ -59,6 +59,9 @@ visible in your browser.
 
 The MariaDB server running in the `db` container will be available at `localhost:6603`.
 
+**REMEMBER:** If you're going to work on your application using Docker containers, make sure to set `APP_ENV` to `dev` 
+in your `.env` file!
+
 **By default, none of the options declared in the `.env` file are used in `docker-compose.yml`.**
 
 ### Xdebug
