@@ -15,9 +15,7 @@ require_once __DIR__ . '/../bootstrap.php';
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder
-    ->registerServicesProvider(new RoutingProvider(
-        require_once __DIR__ . '/../src/Http/Routing/routes.php'
-    ))
+    ->registerServicesProvider(new RoutingProvider())
     ->registerServicesProvider(new DatabaseConnectionProvider())
     ->registerServicesProvider(new HttpMiddlewareProvider())
     ->registerServicesProvider(new DummyServicesProvider())
@@ -33,4 +31,7 @@ $container = $containerBuilder->build();
 
 /** @var WebApplication $app */
 $app = $container->get(WebApplication::class);
+$app->setRoutes(
+    require_once __DIR__ . '/../src/Http/Routing/routes.php'
+);
 $app->run();
