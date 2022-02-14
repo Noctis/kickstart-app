@@ -15,7 +15,7 @@
         "php": "~8.0.0",
         "composer-runtime-api": "^2",
         "laminas/laminas-diactoros": "^2.8",
-        "noctis/kickstart": "^3.0",
+        "noctis/kickstart": "^3.1",
         "paragonie/easydb": "^2.11",
         "php-di/php-di": "^6.3",
         "psr/container": "^1.1",
@@ -40,7 +40,8 @@
         "post-create-project-cmd": [
             "@php -r \"file_exists('.env') || copy('.env-example', '.env');\""
         ],
-        "psalm": "psalm --config=psalm.xml.dist --shepherd",
+        "psalm": "psalm --config=psalm.xml.dist",
+        "psalm-ci": "psalm --config=psalm.xml.dist --shepherd",
         "phpcs": "phpcs --standard=PSR12",
         "reset": "rm -rf ./var/cache/templates/* && rm -rf var/cache/container/*"
     },
@@ -51,7 +52,7 @@
         }
     },
     "extra": {
-        "app-version": "3.0.0"
+        "app-version": "3.1.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
