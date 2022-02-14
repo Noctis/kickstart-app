@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fda7d5a4f8aa7a505a84f5d0a88cdb6d",
+    "content-hash": "c1e9abf85eac5aa1671a7bd645cd0029",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -549,7 +549,7 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "3.1.0",
+            "version": "3.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
@@ -609,7 +609,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/3.1.0"
+                "source": "https://github.com/Noctis/kickstart/tree/master"
             },
             "time": "2022-02-14T10:52:45+00:00"
         },
