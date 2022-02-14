@@ -40,7 +40,7 @@ jobs:
       run: composer-require-checker
 
     - name: Run Psalm
-      run: composer run-script psalm ./src
+      run: composer run-script psalm-ci ./src
 
     - name: Run Coding Style Check
       run: composer run-script phpcs ./src
