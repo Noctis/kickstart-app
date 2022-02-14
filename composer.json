@@ -40,7 +40,8 @@
         "post-create-project-cmd": [
             "@php -r \"file_exists('.env') || copy('.env-example', '.env');\""
         ],
-        "psalm": "psalm --config=psalm.xml.dist --shepherd",
+        "psalm": "psalm --config=psalm.xml.dist",
+        "psalm-ci": "psalm --config=psalm.xml.dist --shepherd",
         "phpcs": "phpcs --standard=PSR12",
         "reset": "rm -rf ./var/cache/templates/* && rm -rf var/cache/container/*"
     },
