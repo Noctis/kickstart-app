@@ -23,8 +23,8 @@ Kickstart was created to be a base for building micro and small PHP applications
 
 **IMPORTANT:** Kickstart has two major platform requirements:
 
-* PHP 8.0 (or higher),
-* Composer 2.0 (or higher).
+* PHP 8.0.x,
+* Composer 2.0.x.
 
 To create a new project Kickstart-based project, run the following command in your CLI and let Composer do its thing:
 
@@ -34,6 +34,42 @@ $ composer create-project --no-dev noctis/kickstart-app app-name
 
 **IMPORTANT:** replace `app-name` in the command above with whatever name you want. `app-name` is the name of the folder 
 which will be created in the current working directory.
+
+### Docker Compose
+
+**The `docker-compose.yml` file has been designed for developing purposes only. DO NOT USE IT IN A PRODUCTION 
+ENVIRONMENT!**
+
+After creating your new Kickstart-based app _via_ `composer create-project`, you can run it using Docker Compose. To do 
+that, execute the following command in CLI while inside your application's root directory:
+
+```shell
+$ docker-compose up -d
+```
+
+This will start two Docker containers: 
+
+* `web` - running Apache 2.4 & PHP 8.0, 
+* `db` - running MariaDB 10.7, with an empty database inside (see inside the 
+  [`.env-example`](https://github.com/Noctis/kickstart-app/blob/master/.env-example) file for that login credentials).
+
+Once the containers have been started, your application will be available in your browser under the 
+[http://localhost:8008/](http://localhost:8008/) URL. Any change you make in the application's code will be immediately
+visible in your browser.
+
+The MariaDB server running in the `db` container will be available at `localhost:6603`.
+
+**REMEMBER:** If you're going to work on your application using Docker containers, make sure to set `APP_ENV` to `dev` 
+in your `.env` file!
+
+**By default, none of the options declared in the `.env` file are used in `docker-compose.yml`.**
+
+### Xdebug
+
+The PHP 8.0 in the `web` container comes bundled with the [Xdebug](https://xdebug.org/) extension, so remote debugging
+will be available from the get go. You can find and modify Xdebug's configuration in the 
+[`docker/php/conf.d/xdebug.ini`](https://github.com/Noctis/kickstart-app/blob/master/docker/php/conf.d/xdebug.ini) file.
+Modifying this file will require restarting the `web` container though.
 
 ## OK, it installed. Now what?
 
@@ -109,7 +145,7 @@ by deleting the contents of the `var/cache/templates` directory, or set the `APP
 
 **If you're making changes to [service providers](docs/Service_Providers.md) or classes' constructors (dependency 
 injection) and the DIC (dependency injection container) fails to see them, clear the contents of the 
-`var/cache/container` directory or set the `APP_ENV` option in `.env` file to `dev`**  
+`var/cache/container` directory or set the `APP_ENV` option in `.env` file to `dev`**
 
 ### `basehref`
 
