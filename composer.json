@@ -15,7 +15,7 @@
         "php": "~8.0.0",
         "composer-runtime-api": "^2",
         "laminas/laminas-diactoros": "^2.8",
-        "noctis/kickstart": "~3.1.0",
+        "noctis/kickstart": "^3.2",
         "paragonie/easydb": "^2.11",
         "php-di/php-di": "^6.3",
         "psr/container": "^1.1",
@@ -52,7 +52,7 @@
         }
     },
     "extra": {
-        "app-version": "3.1.4"
+        "app-version": "3.2.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
