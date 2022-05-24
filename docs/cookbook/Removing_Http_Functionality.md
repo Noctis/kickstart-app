@@ -39,7 +39,7 @@ services:
   db:
     image: mariadb:10.7-focal
     environment:
-      MARIADB_RANDOM_ROOT_PASSWORD: true
+      MARIADB_RANDOM_ROOT_PASSWORD: yesplease
       MARIADB_USER: dbuser
       MARIADB_PASSWORD: dbpass
       MARIADB_DATABASE: dbname
