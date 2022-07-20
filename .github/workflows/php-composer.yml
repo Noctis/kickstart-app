@@ -44,3 +44,6 @@ jobs:
 
     - name: Run Coding Style Check
       run: composer run-script phpcs ./src
+
+    - name: Check dependencies for security advisories
+      run: composer update --dry-run roave/security-advisories
