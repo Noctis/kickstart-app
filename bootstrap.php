@@ -19,8 +19,11 @@ $dotenv->required([
     'db_pass',
     'db_name',
     'db_port'
-]);
-$dotenv->required('db_port')->isInteger();
+])
+->notEmpty();
+$dotenv->required('db_port')
+    ->notEmpty()
+    ->isInteger();
 
 $whoops = new Whoops();
 if (Configuration::isProduction()) {
