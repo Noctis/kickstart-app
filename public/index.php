@@ -13,6 +13,8 @@ use Noctis\KickStart\Provider\RoutingProvider;
 
 require_once __DIR__ . '/../bootstrap.php';
 
+/** @var string */
+$basePath = Configuration::get('basepath');
 $containerBuilder = new ContainerBuilder();
 $containerBuilder
     ->registerServicesProvider(new RoutingProvider())
@@ -22,8 +24,6 @@ $containerBuilder
     ->registerServicesProvider(new RepositoryProvider())
 ;
 if (Configuration::isProduction()) {
-    /** @var string */
-    $basePath = Configuration::get('basepath');
     $containerBuilder->enableCompilation($basePath . '/var/cache/container');
 }
 
@@ -32,6 +32,6 @@ $container = $containerBuilder->build();
 /** @var WebApplication $app */
 $app = $container->get(WebApplication::class);
 $app->setRoutes(
-    require_once __DIR__ . '/../src/Http/Routing/routes.php'
+    require_once $basePath . '/src/Http/Routing/routes.php'
 );
 $app->run();
