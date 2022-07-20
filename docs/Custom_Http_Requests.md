@@ -43,7 +43,7 @@ return [
 ];
 ```
 
-An instance of your custom request's class will be provided to the HTTP action through its `execute()` method, as the
+An instance of your custom request's class will be provided to the HTTP action through its `process()` method, as the
 `$request` variable:
 
 ```php
