@@ -23,10 +23,6 @@ $containerBuilder
     ->registerServicesProvider(new DummyServicesProvider())
     ->registerServicesProvider(new RepositoryProvider())
 ;
-if (Configuration::isProduction()) {
-    $containerBuilder->enableCompilation($basePath . '/var/cache/container');
-}
-
 $container = $containerBuilder->build();
 
 /** @var WebApplication $app */
