@@ -12,7 +12,9 @@ return [
 
     // Example route: the `id` parameter is required and must be a number
     //Route::get('/user/{id:\d+}', DummyAction::class),
+    // The `id` parameter can be fetched in action by calling `$request->getAttribute('id')`
 
     // Example route: the `title` parameter is required (as is the `/` in front of it)
     //Route::get('/project[/{title}]', DummyAction::class),
+    // The `title` parameter can be fetched in action by calling `$request->getAttribute('title')`
 ];
