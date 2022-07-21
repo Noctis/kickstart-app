@@ -38,8 +38,15 @@ itself will not be called.
 A list of routes can be found in the `src/Http/Routing/routes.php` file. It's a simple PHP file, which returns an array 
 of `Noctis\KickStart\Http\Routing\Route` objects.
 
-The `Route` class offers two static factory methods, `get()` and `post()`, both of which accept up to three arguments,
-with the first two being mandatory:
+The `Route` class offers the following static factory methods for their corresponding HTTP methods:
+
+* `get()`,
+* `post()`, 
+* `put()`,
+* `patch()`,
+* `delete()`.
+
+All of those methods accept up to three arguments, with the first two being mandatory:
 
 * the URI, e.g. `/`, `/foo` or `/product/show`,
 * the class name of the HTTP action,
