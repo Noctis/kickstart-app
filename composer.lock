@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c614341f635588a8916bd7b39ebcb408",
+    "content-hash": "901095c8212495942cd5c3317ad9a4f3",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -620,16 +620,16 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "dev-feature/custom-requests-refactor",
+            "version": "4.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "6918b5a12d9250c2fcc74a0a104e8ce3cb0e4a78"
+                "reference": "4ccdfcad5e3d4fa49995c8fe6400b7ef04c7a071"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/6918b5a12d9250c2fcc74a0a104e8ce3cb0e4a78",
-                "reference": "6918b5a12d9250c2fcc74a0a104e8ce3cb0e4a78",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/4ccdfcad5e3d4fa49995c8fe6400b7ef04c7a071",
+                "reference": "4ccdfcad5e3d4fa49995c8fe6400b7ef04c7a071",
                 "shasum": ""
             },
             "require": {
@@ -656,6 +656,7 @@
                 "symfony/var-dumper": "^5.4",
                 "vimeo/psalm": "^4.19"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -680,9 +681,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/feature/custom-requests-refactor"
+                "source": "https://github.com/Noctis/kickstart/tree/4.0.x"
             },
-            "time": "2022-07-19T12:52:43+00:00"
+            "time": "2022-07-26T07:36:21+00:00"
         },
         {
             "name": "opis/closure",
@@ -4266,7 +4267,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "noctis/kickstart": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
