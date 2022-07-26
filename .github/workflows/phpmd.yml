@@ -17,7 +17,7 @@ name: PHPMD
 
 on:
   push:
-    branches: [ "4.0.x", *.*.x ]
+    branches: [ "4.0.x", "*.*.x" ]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "4.0.x" ]
