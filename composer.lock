@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b90ad989f89b22d8670159a191f394c8",
+    "content-hash": "a024bd10d6d54396b052766ce227a029",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -620,22 +620,22 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "3.2.1",
+            "version": "4.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "5eb1dc0dcb68aa51f8d9e7d23f1349f77bedbabe"
+                "reference": "9875b77da443fadb0e218e4a012270b9d08f979f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/5eb1dc0dcb68aa51f8d9e7d23f1349f77bedbabe",
-                "reference": "5eb1dc0dcb68aa51f8d9e7d23f1349f77bedbabe",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/9875b77da443fadb0e218e4a012270b9d08f979f",
+                "reference": "9875b77da443fadb0e218e4a012270b9d08f979f",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2",
                 "fig/http-message-util": "^1.1",
-                "laminas/laminas-diactoros": "^2.11.1",
+                "laminas/laminas-diactoros": "^2.8",
                 "laminas/laminas-httphandlerrunner": "^2.1",
                 "laminas/laminas-session": "^2.12",
                 "nikic/fast-route": "^1.3",
@@ -656,6 +656,7 @@
                 "symfony/var-dumper": "^5.4",
                 "vimeo/psalm": "^4.19"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -680,9 +681,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/3.2.1"
+                "source": "https://github.com/Noctis/kickstart/tree/4.0.x"
             },
-            "time": "2022-07-28T11:23:08+00:00"
+            "time": "2022-08-02T07:54:18+00:00"
         },
         {
             "name": "opis/closure",

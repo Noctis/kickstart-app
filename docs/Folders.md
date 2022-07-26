@@ -89,9 +89,8 @@ You can read more about guards [here](HTTP.md) (`Middleware` section, at the bot
 
 ### src/Http/Request
 
-This folder contains optional classes representing requests, to be passed (as dependencies) to HTTP actions. A standard
-Request class contains a generic `get()` getter method for fetching request's parameters, while a custom one may contain
-parameter-specific ones, e.g. `getDate()`.
+This folder contains optional classes representing requests, to be passed to HTTP actions, instead of Kickstart's 
+standard request object. A custom request class may, for example contain parameter-specific getters, e.g. `getDate()`.
 
 ### src/Http/Routing
 
