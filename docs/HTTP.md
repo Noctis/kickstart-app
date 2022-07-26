@@ -46,7 +46,7 @@ The `Route` class offers the following static factory methods for their correspo
 * `patch()`,
 * `delete()`.
 
-All of those methods accept up to three arguments, with the first two being mandatory:
+All of those methods accept up to four arguments, with the first two being mandatory:
 
 * the URI, e.g. `/`, `/foo` or `/product/show`,
 * the class name of the HTTP action,
@@ -83,6 +83,29 @@ return [
     Route::get('/', DummyAction::class, [DummyGuard::class]),
 ];
 ```
+
+The fourth argument is also optional - it's the name of a custom request class that should be passed to HTTP action's
+`process()` method, as its `$request` parameter. Here's an example of route using a custom request class defined, with 
+no middlewares:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use App\Http\Action\DummyAction;
+use App\Http\Request\DummyRequest;
+use Noctis\KickStart\Http\Routing\Route;
+
+return [
+    Route::get('/', DummyAction::class, [], DummyRequest::class),
+];
+```
+
+You can read more about custom HTTP request classes [here](Custom_Http_Requests.md).
+
+If no value is provided for this argument, the given HTTP action will receive an instance of Kickstart's standard
+request class - `Noctis\KickStart\Http\Request\Request`.
 
 ## HTTP Actions
 
@@ -156,8 +179,8 @@ return [
 ];
 ```
 
-Now, when a matching URL is used, for example: `/product/13/details`, the value `13` will be available in the request
-object, under the `productID` name. To retrieve it, call the `getAttribute()` method on the request object:
+Now, when a matching URL is called, for example: `/product/13/details`, the value `13` will be available in the request
+object, as a `productID` attribute. To retrieve it, call the `getAttribute()` method on the request object:
 
 ```php
 <?php
@@ -193,9 +216,10 @@ declare(strict_types=1);
 
 namespace App\Http\Request;
 
-use Noctis\KickStart\Http\Request\AbstractRequest;
+use Noctis\KickStart\Http\Request\Request;
+use Psr\Http\Message\ServerRequestInterface;
 
-final class DummyRequest extends AbstractRequest
+final class DummyRequest extends Request implements ServerRequestInterface
 {
     public function getProductID(): int
     {
@@ -221,22 +245,33 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class DummyAction implements ActionInterface
 {
-    private DummyRequest $request;
-
-    public function __construct(DummyRequest $request)
-    {
-        $this->request = $request;
-    }
-
     /**
-     * @inheritDoc
+     * @param DummyRequest $request
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $productID = $this->request
-            ->getProductID();
+        $productID = $request->getProductID();
     }
 }
+```
+
+**IMPORTANT:** Remember that for the action to receive an instance of your custom request class, instead of a standard
+one, the action's route definition must include the custom request class name:
+
+```php
+<?php
+
+// src/Http/Routing/routes.php
+
+declare(strict_types=1);
+
+use App\Http\Action\DummyAction;
+use App\Http\Request\DummyRequest;
+use Noctis\KickStart\Http\Routing\Route;
+
+return [
+    Route::get('/', DummyAction::class, [], DummyRequest::class),
+];
 ```
 
 ## Responses

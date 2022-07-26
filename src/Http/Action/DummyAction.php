@@ -16,23 +16,22 @@ final class DummyAction implements ActionInterface
 {
     use RenderTrait;
 
-    private DummyRequest $request;
-
-    public function __construct(DummyRequest $request, HtmlResponseFactoryInterface $htmlResponseFactory)
+    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
     {
-        $this->request = $request;
         $this->htmlResponseFactory = $htmlResponseFactory;
     }
 
+    /**
+     * @param DummyRequest $request
+     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): HtmlResponse
     {
-        $name = $this->request
-            ->getQueryParams()['name'] ?? 'World';
+        /** @var string $name */
+        $name = $request->getQueryParams()['name'] ?? 'World';
 
         return $this->render('dummy.html.twig', [
             'name' => $name,
-            'foo'  => $this->request
-                ->getFoo()
+            'foo'  => $request->getFoo()
         ]);
     }
 }
