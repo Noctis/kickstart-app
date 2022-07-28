@@ -549,22 +549,22 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "67dc6b07f507de86c0c868327163fee6b000ecdd"
+                "reference": "5e8d0ec18cc05f9754244f80ee910ea408bb7efc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/67dc6b07f507de86c0c868327163fee6b000ecdd",
-                "reference": "67dc6b07f507de86c0c868327163fee6b000ecdd",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/5e8d0ec18cc05f9754244f80ee910ea408bb7efc",
+                "reference": "5e8d0ec18cc05f9754244f80ee910ea408bb7efc",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2",
                 "fig/http-message-util": "^1.1",
-                "laminas/laminas-diactoros": "^2.8",
+                "laminas/laminas-diactoros": "^2.11.1",
                 "laminas/laminas-httphandlerrunner": "^2.1",
                 "laminas/laminas-session": "^2.12",
                 "nikic/fast-route": "^1.3",
@@ -609,9 +609,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/3.1.1"
+                "source": "https://github.com/Noctis/kickstart/tree/3.1.2"
             },
-            "time": "2022-05-26T10:48:23+00:00"
+            "time": "2022-07-28T11:07:33+00:00"
         },
         {
             "name": "opis/closure",
