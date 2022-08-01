@@ -23,6 +23,7 @@ final class DummyAction implements ActionInterface
 
     /**
      * @param DummyRequest $request
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): HtmlResponse
     {
