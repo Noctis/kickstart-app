@@ -193,6 +193,7 @@ Additional questions and answers relating to Kickstart can be found in the [FAQ]
 * [Acquiring Client IP Address](docs/cookbook/Acquiring_Client_IP_Address.md)
 * [Adding a New Database Repository](docs/cookbook/Adding_Database_Repository.md)
 * [Adding a Second Database Connection](docs/cookbook/Adding_Second_Database_Connection.md)
+* [Adding User Authentication](docs/cookbook/Adding_User_Authentication.md)
 * [Custom Console Command Loader](docs/cookbook/Custom_Console_Command_Loader.md)
 * [Registering a Custom Twig Function](docs/cookbook/Custom_Twig_Function.md)
 * [Implementing_Session_Handling.md](docs/cookbook/Implementing_Session_Handling.md)
