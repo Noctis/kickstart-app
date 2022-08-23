@@ -1,158 +1,225 @@
 # Service Providers
 
-Service providers in a Kickstart application act as a provider of [autowiring](https://php-di.org/doc/autowiring.html)
-definitions for Kickstart`s DIC (Dependency Injection Container) - [PHP-DI 6](https://php-di.org/).
+## Definition
 
-Each Service Provider implements the `Noctis\KickStart\Provider\ServicesProviderInterface` interface and has a `get()`
-method which returns an array of definitions. Each key of this array should be an interface or class name, while each 
-value should be one of the following:
+Service providers act as a registry, which Kickstart uses to build the DIC - the 
+[Dependency Injection Container](https://medium.com/tech-tajawal/dependency-injection-di-container-in-php-a7e5d309ccc6). 
+DIC automatically provides classes with any dependencies they required, so that they may be properly instantiated.
 
-* a class name,
-* a callable (i.e. factory), returning an object,
-* a valid [definition value](https://php-di.org/doc/php-definitions.html#definition-types) accepted by PHP-DI.
+## Requirements
+
+Service providers are usually found in the application's `src/Provider` directory. Every service provider class must:
+
+* implement the `Noctis\KickStart\Provider\ServicesProviderInterface`,
+* its `getServicesDefinitions()` method must return an array of key-value pairs, where:
+  * key is a fully-qualified class name (recommended), or a unique string identifier,
+  * value is a reference to that key's implementation.
+
+For a service provider to be actually used, it needs to be registered in the application's entry points, i.e. the 
+`bin/console` and/or `public/index.php` files.
 
 ## Examples
 
-For example, if there is an `App\Service\DummyServiceInterface` interface defined, a class called 
-`App\Service\DummyService` which implements it, and you wish for DIC to provide an instance of the latter every time 
-the former is requested via dependency injection (i.e. via constructor), this is how the entry in the array returned by 
-the Service Provider should look like:
-
-```php
-use App\Service\DummyService;
-use App\Service\DummyServiceInterface;
-
-// ...
-
-public function getServicesDefinitions(): array
-{
-    return [
-        // ...
-        DummyServiceInterface::class => DummyService::class,
-        // ...
-    ];
-}
-```
-
-If you wish to define how the `App\Service\DummyService` instance is created, you can provide a callable (a factory).
-In that case here's how the entry in the array returned by the Service Provider should look like:
-
-```php
-use App\Service\DummyService;
-use App\Service\DummyServiceInterface;
-use Psr\Container\ContainerInterface;
-
-// ...
-
-public function getServicesDefinitions(): array
-{
-    return [
-        // ...
-        DummyServiceInterface::class => function (ContainerInterface $container): DummyService {
-            return new DummyService('foo');    
-        },
-        // ...
-    ];
-}
-```
-
-A callable can request an instance of the DIC, like in the above example (the `$container` variable).
-
-If you wish to know more, for example how to let DIC create an instance of a requested object, while you provide one of
-the constructor values yourself, consult PHP-DI's 
-[documentation on the matter](https://php-di.org/doc/php-definitions.html#autowired-objects) or check the Service
-Providers within the application (in the `src/Provider` directory) or the system (in the 
-`vendor/noctis/kickstart/src/provider` directory of the application).
-
-## Adding new Service Providers/Deleting existing
-
-How does Kickstart know which Service Providers to use? If you create a new Service Provider class will the application
-notice it right away? No, it won't. Each Service Provider needs to be registered in the application's entry point. A
-standard Kickstart project has two entry points:
-
-* `bin/console` - for console applications,
-* `public/index.php` - for Web applications.
-
-To register a new service provider, an instance of it must be passed to the `registerServicesProvider()` method of the
-container builder.
-
-Here's how a default `bin/console` file look like, which already registers a few service providers:
-
-```php
-#!/usr/bin/env php
-<?php
-
-declare(strict_types=1);
-
-use App\Console\Command\DummyCommand;
-use App\Provider\DatabaseConnectionProvider;
-use App\Provider\DummyServicesProvider;
-use App\Provider\RepositoryProvider;
-use Noctis\KickStart\Configuration\Configuration;
-use Noctis\KickStart\Console\ConsoleApplication;
-use Noctis\KickStart\Console\ContainerBuilder;
-
-require_once __DIR__ . '/../bootstrap.php';
-
-$containerBuilder = new ContainerBuilder();
-$containerBuilder
-    ->registerServicesProvider(new DatabaseConnectionProvider())
-    ->registerServicesProvider(new DummyServicesProvider())
-    ->registerServicesProvider(new RepositoryProvider())
-;
-if (Configuration::isProduction()) {
-    /** @var string */
-    $basePath = Configuration::get('basepath');
-    $containerBuilder->enableCompilation($basePath . '/var/cache/container');
-}
-
-$container = $containerBuilder->build();
-
-/** @var ConsoleApplication $app */
-$app = $container->get(ConsoleApplication::class);
-$app->setCommands([
-    DummyCommand::class
-]);
-$app->run();
-```
-
-And here's how the default `public/index.php` file looks like, which also registers some service providers:
+Say your HTTP action - `App\Http\Action\DummyAction` - requires an implementation of the 
+`App\Service\DummyServiceInterface` interface:
 
 ```php
 <?php
 
 declare(strict_types=1);
 
-use App\Provider\DatabaseConnectionProvider;
-use App\Provider\DummyServicesProvider;
-use App\Provider\HttpMiddlewareProvider;
-use App\Provider\RepositoryProvider;
-use Noctis\KickStart\Configuration\Configuration;
-use Noctis\KickStart\Http\ContainerBuilder;
-use Noctis\KickStart\Http\WebApplication;
-use Noctis\KickStart\Provider\RoutingProvider;
+namespace App\Http\Action;
 
-require_once __DIR__ . '/../bootstrap.php';
+use App\Service\DummyServiceInterface;
+use Noctis\KickStart\Http\Action\ActionInterface;
 
-$containerBuilder = new ContainerBuilder();
-$containerBuilder
-    ->registerServicesProvider(new RoutingProvider(
-        require_once __DIR__ . '/../src/Http/Routing/routes.php'
-    ))
-    ->registerServicesProvider(new DatabaseConnectionProvider())
-    ->registerServicesProvider(new HttpMiddlewareProvider())
-    ->registerServicesProvider(new DummyServicesProvider())
-    ->registerServicesProvider(new RepositoryProvider())
-;
-if (Configuration::isProduction()) {
-    /** @var string */
-    $basePath = Configuration::get('basepath');
-    $containerBuilder->enableCompilation($basePath . '/var/cache/container');
+final class DummyAction implements ActionInterface
+{
+    private DummyServiceInterface $service;
+
+    public function __construct(DummyServiceInterface $service)
+    {
+        $this->service = $service;
+    }
+
+    // ...
 }
-
-$container = $containerBuilder->build();
-
-/** @var WebApplication $app */
-$app = $container->get(WebApplication::class);
-$app->run();
 ```
+
+When the action is about to be instantiated, DIC will inspect its constructor and try to provide an implementation of
+that interface. There exists one implementation of that interface - the `App\Service\DummyService` class:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service;
+
+final class DummyService implements DummyServiceInterface
+{
+    // ...
+}
+```
+
+To inform DIC that when some class needs an implementation of `DummyServiceInterface`, they should be provided with an 
+instance of `DummyService`, the following definition should be added to a service provider:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Provider;
+
+use App\Service\DummyService;
+use App\Service\DummyServiceInterface;
+use Noctis\KickStart\Provider\ServicesProviderInterface;
+
+final class DummyServicesProvider implements ServicesProviderInterface
+{
+    /**
+     * @inheritDoc
+     */
+    public function getServicesDefinitions(): array
+    {
+        return [
+            DummyServiceInterface::class => DummyService::class,
+            // ...
+        ];
+    }
+}
+```
+
+Now, let's say that the `DummyService` class has its own dependency, but it's not a class or an interface, but a 
+primitive value, an integer in this case:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service;
+
+final class DummyService implements DummyServiceInterface
+{
+    private int $limit;
+
+    public function __construct(int $limit)
+    {
+        $this->limit = $limit;
+    }
+
+    // ...
+}
+```
+
+How do you tell the DIC, what should it provide as the `$limit` value when instantiating the `DummyService` class?
+
+If you want to specify a specific value, for a specific constructor parameter, your service definition should look 
+like so:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Provider;
+
+use App\Service\DummyService;
+use App\Service\DummyServiceInterface;
+use Noctis\KickStart\Provider\ServicesProviderInterface;
+use Noctis\KickStart\Service\Container\Definition\Autowire;
+
+final class DummyServicesProvider implements ServicesProviderInterface
+{
+    /**
+     * @inheritDoc
+     */
+    public function getServicesDefinitions(): array
+    {
+        return [
+            DummyServiceInterface::class => new Autowire(
+                DummyService::class,
+                ['limit' => 5]
+            ),
+            // ...
+        ];
+    }
+}
+```
+
+The definition above should be read as: _when someone requires an implementation of `DummyServiceInterface`, they should
+be provided with an instance of `DummyService`, instantiated using `5` as that implementation's `$limit` constructor parameter
+value_.
+
+You don't need to provide every single constructor's parameter value like this, only those for which DIC won't be able
+to automatically guess values for.
+
+## Advanced Examples
+
+Suppose you have a repository which requires a database connection:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Repository;
+
+use ParagonIE\EasyDB\EasyDB;
+
+final class DummyRepository implements DummyRepositoryInterface
+{
+    private EasyDB $db;
+
+    public function __construct(EasyDB $db)
+    {
+        $this->db = $db;
+    }
+
+    // ...
+}
+```
+
+Normally that wouldn't be a problem, but your application has 
+[more than one database connections defined](cookbook/Adding_Second_Database_Connection.md) and they're registered in
+the DIC under names: `primary_db` and `secondary_db`, instead of class names. How do you tell the DIC to provide this
+repository with the `secondary_db` database connection?
+
+Use the following service definition, using the `Autowire` and `Reference` definition helpers:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Provider;
+
+use App\Repository\DummyRepository;
+use App\Repository\DummyRepositoryInterface;
+use Noctis\KickStart\Provider\ServicesProviderInterface;
+use Noctis\KickStart\Service\Container\Definition\Autowire;
+use Noctis\KickStart\Service\Container\Definition\Reference;
+
+final class RepositoryProvider implements ServicesProviderInterface
+{
+    /**
+     * @inheritDoc
+     */
+    public function getServicesDefinitions(): array
+    {
+        return [
+            DummyRepositoryInterface::class => new Autowire(
+                DummyRepository::class,
+                ['db' => new Reference('secondary_db')]
+            ),
+            // ...
+        ];
+    }
+}
+```
+
+There is also one more definition helper available: `Decorator`. This can be used to "decorate"/"extend" a service
+definition already registered in the DIC. This can be used to, for example 
+[add custom functions to the Twig template engine](cookbook/Custom_Twig_Function.md).

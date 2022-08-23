@@ -195,9 +195,8 @@ use Laminas\Authentication\Storage\Session;
 use Laminas\Authentication\Storage\StorageInterface;
 use Noctis\KickStart\Configuration\Configuration;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
-
-use function DI\autowire;
-use function DI\get;
+use Noctis\KickStart\Service\Container\Definition\Autowire;
+use Noctis\KickStart\Service\Container\Definition\Reference;
 
 final class SecurityProvider implements ServicesProviderInterface
 {
@@ -208,27 +207,20 @@ final class SecurityProvider implements ServicesProviderInterface
     {
         return [
             AuthAdapterInterface::class => AuthAdapter::class,
-            AuthenticationService::class => autowire()
-                ->constructorParameter(
-                    'storage',
-                    get(StorageInterface::class)
-                )
-                ->constructorParameter(
-                    'adapter',
-                    get(AuthAdapterInterface::class)
-                ),
-            AuthenticationServiceInterface::class => autowire(AuthenticationService::class),
+            AuthenticationService::class => [
+                'storage' => new Reference(StorageInterface::class),
+                'adapter' => new Reference(AuthAdapterInterface::class)
+            ],
+            AuthenticationServiceInterface::class => AuthenticationService::class,
             AuthServiceInterface::class => AuthService::class,
             ResolverInterface::class => function (): ApacheResolver {
                 return new ApacheResolver(
                     Configuration::get('security.htpasswd_path')
                 );
             },
-            StorageInterface::class => autowire(Session::class)
-                ->constructorParameter(
-                    'namespace',
-                    Configuration::get('security.realm')
-                ),
+            StorageInterface::class => new Autowire(Session::class, [
+                'namespace' => Configuration::get('security.realm')
+            ]),
         ];
     }
 }

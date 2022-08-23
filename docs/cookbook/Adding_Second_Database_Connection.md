@@ -112,9 +112,8 @@ namespace App\Provider;
 
 use App\Repository\SecondaryRepository;
 use App\Repository\SecondaryRepositoryInterface;
-
-use function DI\autowire;
-use function DI\get;
+use Noctis\KickStart\Service\Container\Definition\Autowire;
+use Noctis\KickStart\Service\Container\Definition\Reference;
 
 final class RepositoryProvider implements ServicesProviderInterface
 {
@@ -125,15 +124,13 @@ final class RepositoryProvider implements ServicesProviderInterface
     {
         return [
             // ...
-            SecondaryRepositoryInterface::class => autowire(SecondaryRepository::class)
-                ->constructorParameter(
-                    'db',
-                    get('secondary_db_connection')
-                ),
+            SecondaryRepositoryInterface::class => new Autowire(SecondaryRepository::class, [
+                'db' => new Reference('secondary_db_connection')
+            ]),
             // ...
         ];
     }
-} 
+}
 ```
 
 Now whenever an instance of `SecondaryRepositoryInterface` is requested from the DIC, an instance of `SecodaryRepository`
