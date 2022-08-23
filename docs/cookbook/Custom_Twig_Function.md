@@ -24,9 +24,8 @@ declare(strict_types=1);
 namespace App\Provider;
 
 use Noctis\KickStart\Provider\ServicesProviderInterface;
+use Noctis\KickStart\Service\Container\Definition\Decorator;
 use Noctis\KickStart\Service\TemplateRendererInterface;
-
-use function DI\decorate;
 
 final class ServicesProvider implements ServicesProviderInterface
 {
@@ -36,7 +35,7 @@ final class ServicesProvider implements ServicesProviderInterface
     public function getServicesDefinitions(): array
     {
         return [
-            TemplateRendererInterface::class => decorate(
+            TemplateRendererInterface::class => new Decorator(
                 function (TemplateRendererInterface $templateRenderer): TemplateRendererInterface {
                     $templateRenderer->registerFunction(
                         'percentage',
@@ -59,8 +58,5 @@ final class ServicesProvider implements ServicesProviderInterface
 }
 ```
 
-Notice that we're using the `DI\decorate()` method here, which is part of the [PHP-DI](https://php-di.org/) package, 
-Kickstart uses as its Dependency Injection Container. If you wish to know more about how this method can be used, you 
-can read about it [here](https://php-di.org/doc/definition-overriding.html#decorators).
-
-The `Noctis\KickStart\Service\TemplateRendererInterface::registerFunction()` is available in Kickstart 2.1.0 and up.
+**NOTICE:** The `Noctis\KickStart\Service\TemplateRendererInterface::registerFunction()` is available in Kickstart 
+2.1.0 and up.
