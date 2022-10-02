@@ -53,7 +53,7 @@
         }
     },
     "extra": {
-        "app-version": "3.1.6"
+        "app-version": "3.1.7"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
