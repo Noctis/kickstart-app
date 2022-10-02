@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f837f6064134f1c6c6278e4cf4467beb",
+    "content-hash": "aad6e3ad15010368eed56f0b3e707af1",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -549,16 +549,16 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "3.1.2",
+            "version": "3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "5e8d0ec18cc05f9754244f80ee910ea408bb7efc"
+                "reference": "0468c5ccd2ade63a4b732b2437b015610617c057"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/5e8d0ec18cc05f9754244f80ee910ea408bb7efc",
-                "reference": "5e8d0ec18cc05f9754244f80ee910ea408bb7efc",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/0468c5ccd2ade63a4b732b2437b015610617c057",
+                "reference": "0468c5ccd2ade63a4b732b2437b015610617c057",
                 "shasum": ""
             },
             "require": {
@@ -576,7 +576,7 @@
                 "psr/http-server-handler": "^1.0",
                 "psr/http-server-middleware": "^1.0",
                 "symfony/console": "^5.4",
-                "twig/twig": "^3.3.8"
+                "twig/twig": "^3.4.3"
             },
             "require-dev": {
                 "phpspec/prophecy-phpunit": "^2.0",
@@ -609,9 +609,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/3.1.2"
+                "source": "https://github.com/Noctis/kickstart/tree/3.1.3"
             },
-            "time": "2022-07-28T11:07:33+00:00"
+            "time": "2022-10-02T09:03:45+00:00"
         },
         {
             "name": "opis/closure",
@@ -2131,16 +2131,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.3.8",
+            "version": "v3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "972d8604a92b7054828b539f2febb0211dd5945c"
+                "reference": "c38fd6b0b7f370c198db91ffd02e23b517426b58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/972d8604a92b7054828b539f2febb0211dd5945c",
-                "reference": "972d8604a92b7054828b539f2febb0211dd5945c",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c38fd6b0b7f370c198db91ffd02e23b517426b58",
+                "reference": "c38fd6b0b7f370c198db91ffd02e23b517426b58",
                 "shasum": ""
             },
             "require": {
@@ -2155,7 +2155,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3-dev"
+                    "dev-master": "3.4-dev"
                 }
             },
             "autoload": {
@@ -2191,7 +2191,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.3.8"
+                "source": "https://github.com/twigphp/Twig/tree/v3.4.3"
             },
             "funding": [
                 {
@@ -2203,7 +2203,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-04T06:59:48+00:00"
+            "time": "2022-09-28T08:42:51+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
