@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "baf21e99cf8040b723959489545176c9",
+    "content-hash": "c855a79e3206741f16177e0a8fbe25be",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -776,12 +776,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "a6f20d3ce759b048a0e4fce8ff13d747f5b5a3ff"
+                "reference": "6e6c43cfc2ffe0ba3a07d14d61af14401232420c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/a6f20d3ce759b048a0e4fce8ff13d747f5b5a3ff",
-                "reference": "a6f20d3ce759b048a0e4fce8ff13d747f5b5a3ff",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/6e6c43cfc2ffe0ba3a07d14d61af14401232420c",
+                "reference": "6e6c43cfc2ffe0ba3a07d14d61af14401232420c",
                 "shasum": ""
             },
             "require": {
@@ -791,7 +791,7 @@
                 "laminas/laminas-httphandlerrunner": "^2.1",
                 "laminas/laminas-session": "^2.12",
                 "nikic/fast-route": "^1.3",
-                "php": "~8.0.0",
+                "php": "~8.1.0",
                 "php-di/php-di": "^6.3",
                 "psr/container": "^1.1|^2.0",
                 "psr/http-factory": "^1.0",
@@ -835,7 +835,7 @@
                 "issues": "https://github.com/Noctis/kickstart/issues",
                 "source": "https://github.com/Noctis/kickstart/tree/4.0.x"
             },
-            "time": "2022-10-02T09:10:22+00:00"
+            "time": "2022-12-02T12:56:38+00:00"
         },
         {
             "name": "paragonie/corner",
@@ -4362,7 +4362,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "~8.0.0",
+        "php": "~8.1.0",
         "composer-runtime-api": "^2"
     },
     "platform-dev": [],
