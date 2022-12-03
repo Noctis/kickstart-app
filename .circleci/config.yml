@@ -51,5 +51,5 @@ jobs:
       # run tests with phpunit or codecept
       #- run: ./vendor/bin/phpunit
       - run: composer run-script psalm-ci ./src
-      - run: composer run-script phpcs ./src
+      - run: vendor/bin/phpcs ./src
       - run: composer update --dry-run roave/security-advisories
