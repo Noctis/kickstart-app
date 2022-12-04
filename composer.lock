@@ -850,12 +850,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "f8aaa23bfc7dd9e2a782dcebc55e1c6170547d38"
+                "reference": "f1e073dfc8177f22170c5947966b5d50de7e7d75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/f8aaa23bfc7dd9e2a782dcebc55e1c6170547d38",
-                "reference": "f8aaa23bfc7dd9e2a782dcebc55e1c6170547d38",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/f1e073dfc8177f22170c5947966b5d50de7e7d75",
+                "reference": "f1e073dfc8177f22170c5947966b5d50de7e7d75",
                 "shasum": ""
             },
             "require": {
@@ -877,12 +877,12 @@
                 "twig/twig": "^3.4.3"
             },
             "require-dev": {
-                "php-standard-library/psalm-plugin": "^2.0",
+                "php-standard-library/psalm-plugin": "^2.1",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpunit/phpunit": "^9.5",
                 "squizlabs/php_codesniffer": "^3.6",
                 "symfony/var-dumper": "^5.4",
-                "vimeo/psalm": "^4.19"
+                "vimeo/psalm": "^5.1"
             },
             "default-branch": true,
             "type": "library",
@@ -911,7 +911,7 @@
                 "issues": "https://github.com/Noctis/kickstart/issues",
                 "source": "https://github.com/Noctis/kickstart/tree/4.0.x"
             },
-            "time": "2022-12-04T10:04:43+00:00"
+            "time": "2022-12-04T10:50:30+00:00"
         },
         {
             "name": "paragonie/corner",
