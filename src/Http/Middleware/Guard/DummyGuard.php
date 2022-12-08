@@ -11,11 +11,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class DummyGuard implements MiddlewareInterface
 {
-    private bool $dummyParam;
-
-    public function __construct(bool $dummyParam)
+    public function __construct(private bool $dummyParam)
     {
-        $this->dummyParam = $dummyParam;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

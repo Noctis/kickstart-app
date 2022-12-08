@@ -8,10 +8,7 @@ use ParagonIE\EasyDB\EasyDB;
 
 abstract class AbstractDatabaseRepository
 {
-    protected EasyDB $db;
-
-    public function __construct(EasyDB $db)
+    public function __construct(protected EasyDB $db)
     {
-        $this->db = $db;
     }
 }
