@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfc405664ded4ec06fbe46932c7a6440",
+    "content-hash": "df9679ce8d79cd5ec357d1254e73a665",
     "packages": [
         {
             "name": "azjezz/psl",
@@ -846,16 +846,16 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "4.0.x-dev",
+            "version": "dev-refactor/container-builder",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "df98d133d365d21c4b833e8cc41af4dd0ecb3e71"
+                "reference": "7337c158e7e1daffee52cda4dca1822a18c559bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/df98d133d365d21c4b833e8cc41af4dd0ecb3e71",
-                "reference": "df98d133d365d21c4b833e8cc41af4dd0ecb3e71",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/7337c158e7e1daffee52cda4dca1822a18c559bc",
+                "reference": "7337c158e7e1daffee52cda4dca1822a18c559bc",
                 "shasum": ""
             },
             "require": {
@@ -884,9 +884,11 @@
                 "symfony/var-dumper": "^5.4",
                 "vimeo/psalm": "^5.1"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
+                "files": [
+                    "src/Service/Container/functions.php"
+                ],
                 "psr-4": {
                     "Noctis\\KickStart\\": "src/"
                 }
@@ -909,9 +911,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/4.0.x"
+                "source": "https://github.com/Noctis/kickstart/tree/refactor/container-builder"
             },
-            "time": "2022-12-08T13:51:22+00:00"
+            "time": "2022-12-08T13:37:30+00:00"
         },
         {
             "name": "paragonie/corner",
@@ -4521,6 +4523,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "noctis/kickstart": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
