@@ -12,13 +12,13 @@ use Noctis\KickStart\Provider\RoutingProvider;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-$app = WebApplication::boot([
+$app = WebApplication::boot(
     new RoutingProvider(),
     new DatabaseConnectionProvider(),
     new HttpMiddlewareProvider(),
     new DummyServicesProvider(),
     new RepositoryProvider()
-]);
+);
 
 /** @var list<RouteInterface> $routes */
 $routes = require_once __DIR__ . '/../src/Http/Routing/routes.php';

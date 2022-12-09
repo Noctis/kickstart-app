@@ -56,10 +56,10 @@ use Noctis\KickStart\Http\WebApplication;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-$app = WebApplication::boot([
-    // ...
+$app = WebApplication::boot(
+    // ... ,
     new SessionProvider()
-]);
+);
 
 // ...
 ```
