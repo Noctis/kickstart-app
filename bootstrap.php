@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Debugging;
 use Dotenv\Dotenv;
 use Noctis\KickStart\Configuration\Configuration;
-use Whoops\Handler\PrettyPageHandler;
-use Whoops\Run as Whoops;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -25,13 +24,8 @@ $dotenv->required('db_port')
     ->notEmpty()
     ->isInteger();
 
-$whoops = new Whoops();
-if (Configuration::isProduction()) {
-    ini_set('display_errors', 'Off');
-} else {
-    ini_set('display_errors', 'On');
-    $whoops->pushHandler(new PrettyPageHandler());
-}
-$whoops->register();
+Configuration::isProduction()
+    ? Debugging::off()
+    : Debugging::on();
 
 $_ENV['basepath'] = __DIR__;
