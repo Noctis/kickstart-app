@@ -244,6 +244,7 @@ Register the new service provider in `public/index.php` file:
 declare(strict_types=1);
 
 use App\Provider\SecurityProvider;
+use Noctis\KickStart\Http\Routing\RouteInterface;
 use Noctis\KickStart\Http\WebApplication;
 
 // ...
@@ -252,9 +253,10 @@ $app = WebApplication::boot([
     // ...
     new SecurityProvider()
 ]);
-$app->setRoutes(
-    require_once $basePath . '/src/Http/Routing/routes.php'
-);
+
+/** @var list<RouteInterface> $routes */
+$routes = require_once __DIR__ . '/../src/Http/Routing/routes.php';
+$app->setRoutes($routes);
 $app->run();
 ```
 

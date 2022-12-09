@@ -8,6 +8,10 @@
 >
     <projectFiles>
         <directory name="src" />
+        <file name="bootstrap.php" />
+        <file name="bin/console" />
+        <file name="public/index.php" />
+
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>
