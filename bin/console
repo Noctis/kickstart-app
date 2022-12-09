@@ -11,11 +11,11 @@ use Noctis\KickStart\Console\ConsoleApplication;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-$app = ConsoleApplication::boot([
+$app = ConsoleApplication::boot(
     new DatabaseConnectionProvider(),
     new DummyServicesProvider(),
     new RepositoryProvider()
-]);
+);
 $app->setCommands([
     DummyCommand::class
 ]);

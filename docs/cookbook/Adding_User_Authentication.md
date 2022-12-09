@@ -249,10 +249,10 @@ use Noctis\KickStart\Http\WebApplication;
 
 // ...
 
-$app = WebApplication::boot([
-    // ...
+$app = WebApplication::boot(
+    // ... ,
     new SecurityProvider()
-]);
+);
 
 /** @var list<RouteInterface> $routes */
 $routes = require_once __DIR__ . '/../src/Http/Routing/routes.php';
