@@ -26,12 +26,13 @@ declare(strict_types=1);
 namespace App\Provider;
 
 use Noctis\KickStart\Provider\ServicesProviderInterface;
-use Noctis\KickStart\Service\Container\Definition\Decorator;
 use Noctis\KickStart\Service\TemplateRendererInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extra\Intl\IntlExtension;
+
+use function Noctis\KickStart\Service\Container\decorator;
 
 final class TwigExtensionsProvider implements ServicesProviderInterface
 {
@@ -41,7 +42,7 @@ final class TwigExtensionsProvider implements ServicesProviderInterface
     public function getServicesDefinitions(): array
     {
         return [
-            TemplateRendererInterface::class => new Decorator(
+            TemplateRendererInterface::class => decorator(
                 function (
                     TemplateRendererInterface $templateRenderer,
                     ContainerInterface $container

@@ -62,7 +62,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class DummyAction implements ActionInterface
 {
     // ...
-    
+
+    /**
+     * @param DummyRequest $request
+     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): HtmlResponse
     {
         // ...

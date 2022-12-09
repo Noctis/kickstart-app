@@ -52,15 +52,19 @@ declare(strict_types=1);
 
 // ...
 use App\Provider\SessionProvider;
-use Noctis\KickStart\Http\ContainerBuilder;
+use Noctis\KickStart\Configuration\Configuration;
+use Noctis\KickStart\Http\WebApplication;
+use Noctis\KickStart\Provider\RoutingProvider;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-$containerBuilder = new ContainerBuilder();
-$containerBuilder
+/** @var $basePath string */
+$basePath = Configuration::get('basepath');
+$app = WebApplication::boot([
     // ...
-    ->registerServicesProvider(new SessionProvider())
-;
+    new SessionProvider()
+]);
+
 // ...
 ```
 

@@ -198,6 +198,9 @@ use Noctis\KickStart\Provider\ServicesProviderInterface;
 use Noctis\KickStart\Service\Container\Definition\Autowire;
 use Noctis\KickStart\Service\Container\Definition\Reference;
 
+use function Noctis\KickStart\Service\Container\autowire;
+use function Noctis\KickStart\Service\Container\reference;
+
 final class SecurityProvider implements ServicesProviderInterface
 {
     /**
@@ -207,10 +210,15 @@ final class SecurityProvider implements ServicesProviderInterface
     {
         return [
             AuthAdapterInterface::class => AuthAdapter::class,
-            AuthenticationService::class => [
-                'storage' => new Reference(StorageInterface::class),
-                'adapter' => new Reference(AuthAdapterInterface::class)
-            ],
+            AuthenticationService::class => autowire(AuthenticationService::class)
+                ->constructorParameter(
+                    'storage',
+                     reference(StorageInterface::class),
+                )
+                ->constructorParameter(
+                    'adapter',
+                    reference(AuthAdapterInterface::class)
+                ),
             AuthenticationServiceInterface::class => AuthenticationService::class,
             AuthServiceInterface::class => AuthService::class,
             ResolverInterface::class => function (): ApacheResolver {
@@ -218,9 +226,11 @@ final class SecurityProvider implements ServicesProviderInterface
                     Configuration::get('security.htpasswd_path')
                 );
             },
-            StorageInterface::class => new Autowire(Session::class, [
-                'namespace' => Configuration::get('security.realm')
-            ]),
+            StorageInterface::class => autowire(Session::class)
+                ->constructorParameter(
+                    'namespace',
+                    Configuration::get('security.realm')
+                ),
         ];
     }
 }
@@ -234,19 +244,17 @@ Register the new service provider in `public/index.php` file:
 declare(strict_types=1);
 
 use App\Provider\SecurityProvider;
-use Noctis\KickStart\Configuration\Configuration;
-use Noctis\KickStart\Http\ContainerBuilder;
+use Noctis\KickStart\Http\WebApplication;
 
 // ...
 
-$containerBuilder = new ContainerBuilder();
-$containerBuilder
+$app = WebApplication::boot([
     // ...
-    ->registerServicesProvider(new SecurityProvider())
-;
-$container = $containerBuilder->build();
-
-// ...
+    new SecurityProvider()
+]);
+$app->setRoutes(
+    require_once $basePath . '/src/Http/Routing/routes.php'
+);
 $app->run();
 ```
 
