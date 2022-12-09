@@ -112,8 +112,9 @@ namespace App\Provider;
 
 use App\Repository\SecondaryRepository;
 use App\Repository\SecondaryRepositoryInterface;
-use Noctis\KickStart\Service\Container\Definition\Autowire;
-use Noctis\KickStart\Service\Container\Definition\Reference;
+
+use function Noctis\KickStart\Service\Container\autowire;
+use function Noctis\KickStart\Service\Container\reference;
 
 final class RepositoryProvider implements ServicesProviderInterface
 {
@@ -124,9 +125,11 @@ final class RepositoryProvider implements ServicesProviderInterface
     {
         return [
             // ...
-            SecondaryRepositoryInterface::class => new Autowire(SecondaryRepository::class, [
-                'db' => new Reference('secondary_db_connection')
-            ]),
+            SecondaryRepositoryInterface::class => autowire(SecondaryRepository::class)
+                ->constructorParameter(
+                    'db',
+                    reference('secondary_db_connection')
+                ),
             // ...
         ];
     }

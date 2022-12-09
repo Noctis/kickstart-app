@@ -24,8 +24,9 @@ declare(strict_types=1);
 namespace App\Provider;
 
 use Noctis\KickStart\Provider\ServicesProviderInterface;
-use Noctis\KickStart\Service\Container\Definition\Decorator;
 use Noctis\KickStart\Service\TemplateRendererInterface;
+
+use function Noctis\KickStart\Service\Container\decorator;
 
 final class ServicesProvider implements ServicesProviderInterface
 {
@@ -35,7 +36,7 @@ final class ServicesProvider implements ServicesProviderInterface
     public function getServicesDefinitions(): array
     {
         return [
-            TemplateRendererInterface::class => new Decorator(
+            TemplateRendererInterface::class => decorator(
                 function (TemplateRendererInterface $templateRenderer): TemplateRendererInterface {
                     $templateRenderer->registerFunction(
                         'percentage',

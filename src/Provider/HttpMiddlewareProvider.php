@@ -7,6 +7,8 @@ namespace App\Provider;
 use App\Http\Middleware\Guard\DummyGuard;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
 
+use function Noctis\KickStart\Service\Container\autowire;
+
 final class HttpMiddlewareProvider implements ServicesProviderInterface
 {
     /**
@@ -15,7 +17,8 @@ final class HttpMiddlewareProvider implements ServicesProviderInterface
     public function getServicesDefinitions(): array
     {
         return [
-            DummyGuard::class => ['dummyParam' => true],
+            DummyGuard::class => autowire(DummyGuard::class)
+                ->constructorParameter('dummyParam', true),
         ];
     }
 }

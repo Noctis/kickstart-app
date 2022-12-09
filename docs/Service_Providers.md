@@ -129,7 +129,8 @@ namespace App\Provider;
 use App\Service\DummyService;
 use App\Service\DummyServiceInterface;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
-use Noctis\KickStart\Service\Container\Definition\Autowire;
+
+use function Noctis\KickStart\Service\Container\autowire;
 
 final class DummyServicesProvider implements ServicesProviderInterface
 {
@@ -139,10 +140,8 @@ final class DummyServicesProvider implements ServicesProviderInterface
     public function getServicesDefinitions(): array
     {
         return [
-            DummyServiceInterface::class => new Autowire(
-                DummyService::class,
-                ['limit' => 5]
-            ),
+            DummyServiceInterface::class => autowire(DummyService::class)
+                ->constructorParameter('limit', 5),
             // ...
         ];
     }
@@ -150,8 +149,8 @@ final class DummyServicesProvider implements ServicesProviderInterface
 ```
 
 The definition above should be read as: _when someone requires an implementation of `DummyServiceInterface`, they should
-be provided with an instance of `DummyService`, instantiated using `5` as that implementation's `$limit` constructor parameter
-value_.
+be provided with an instance of `DummyService`, instantiated using `5` as that implementation's `$limit` constructor 
+parameter value_.
 
 You don't need to provide every single constructor's parameter value like this, only those for which DIC won't be able
 to automatically guess values for.
@@ -187,7 +186,8 @@ Normally that wouldn't be a problem, but your application has
 the DIC under names: `primary_db` and `secondary_db`, instead of class names. How do you tell the DIC to provide this
 repository with the `secondary_db` database connection?
 
-Use the following service definition, using the `Autowire` and `Reference` definition helpers:
+Use the following service definition, using the definition helpers returned by the `autowire()` and `reference()`
+functions:
 
 ```php
 <?php
@@ -199,8 +199,9 @@ namespace App\Provider;
 use App\Repository\DummyRepository;
 use App\Repository\DummyRepositoryInterface;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
-use Noctis\KickStart\Service\Container\Definition\Autowire;
-use Noctis\KickStart\Service\Container\Definition\Reference;
+
+use function Noctis\KickStart\Service\Container\autowire;
+use function Noctis\KickStart\Service\Container\reference;
 
 final class RepositoryProvider implements ServicesProviderInterface
 {
@@ -210,16 +211,17 @@ final class RepositoryProvider implements ServicesProviderInterface
     public function getServicesDefinitions(): array
     {
         return [
-            DummyRepositoryInterface::class => new Autowire(
-                DummyRepository::class,
-                ['db' => new Reference('secondary_db')]
-            ),
+            DummyRepositoryInterface::class => autowire(DummyRepository::class)
+                ->constructorParameter(
+                    'db',
+                    reference('secondary_db')
+                ),
             // ...
         ];
     }
 }
 ```
 
-There is also one more definition helper available: `Decorator`. This can be used to "decorate"/"extend" a service
-definition already registered in the DIC. This can be used to, for example 
+There is also one more definition helper available, via the: `decorator()` function. This can be used to 
+"decorate"/"extend" a service definition already registered in the DIC. This can be used to, for example 
 [add custom functions to the Twig template engine](cookbook/Custom_Twig_Function.md).
