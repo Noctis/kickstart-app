@@ -16,7 +16,7 @@
         "composer-runtime-api": "^2",
         "filp/whoops": "^2.14",
         "laminas/laminas-diactoros": "^2.11.1",
-        "noctis/kickstart": "dev-refactor/container-builder",
+        "noctis/kickstart": "~4.0.0",
         "paragonie/easydb": "^2.11|^3.0",
         "psr/container": "^1.1|^2.0",
         "psr/http-message": "^1.0",
