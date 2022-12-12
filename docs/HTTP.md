@@ -107,6 +107,49 @@ You can read more about custom HTTP request classes [here](Custom_Http_Requests.
 If no value is provided for this argument, the given HTTP action will receive an instance of Kickstart's standard
 request class - `Noctis\KickStart\Http\Request\Request`.
 
+### Named Routes
+
+Each route in the routes list can have a unique name, eg.:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use App\Http\Action\DummyAction;
+use App\Http\Action\SignInAction;
+use Noctis\KickStart\Http\Routing\Route;
+
+return [
+    'home' => Route::get('/', DummyAction::class),
+    'sign-in-form' => Route::get('/sign-in', SignInAction::class),
+    // ...
+];
+```
+
+You can refer to routes by their name while using the `path()` function in your application's twig templates, eg.:
+
+```html
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <div class="container">
+        <a href="{{ path('sign-in-form') }}" class="btn btn-small btn-primary">Sign-In</a>
+    </div>
+{% endblock %}
+```
+
+This will result in the following HTML being generated:
+
+```html
+<div class="container">
+    <a href="/sign-in" class="btn btn-small btn-primary">Sign-In</a>
+</div>
+```
+
+Route names are optional, i.e. a route will work perfectly fine without a name specified, it's just that you won't be
+able to refer to that route by name while using the `path()` function Twig template files.
+
 ## HTTP Actions
 
 Every defined route should have an HTTP action class defined. These are like the ever popular Controllers, except where 
