@@ -172,8 +172,12 @@ You can learn more about Twig templates from
 ### Redirection Response
 
 To create an HTML redirection object, include the `Noctis\KickStart\Http\Helper\RedirectTrait` trait into your action 
-and make sure an instance of the `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory` is injected into the
-local `$redirectResponseFactory` field:
+and make sure its dependencies:
+
+* `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory`,
+* `Noctis\KickStart\Service\PathGenerator`
+
+are injected into it:
 
 ```php
 <?php
@@ -185,14 +189,18 @@ namespace App\Http\Action;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
 use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
+use Noctis\KickStart\Service\PathGeneratorInterface;
 
 final class DummyAction implements ActionInterface
 {
     use RedirectTrait;
 
-    public function __construct(RedirectResponseFactoryInterface $redirectResponseFactory)
-    {
+    public function __construct(
+        RedirectResponseFactoryInterface $redirectResponseFactory,
+        PathGeneratorInterface $pathGenerator
+    ) {
         $this->redirectResponseFactory = $redirectResponseFactory;
+        $this->pathGenerator = $pathGenerator;
     }
     
     // ...
@@ -213,6 +221,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
 use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
+use Noctis\KickStart\Service\PathGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -220,9 +229,12 @@ final class DummyAction implements ActionInterface
 {
     use RedirectTrait;
 
-    public function __construct(RedirectResponseFactoryInterface $redirectResponseFactory)
-    {
+    public function __construct(
+        RedirectResponseFactoryInterface $redirectResponseFactory,
+        PathGeneratorInterface $pathGenerator
+    ) {
         $this->redirectResponseFactory = $redirectResponseFactory;
+        $this->pathGenerator = $pathGenerator
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse
@@ -234,9 +246,12 @@ final class DummyAction implements ActionInterface
 
 The `RedirectTrait::redirect()` method takes up to two arguments:
 
-* the first argument is the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you
-  wish to redirect the user to a URL outside of your site, i.e. to a different domain, pass in the full URL, starting
-  with `http://` or `https://`,
+* the first argument is:
+  * the name of the route (see: [Named Routes](Routing.md#named-routes) section in the [Routing](Routing.md) article), 
+    or 
+  * the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you
+    wish to redirect the user to a URL outside of your site, i.e. to a different domain, pass in the full URL, starting
+    with `http://` or `https://`,
 * the second argument is an optional list of parameters which will be added to the given URL as its query string.
 
 The `RedirectTrait::redirect()` method returns a `302 Found` HTTP response, with no body.
