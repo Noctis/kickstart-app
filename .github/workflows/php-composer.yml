@@ -13,9 +13,10 @@ jobs:
 
     steps:
     - name: Setup PHP
-      uses: shivammathur/setup-php@2.16.0
+      uses: shivammathur/setup-php@2.22.0
       with:
         php-version: '8.1'
+        ini-file: development
         tools: composer-require-checker
 
     - name: Checkout code
