@@ -40,8 +40,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@aa1fe473f9c687b6fb896056d771232c0bc41161
+        uses: shivammathur/setup-php@2.22.0
         with:
+          php-version: '8.1'
+          ini-file: production
           coverage: none
           tools: phpmd
 
