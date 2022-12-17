@@ -323,7 +323,7 @@ If you want the `RedirectingAction` to redirect the user to the `welcome_page` r
   * `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory`, for generating the redirecting response object,
   * `Noctis\KickStart\Service\PathGenerator`, for generating the actual path to redirect to.
 
-Once you do that, you can use the `redirect()` method provided by the trait, like so:
+Once you do that, you can use the `redirectToRoute()` method provided by the trait, like so:
 
 ```php
 <?php
@@ -354,7 +354,7 @@ final class RedirectingAction implements ActionInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse
     {
-        return $this->redirect('home');
+        return $this->redirectToRoute('home');
     }
 }
 ```

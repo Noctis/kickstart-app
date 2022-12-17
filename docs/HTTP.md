@@ -207,8 +207,8 @@ final class DummyAction implements ActionInterface
 }
 ```
 
-You can then use the trait's `redirect()` method to create an instance of `Laminas\Diactoros\Response\RedirectResponse`. 
-The entire action will then look like this:
+You can then use the trait's `redirect()` or `redirectToRoute()` method to create an instance of 
+`Laminas\Diactoros\Response\RedirectResponse`. The entire action will then look like this:
 
 ```php
 <?php
@@ -244,17 +244,21 @@ final class DummyAction implements ActionInterface
 }
 ```
 
-The `RedirectTrait::redirect()` method takes up to two arguments:
+The `RedirectTrait::redirect()` method takes up to two parameters:
 
-* the first argument is:
-  * the name of the route (see: [Named Routes](Routing.md#named-routes) section in the [Routing](Routing.md) article), 
-    or 
-  * the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you
-    wish to redirect the user to a URL outside of your site, i.e. to a different domain, pass in the full URL, starting
-    with `http://` or `https://`,
+* the first parameters is the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you 
+  wish to redirect the user to a URL outside of your site, i.e. to a different domain, pass in the full URL, starting
+  with `http://` or `https://`,
 * the second argument is an optional list of parameters which will be added to the given URL as its query string.
 
-The `RedirectTrait::redirect()` method returns a `302 Found` HTTP response, with no body.
+The `RedirectTrait::redirectToRoute()` method also takes up to two parameters:
+
+* the first parameter is the name of the route (see: [Named Routes](Routing.md#named-routes) section in the 
+  [Routing](Routing.md) article),
+* the second parameter is an array of parameters; those will firstly be used to replace any named parameters in the
+  route's path (if there are any), and any that are left will be used to build the query string of the URL.
+
+Both the `redirect()` and `redirectToRoute()` methods returns a `302 Found` HTTP response, with no body.
 
 ### Attachment Response
 
