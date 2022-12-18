@@ -86,14 +86,21 @@ methods the `Psr\Http\Message\ServerRequestInterface` interface declares, i.e.:
 * `getQueryParams()` - for fetching request's query parameters (used in requests sent _via_ HTTP's `GET` method),
 * `getUploadedFiles()` - for getting a list of uploaded files, if there were any.
 
+In addition to the above-mentioned methods, the `Request` class offers two more, helper/shortcut methods:
+
+* `fromQueryString()` - a wrapper method for the `getQueryParams()` method; returns the value of a given query string 
+  parameter or the provided default value (`null` by default),
+* `fromBody()` - a wrapper method for the `getParsedBody()` method; returns the value of a given parameter contained in
+  the request's body or the provided default value (`null` by default).
+
 ## Custom Methods
 
-A custom request class can have its own, additional methods available. For example, if one of your request query 
-parameters is a string representing a date, named `date`, you could fetch it like so:
+A custom request class can have its own, additional methods available. For example, if one of your request's query 
+string parameters is a string representing a date, named `date`, you could fetch it like so:
 
 ```php
 /** @var string */
-$date = $this->getQueryParams()['date'];
+$date = $this->fromQueryString('date');
 ```
 
 or you could add the following method to your custom request class:
@@ -115,7 +122,7 @@ final class DummyRequest extends Request implements ServerRequestInterface
     public function getDate(): \DateTimeImmutable
     {
         return new \DateTimeImmutable(
-            $this->getQueryParams()['date']
+            $this->fromQueryString('date')
         );
     }
 }
