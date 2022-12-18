@@ -413,6 +413,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
 use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
+use Noctis\KickStart\Service\PathGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -424,10 +425,12 @@ final class SignInAction implements ActionInterface
 
     public function __construct(
         AuthServiceInterface $authService,
-        RedirectResponseFactoryInterface $redirectResponseFactory
+        RedirectResponseFactoryInterface $redirectResponseFactory,
+        PathGeneratorInterface $pathGenerator
     ) {
         $this->authService = $authService;
         $this->redirectResponseFactory = $redirectResponseFactory;
+        $this->pathGenerator = $pathGenerator;
     }
 
     /**
@@ -494,6 +497,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
 use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
+use Noctis\KickStart\Service\PathGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -505,10 +509,12 @@ final class SignOutAction implements ActionInterface
 
     public function __construct(
         AuthServiceInterface $authService,
-        RedirectResponseFactoryInterface $redirectResponseFactory
+        RedirectResponseFactoryInterface $redirectResponseFactory,
+        PathGeneratorInterface $pathGenerator
     ) {
         $this->authService = $authService;
         $this->redirectResponseFactory = $redirectResponseFactory;
+        $this->pathGenerator = $pathGenerator;
     }
 
     /**
@@ -570,6 +576,7 @@ namespace App\Http\Middleware\Guard;
 use App\Service\Security\AuthServiceInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
 use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
+use Noctis\KickStart\Service\PathGeneratorInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -583,10 +590,12 @@ final class IsLoggedInGuard implements MiddlewareInterface
 
     public function __construct(
         AuthServiceInterface $authService,
-        RedirectResponseFactoryInterface $redirectResponseFactory
+        RedirectResponseFactoryInterface $redirectResponseFactory,
+        PathGeneratorInterface $pathGenerator
     ) {
         $this->authService = $authService;
         $this->redirectResponseFactory = $redirectResponseFactory;
+        $this->pathGenerator = $pathGenerator;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

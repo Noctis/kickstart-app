@@ -33,112 +33,9 @@ If there were any middleware declared in the route definition, those will be cal
 action. A middleware may generate and return its own response object. In such case, any further middlewares & the action
 itself will not be called.
 
-## Routes
+## Routing
 
-A list of routes can be found in the `src/Http/Routing/routes.php` file. It's a simple PHP file, which returns an array 
-of `Noctis\KickStart\Http\Routing\Route` objects.
-
-The `Route` class offers the following static factory methods for their corresponding HTTP methods:
-
-* `get()`,
-* `post()`, 
-* `put()`,
-* `patch()`,
-* `delete()`.
-
-All of those methods accept up to four arguments, with the first two being mandatory:
-
-* the URI, e.g. `/`, `/foo` or `/product/show`,
-* the class name of the HTTP action,
-
-The third argument is optional - it's an array of HTTP middleware, in the form of a list of middleware class names, all
-implementing the `Psr\Http\Server\MiddlewareInterface` (see: [PSR-15](https://www.php-fig.org/psr/psr-15/))
-interface.
-
-If you do not wish for the route to utilize any middleware, you should simply omit the third argument or declare it as 
-an empty array (`[]`).
-
-Here's an example of a route definition with no middleware:
-
-```php
-use App\Http\Action\DummyAction;
-use App\Http\Middleware\Guard\DummyGuard;
-use Noctis\KickStart\Http\Routing\Route;
-
-// ...
-return [
-    Route::get('/', DummyAction::class),
-];
-```
-
-And here's an example of a route definition with one middleware - `App\Http\Middleware\Guard\DummyGuard`:
-
-```php
-use App\Http\Action\DummyAction;
-use App\Http\Middleware\Guard\DummyGuard;
-use Noctis\KickStart\Http\Routing\Route;
-
-// ...
-return [
-    Route::get('/', DummyAction::class, [DummyGuard::class]),
-];
-```
-
-The fourth argument is also optional - it's the name of a custom request class that should be passed to HTTP action's
-`process()` method, as its `$request` parameter. Here's an example of route using a custom request class defined, with 
-no middlewares:
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use App\Http\Action\DummyAction;
-use App\Http\Request\DummyRequest;
-use Noctis\KickStart\Http\Routing\Route;
-
-return [
-    Route::get('/', DummyAction::class, [], DummyRequest::class),
-];
-```
-
-You can read more about custom HTTP request classes [here](Custom_Http_Requests.md).
-
-If no value is provided for this argument, the given HTTP action will receive an instance of Kickstart's standard
-request class - `Noctis\KickStart\Http\Request\Request`.
-
-## HTTP Actions
-
-Every defined route should have an HTTP action class defined. These are like the ever popular Controllers, except where 
-a Controller has multiple methods, each for different routes, an HTTP action only has one public method - `process()`.
-
-There are a couple of requirements every HTTP action class must meet:
-
-* it must implement the `Noctis\KickStart\Http\Action\ActionInterface` interface,
-* it must be PSR-15 compliant, i.e. have a public method called `process`, with the following signature:
-  ```php
-  use Psr\Http\Message\ResponseInterface;
-  use Psr\Http\Message\ServerRequestInterface;
-  use Psr\Http\Server\RequestHandlerInterface;
-
-  public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-  {
-      // ...
-  }
-  ```
-* if the action has dependencies, they should be injected through the action's constructor, e.g.:
-  ```php
-  use App\Service\DummyServiceInterface;
-
-  private DummyServiceInterface $dummyService;
-
-  public function __construct(DummyServiceInterface $dummyService)
-  {
-      $this->dummyService = $dummyService
-  }
-  
-  // ...
-  ```
+You can read all about how Kickstart does HTTP routing [here](Routing.md).
 
 ## Requests
 
@@ -158,121 +55,6 @@ If the HTTP action needs to get some data from the incoming HTTP request, the fo
 
 If you wish to have your own, additional methods available in the request object, please refer to the ["Custom HTTP
 Requests" article](Custom_Http_Requests.md).
-
-### Named Route Parameters
-
-Kickstart utilizes the [FastRoute](https://github.com/nikic/FastRoute) library for HTTP routing. FastRoute allows you
-to define [named route parameters](https://github.com/nikic/FastRoute#defining-routes), as part of the route definition, 
-for example:
-
-```php
-// src/Http/Routing/routes.php
-
-use App\Http\Action\DummyAction;
-use App\Http\Middleware\Guard\DummyGuard;
-use Noctis\KickStart\Http\Routing\Route;
-
-// ...
-return [
-    // ...
-    Route::get('/product/{productID:\d+}/details', DummyAction::class),
-];
-```
-
-Now, when a matching URL is called, for example: `/product/13/details`, the value `13` will be available in the request
-object, as a `productID` attribute. To retrieve it, call the `getAttribute()` method on the request object:
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Http\Action;
-
-use Noctis\KickStart\Http\Action\ActionInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-
-final class DummyAction implements ActionInterface
-{
-    /**
-     * @inheritDoc
-     */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-        $productID = $request->getAttribute('productID');
-    }
-}
-```
-
-You could also take advantage of Kickstart's [custom HTTP requests](Custom_Http_Requests.md) functionality and create a
-custom HTTP request class, with a dedicated method for fetching the route parameter, for example:
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Http\Request;
-
-use Noctis\KickStart\Http\Request\Request;
-use Psr\Http\Message\ServerRequestInterface;
-
-final class DummyRequest extends Request implements ServerRequestInterface
-{
-    public function getProductID(): int
-    {
-        return (int)$this->getAttribute('productID');
-    }
-}
-```
-
-Then, in your action you'd do something like this:
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Http\Action;
-
-use App\Http\Request\DummyRequest;
-use Noctis\KickStart\Http\Action\ActionInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-
-final class DummyAction implements ActionInterface
-{
-    /**
-     * @param DummyRequest $request
-     */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-        $productID = $request->getProductID();
-    }
-}
-```
-
-**IMPORTANT:** Remember that for the action to receive an instance of your custom request class, instead of a standard
-one, the action's route definition must include the custom request class name:
-
-```php
-<?php
-
-// src/Http/Routing/routes.php
-
-declare(strict_types=1);
-
-use App\Http\Action\DummyAction;
-use App\Http\Request\DummyRequest;
-use Noctis\KickStart\Http\Routing\Route;
-
-return [
-    Route::get('/', DummyAction::class, [], DummyRequest::class),
-];
-```
 
 ## Responses
 
@@ -390,8 +172,12 @@ You can learn more about Twig templates from
 ### Redirection Response
 
 To create an HTML redirection object, include the `Noctis\KickStart\Http\Helper\RedirectTrait` trait into your action 
-and make sure an instance of the `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory` is injected into the
-local `$redirectResponseFactory` field:
+and make sure its dependencies:
+
+* `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory`,
+* `Noctis\KickStart\Service\PathGenerator`
+
+are injected into it:
 
 ```php
 <?php
@@ -403,22 +189,26 @@ namespace App\Http\Action;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
 use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
+use Noctis\KickStart\Service\PathGeneratorInterface;
 
 final class DummyAction implements ActionInterface
 {
     use RedirectTrait;
 
-    public function __construct(RedirectResponseFactoryInterface $redirectResponseFactory)
-    {
+    public function __construct(
+        RedirectResponseFactoryInterface $redirectResponseFactory,
+        PathGeneratorInterface $pathGenerator
+    ) {
         $this->redirectResponseFactory = $redirectResponseFactory;
+        $this->pathGenerator = $pathGenerator;
     }
     
     // ...
 }
 ```
 
-You can then use the trait's `redirect()` method to create an instance of `Laminas\Diactoros\Response\RedirectResponse`. 
-The entire action will then look like this:
+You can then use the trait's `redirect()` or `redirectToRoute()` method to create an instance of 
+`Laminas\Diactoros\Response\RedirectResponse`. The entire action will then look like this:
 
 ```php
 <?php
@@ -431,6 +221,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
 use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
+use Noctis\KickStart\Service\PathGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -438,9 +229,12 @@ final class DummyAction implements ActionInterface
 {
     use RedirectTrait;
 
-    public function __construct(RedirectResponseFactoryInterface $redirectResponseFactory)
-    {
+    public function __construct(
+        RedirectResponseFactoryInterface $redirectResponseFactory,
+        PathGeneratorInterface $pathGenerator
+    ) {
         $this->redirectResponseFactory = $redirectResponseFactory;
+        $this->pathGenerator = $pathGenerator
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse
@@ -450,14 +244,21 @@ final class DummyAction implements ActionInterface
 }
 ```
 
-The `RedirectTrait::redirect()` method takes up to two arguments:
+The `RedirectTrait::redirect()` method takes up to two parameters:
 
-* the first argument is the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you
+* the first parameters is the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you 
   wish to redirect the user to a URL outside of your site, i.e. to a different domain, pass in the full URL, starting
   with `http://` or `https://`,
 * the second argument is an optional list of parameters which will be added to the given URL as its query string.
 
-The `RedirectTrait::redirect()` method returns a `302 Found` HTTP response, with no body.
+The `RedirectTrait::redirectToRoute()` method also takes up to two parameters:
+
+* the first parameter is the name of the route (see: [Named Routes](Routing.md#named-routes) section in the 
+  [Routing](Routing.md) article),
+* the second parameter is an array of parameters; those will firstly be used to replace any named parameters in the
+  route's path (if there are any), and any that are left will be used to build the query string of the URL.
+
+Both the `redirect()` and `redirectToRoute()` methods returns a `302 Found` HTTP response, with no body.
 
 ### Attachment Response
 
