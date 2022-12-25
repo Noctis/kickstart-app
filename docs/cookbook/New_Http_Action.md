@@ -113,7 +113,7 @@ Create an empty file named `form.html.twig` in the `templates` folder. Next, put
 ```
 
 Next, let's finish implementing the `process()` method. First, let's include the `RenderTrait` and provide it with an
-instance of `HtmlResponseFactory` in the `$htmlResponseFactory` field:
+instance of `RenderService` in the `$renderService` field:
 
 ```php
 <?php
@@ -124,7 +124,7 @@ namespace App\Http\Action;
 
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RenderTrait;
-use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
+use Noctis\KickStart\Http\Service\RenderServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -133,9 +133,9 @@ final class FormAction implements ActionInterface
 {
     use RenderTrait;
     
-    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
+    public function __construct(RenderServiceInterface $renderService)
     {
-        $this->htmlResponseFactory = $htmlResponseFactory;
+        $this->renderService = $renderService;
     }
 
     /**
@@ -173,7 +173,7 @@ namespace App\Http\Action;
 
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RenderTrait;
-use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
+use Noctis\KickStart\Http\Service\RenderServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -182,9 +182,9 @@ final class FormAction implements ActionInterface
 {
     use RenderTrait;
 
-    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
+    public function __construct(RenderServiceInterface $renderService)
     {
-        $this->htmlResponseFactory = $htmlResponseFactory;
+        $this->renderService = $renderService;
     }
 
     /**

@@ -8,7 +8,7 @@ use App\Http\Request\DummyRequest;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RenderTrait;
-use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
+use Noctis\KickStart\Http\Service\RenderServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -16,9 +16,9 @@ final class DummyAction implements ActionInterface
 {
     use RenderTrait;
 
-    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
+    public function __construct(RenderServiceInterface $renderService)
     {
-        $this->htmlResponseFactory = $htmlResponseFactory;
+        $this->renderService = $renderService;
     }
 
     /**

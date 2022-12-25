@@ -317,11 +317,9 @@ return [
 
 If you want the `RedirectingAction` to redirect the user to the `welcome_page` route, you should:
 
-* use the `Noctis\KickStart\Http\Helper\RedirectTrait` in the `RedirectingAction`, to have access to the `redirect()`
-  method,
-* provide the `RedirectTrait` with two dependencies:
-  * `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory`, for generating the redirecting response object,
-  * `Noctis\KickStart\Service\PathGenerator`, for generating the actual path to redirect to.
+* use the `Noctis\KickStart\Http\Helper\RedirectTrait` in the `RedirectingAction`, to get access to the 
+  `redirectToRoute()` method, and
+* provide the `RedirectTrait` with an instance of `Noctis\KickStart\Http\Service\RedirectService`.
 
 Once you do that, you can use the `redirectToRoute()` method provided by the trait, like so:
 
@@ -335,8 +333,7 @@ namespace App\Http\Action;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
-use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
-use Noctis\KickStart\Service\PathGeneratorInterface;
+use Noctis\KickStart\Http\Service\RedirectServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -344,12 +341,9 @@ final class RedirectingAction implements ActionInterface
 {
     use RedirectTrait;
 
-    public function __construct(
-        RedirectResponseFactoryInterface $redirectResponseFactory,
-        PathGeneratorInterface $pathGenerator
-    ) {
-        $this->redirectResponseFactory = $redirectResponseFactory;
-        $this->pathGenerator = $pathGenerator;
+    public function __construct(RedirectServiceInterface $redirectService) 
+    {
+        $this->redirectService = $redirectService;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse

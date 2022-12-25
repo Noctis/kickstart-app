@@ -5,8 +5,8 @@ download, that action's `process()` method needs to return an instance of
 `Noctis\KickStart\Http\Response\AttachmentResponse` class.
 
 To create an attachment response object, include the `Noctis\KickStart\Http\Helper\AttachmentTrait` trait into your 
-action and make sure an instance of the `Noctis\KickStart\Http\Response\Factory\AttachmentResponseFactory` is injected 
-into the local `$attachmentResponseFactory` field:
+action and make sure an instance of the `Noctis\KickStart\Http\Service\AttachmentService` is injected into its 
+`$attachmentService` field:
 
 ```php
 <?php
@@ -17,17 +17,17 @@ namespace App\Http\Action;
 
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\AttachmentTrait;
-use Noctis\KickStart\Http\Response\Factory\AttachmentResponseFactoryInterface;
+use Noctis\KickStart\Http\Service\AttachmentServiceInterface;
 
 final class DummyAction implements ActionInterface
 {
     use AttachmentTrait;
 
-    public function __construct(AttachmentResponseFactoryInterface $attachmentResponseFactory)
+    public function __construct(AttachmentServiceInterface $attachmentService)
     {
-        $this->attachmentResponseFactory = $attachmentResponseFactory;
+        $this->attachmentService = $attachmentService;
     }
-    
+
     // ...
 }
 ```
@@ -57,7 +57,7 @@ namespace App\Http\Action;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\AttachmentTrait;
 use Noctis\KickStart\Http\Response\AttachmentResponse;
-use Noctis\KickStart\Http\Response\Factory\AttachmentResponseFactoryInterface;
+use Noctis\KickStart\Http\Service\AttachmentServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -65,9 +65,9 @@ final class SendAttachmentAction implements ActionInterface
 {
     use AttachmentTrait;
 
-    public function __construct(AttachmentResponseFactoryInterface $attachmentResponseFactory)
+    public function __construct(AttachmentServiceInterface $attachmentService)
     {
-        $this->attachmentResponseFactory = $attachmentResponseFactory;
+        $this->attachmentService = $attachmentService;
     }
 
     /**
@@ -76,7 +76,7 @@ final class SendAttachmentAction implements ActionInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): AttachmentResponse
     {
         // ...
-    
+
         return $this->sendAttachment($attachment);
     }
 }
@@ -105,8 +105,8 @@ namespace App\Http\Action;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\AttachmentTrait;
 use Noctis\KickStart\Http\Response\AttachmentResponse;
-use Noctis\KickStart\Http\Response\Factory\AttachmentResponseFactoryInterface;
 use Noctis\KickStart\Http\Response\Headers\Disposition;
+use Noctis\KickStart\Http\Service\AttachmentServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -114,9 +114,9 @@ final class SendFileAction implements ActionInterface
 {
     use AttachmentTrait;
 
-    public function __construct(AttachmentResponseFactoryInterface $attachmentResponseFactory)
+    public function __construct(AttachmentServiceInterface $attachmentService)
     {
-        $this->attachmentResponseFactory = $attachmentResponseFactory;
+        $this->attachmentService = $attachmentService;
     }
 
     /**
@@ -156,8 +156,8 @@ namespace App\Http\Action;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\AttachmentTrait;
 use Noctis\KickStart\Http\Response\AttachmentResponse;
-use Noctis\KickStart\Http\Response\Factory\AttachmentResponseFactoryInterface;
 use Noctis\KickStart\Http\Response\Headers\Disposition;
+use Noctis\KickStart\Http\Service\AttachmentServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -165,9 +165,9 @@ final class SendContentAction implements ActionInterface
 {
     use AttachmentTrait;
 
-    public function __construct(AttachmentResponseFactoryInterface $attachmentResponseFactory)
+    public function __construct(AttachmentServiceInterface $attachmentService)
     {
-        $this->attachmentResponseFactory = $attachmentResponseFactory;
+        $this->attachmentService = $attachmentService;
     }
 
     /**
@@ -211,8 +211,8 @@ namespace App\Http\Action;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\AttachmentTrait;
 use Noctis\KickStart\Http\Response\AttachmentResponse;
-use Noctis\KickStart\Http\Response\Factory\AttachmentResponseFactoryInterface;
-use Noctis\KickStart\Http\Response\Headers\Disposition;
+use Noctis\KickStart\Http\Response\Headers\Disposition
+use Noctis\KickStart\Http\Service\AttachmentServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -220,9 +220,9 @@ final class SendResourceAction implements ActionInterface
 {
     use AttachmentTrait;
 
-    public function __construct(AttachmentResponseFactoryInterface $attachmentResponseFactory)
+    public function __construct(AttachmentServiceInterface $attachmentService)
     {
-        $this->attachmentResponseFactory = $attachmentResponseFactory;
+        $this->attachmentService = $attachmentService;
     }
 
     /**
