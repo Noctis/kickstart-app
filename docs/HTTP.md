@@ -71,32 +71,19 @@ HTTP action's `process()` method must return an instance of a class implementing
 Plus, one additional response, for [sending attachments](cookbook/Sending_Attachments.md):
 `Noctis\KickStart\Http\Response\AttachmentResponse`.
 
-Kickstart comes with a bunch of response factories (in the `Noctis\KickStart\Http\Response\Factory` namespace), each of 
-which produces a specific type of response:
+To generate the appropriate response object you can use the following traits, available in the 
+`Noctis\KickStart\Http\Helper` namespace:
 
-* `HtmlResponseFactory` - for creating an `HtmlResponse`,
-* `RedirectResponseFactory` - for creating a `RedirectResponse` response.
-* `AttachmentResponseFactory` - for creating an `AttachmentResponse`,
-* `NotFoundResponseFactory` - for creating an 404 response, with (`TextResponse`) 
-  or without (`EmptyResponse`) additional text message.
-
-Although you can use these factories in your actions directly, the recommended approach is to utilize the following
-traits, available in the `Noctis\KickStart\Http\Helper` namespace, which act as shortcuts for the response factories:
-
-* `RenderTrait` - for using `HtmlResponseFactory` to generate a `HtmlResponse`,
-* `RedirectTrait` - for using the `RedirectResponseFactory` to generate a `RedirectResponse`,
-* `AttachmentTrait` - for using the `AttachmentResponseFactory` to generate a `AttachmentResponse`, or
-* `NotFoundTrait` - for using the `NotFoundResponseFactory` to generate a 404 response, in the form of a `EmptyResponse`
-  or a `TextResponse`.
-
-Each trait requires one of the response factories to be set in a local, private field. You can find examples on how to 
-use those traits below.
+* `RenderTrait` - to generate a `HtmlResponse`,
+* `RedirectTrait` - to generate a `RedirectResponse`,
+* `AttachmentTrait` - to generate a `AttachmentResponse`, or
+* `NotFoundTrait` - to generate a 404 response, in the form of a `EmptyResponse` or a `TextResponse`.
 
 ### HTML Response
 
 To create an HTML response object, include the `Noctis\KickStart\Http\Helper\RenderTrait` trait into your action and
-make sure an instance of the `Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface` is injected into the
-local `$htmlResponseFactory` field:
+make sure an instance of the `Noctis\KickStart\Http\Service\RenderService` is injected into the
+local `$renderService` field:
 
 ```php
 <?php
@@ -107,15 +94,15 @@ namespace App\Http\Action;
 
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RenderTrait;
-use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
+use Noctis\KickStart\Http\Service\RenderServiceInterface;
 
 final class DummyAction implements ActionInterface
 {
     use RenderTrait;
 
-    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
+    public function __construct(RenderServiceInterface $renderService)
     {
-        $this->htmlResponseFactory = $htmlResponseFactory;
+        $this->renderService = $renderService;
     }
 
     // ...
@@ -135,7 +122,7 @@ namespace App\Http\Action;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RenderTrait;
-use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
+use Noctis\KickStart\Http\Service\RenderServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -143,9 +130,9 @@ final class DummyAction implements ActionInterface
 {
     use RenderTrait;
 
-    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
+    public function __construct(RenderServiceInterface $renderService)
     {
-        $this->htmlResponseFactory = $htmlResponseFactory;
+        $this->renderService = $renderService;
     }
 
     /**
@@ -160,7 +147,7 @@ final class DummyAction implements ActionInterface
 }
 ```
 
-The `RenderTrait::render()` method takes up to two arguments:
+The `render()` method takes up to two arguments:
 
 * the first argument is the name of the Twig template file, as it is in the `templates` directory, e.g. 
   `dummy.html.twig`,
@@ -171,13 +158,9 @@ You can learn more about Twig templates from
 
 ### Redirection Response
 
-To create an HTML redirection object, include the `Noctis\KickStart\Http\Helper\RedirectTrait` trait into your action 
-and make sure its dependencies:
-
-* `Noctis\KickStart\Http\Response\Factory\RedirectResponseFactory`,
-* `Noctis\KickStart\Service\PathGenerator`
-
-are injected into it:
+To create an HTML redirection object, include the `Noctis\KickStart\Http\Helper\RedirectTrait` trait into your action
+and make sure an instance of the `Noctis\KickStart\Http\Service\RedirectService` is injected into its 
+`$renderService` field:
 
 ```php
 <?php
@@ -188,21 +171,17 @@ namespace App\Http\Action;
 
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
-use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
-use Noctis\KickStart\Service\PathGeneratorInterface;
+use Noctis\KickStart\Http\Service\RedirectServiceInterface;
 
 final class DummyAction implements ActionInterface
 {
     use RedirectTrait;
 
-    public function __construct(
-        RedirectResponseFactoryInterface $redirectResponseFactory,
-        PathGeneratorInterface $pathGenerator
-    ) {
-        $this->redirectResponseFactory = $redirectResponseFactory;
-        $this->pathGenerator = $pathGenerator;
+    public function __construct(RedirectServiceInterface $redirectService)
+    {
+        $this->redirectService = $redirectService;
     }
-    
+
     // ...
 }
 ```
@@ -220,8 +199,7 @@ namespace App\Http\Action;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
-use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
-use Noctis\KickStart\Service\PathGeneratorInterface;
+use Noctis\KickStart\Http\Service\RedirectServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -229,12 +207,9 @@ final class DummyAction implements ActionInterface
 {
     use RedirectTrait;
 
-    public function __construct(
-        RedirectResponseFactoryInterface $redirectResponseFactory,
-        PathGeneratorInterface $pathGenerator
-    ) {
-        $this->redirectResponseFactory = $redirectResponseFactory;
-        $this->pathGenerator = $pathGenerator
+    public function __construct(RedirectServiceInterface $redirectService) 
+    {
+        $this->redirectService = $redirectService;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse
@@ -244,26 +219,26 @@ final class DummyAction implements ActionInterface
 }
 ```
 
-The `RedirectTrait::redirect()` method takes up to two parameters:
+The `redirect()` method takes up to two parameters:
 
 * the first parameters is the URL you wish the redirect to, e.g. `sign-in` will redirect the user to `/sign-in`. If you 
   wish to redirect the user to a URL outside of your site, i.e. to a different domain, pass in the full URL, starting
   with `http://` or `https://`,
 * the second argument is an optional list of parameters which will be added to the given URL as its query string.
 
-The `RedirectTrait::redirectToRoute()` method also takes up to two parameters:
+The `redirectToRoute()` method also takes up to two parameters:
 
 * the first parameter is the name of the route (see: [Named Routes](Routing.md#named-routes) section in the 
   [Routing](Routing.md) article),
 * the second parameter is an array of parameters; those will firstly be used to replace any named parameters in the
   route's path (if there are any), and any that are left will be used to build the query string of the URL.
 
-Both the `redirect()` and `redirectToRoute()` methods returns a `302 Found` HTTP response, with no body.
+Both the `redirect()` and `redirectToRoute()` methods return a `302 Found` HTTP response, with no body.
 
 ### Attachment Response
 
 If you wish for your action to return an attachment, i.e. a file which the user's Web browser should attempt to 
-download, you should call one of the methods available in the `AttachmentResponseFactory`.
+download, you should call one of the methods provided by the `Noctis\KickStart\Http\Helper\AttachmentTrait`.
 
 You can learn more about sending attachments from your HTTP action [here](cookbook/Sending_Attachments.md).
 
@@ -288,22 +263,24 @@ namespace App\Http\Action;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
-use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
+use Noctis\KickStart\Http\Helper\RedirectTrait;
 use Noctis\KickStart\Http\Service\FlashMessageServiceInterface;
+use Noctis\KickStart\Http\Service\RedirectServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class FooAction implements ActionInterface
 {
+    use RedirectTrait;
+
     private FlashMessageServiceInterface $flashMessageService;
-    private RedirectResponseFactoryInterface $redirectResponseFactory;
 
     public function __construct(
         FlashMessageServiceInterface $flashMessageService,
-        RedirectResponseFactoryInterface $redirectResponseFactory
+        RedirectServiceInterface $redirectService
     ) {
         $this->flashMessageService = $flashMessageService;
-        $this->redirectResponseFactory = $redirectResponseFactory;
+        $this->redirectService = $redirectService;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse
@@ -311,8 +288,7 @@ final class FooAction implements ActionInterface
         $this->flashMessageService
             ->setFlashMessage('info', 'Information has been saved.');
 
-        return $this->redirectResponseFactory
-            ->toPath('bar');
+        return $this->redirect('bar');
     }
 }
 ```
@@ -329,22 +305,24 @@ namespace App\Http\Action;
 
 use Laminas\Diactoros\Response\HtmlResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
-use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
+use Noctis\KickStart\Http\Helper\RenderTrait;
 use Noctis\KickStart\Http\Service\FlashMessageServiceInterface;
+use Noctis\KickStart\Http\Service\RenderServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class BarAction implements ActionInterface
 {
+    use RenderTrait;
+
     private FlashMessageServiceInterface $flashMessageService;
-    private HtmlResponseFactoryInterface $htmlResponseFactory;
 
     public function __construct(
         FlashMessageServiceInterface $flashMessageService,
-        HtmlResponseFactoryInterface $htmlResponseFactory
+        RenderServiceInterface $renderService
     ) {
         $this->flashMessageService = $flashMessageService;
-        $this->htmlResponseFactory = $htmlResponseFactory;
+        $this->renderService = $renderService;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): HtmlResponse
@@ -352,10 +330,9 @@ final class BarAction implements ActionInterface
         $message = $this->flashMessageService
             ->getFlashMessage('info');
 
-        return $this->htmlResponseFactory
-            ->render('bar.html.twig', [
-                'message' => $message
-            ]);
+        return $this->render('bar.html.twig', [
+              'message' => $message
+          ]);
     }
 }
 ```

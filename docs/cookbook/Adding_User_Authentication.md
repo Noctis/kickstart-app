@@ -323,7 +323,7 @@ namespace App\Http\Action;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RenderTrait;
-use Noctis\KickStart\Http\Response\Factory\HtmlResponseFactoryInterface;
+use Noctis\KickStart\Http\Service\RenderServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -331,9 +331,9 @@ final class SignInFormAction implements ActionInterface
 {
     use RenderTrait;
 
-    public function __construct(HtmlResponseFactoryInterface $htmlResponseFactory)
+    public function __construct(RenderServiceInterface $renderService)
     {
-        $this->htmlResponseFactory = $htmlResponseFactory;
+        $this->renderService = $renderService;
     }
 
     /**
@@ -412,8 +412,7 @@ use App\Service\Security\AuthServiceInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
-use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
-use Noctis\KickStart\Service\PathGeneratorInterface;
+use Noctis\KickStart\Http\Service\RedirectServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -425,12 +424,10 @@ final class SignInAction implements ActionInterface
 
     public function __construct(
         AuthServiceInterface $authService,
-        RedirectResponseFactoryInterface $redirectResponseFactory,
-        PathGeneratorInterface $pathGenerator
+        RedirectServiceInterface $redirectService
     ) {
         $this->authService = $authService;
-        $this->redirectResponseFactory = $redirectResponseFactory;
-        $this->pathGenerator = $pathGenerator;
+        $this->redirectService = $redirectService;
     }
 
     /**
@@ -496,8 +493,7 @@ use App\Service\Security\AuthServiceInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
-use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
-use Noctis\KickStart\Service\PathGeneratorInterface;
+use Noctis\KickStart\Http\Service\RedirectServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -509,12 +505,10 @@ final class SignOutAction implements ActionInterface
 
     public function __construct(
         AuthServiceInterface $authService,
-        RedirectResponseFactoryInterface $redirectResponseFactory,
-        PathGeneratorInterface $pathGenerator
+        RedirectServiceInterface $redirectService
     ) {
         $this->authService = $authService;
-        $this->redirectResponseFactory = $redirectResponseFactory;
-        $this->pathGenerator = $pathGenerator;
+        $this->redirectService = $redirectService;
     }
 
     /**
@@ -575,8 +569,7 @@ namespace App\Http\Middleware\Guard;
 
 use App\Service\Security\AuthServiceInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
-use Noctis\KickStart\Http\Response\Factory\RedirectResponseFactoryInterface;
-use Noctis\KickStart\Service\PathGeneratorInterface;
+use Noctis\KickStart\Http\Service\RedirectServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -590,12 +583,10 @@ final class IsLoggedInGuard implements MiddlewareInterface
 
     public function __construct(
         AuthServiceInterface $authService,
-        RedirectResponseFactoryInterface $redirectResponseFactory,
-        PathGeneratorInterface $pathGenerator
+        RedirectServiceInterface $redirectService
     ) {
         $this->authService = $authService;
-        $this->redirectResponseFactory = $redirectResponseFactory;
-        $this->pathGenerator = $pathGenerator;
+        $this->redirectService = $redirectService;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
