@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "558c084d8c168766fd7904e05af62a3d",
+    "content-hash": "f99db244eb7c25430e4074d935e3fa8e",
     "packages": [
         {
             "name": "azjezz/psl",
@@ -843,16 +843,16 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "dev-chore/dependencies-update",
+            "version": "4.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "50ad6509421bf2c5ef17a15c9020009747dc8616"
+                "reference": "954ea5a6e28ba57987d6d5a0570dbbb757f6165d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/50ad6509421bf2c5ef17a15c9020009747dc8616",
-                "reference": "50ad6509421bf2c5ef17a15c9020009747dc8616",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/954ea5a6e28ba57987d6d5a0570dbbb757f6165d",
+                "reference": "954ea5a6e28ba57987d6d5a0570dbbb757f6165d",
                 "shasum": ""
             },
             "require": {
@@ -881,6 +881,7 @@
                 "symfony/var-dumper": "^6.2",
                 "vimeo/psalm": "^5.4"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -908,9 +909,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/chore/dependencies-update"
+                "source": "https://github.com/Noctis/kickstart/tree/4.0.x"
             },
-            "time": "2022-12-25T15:47:49+00:00"
+            "time": "2022-12-25T16:13:55+00:00"
         },
         {
             "name": "paragonie/corner",
@@ -4546,7 +4547,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "noctis/kickstart": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
