@@ -41,7 +41,7 @@ Now for HTTP-related things - there's going be a few. Start by deleting the foll
 * `templates/dummy.html.twig`
 * `templates/layout.html.twig` (optionally)
 
-Next remove the route referring to `DummyAction` and `DummyGuard` classes in the `src/Http/Routing/routes.php` file.
+Next remove the route referring to `DummyAction` and `DummyGuard` classes in the `config/routes.php` file.
 
 And that's it. No more dummy code left in the application.
 

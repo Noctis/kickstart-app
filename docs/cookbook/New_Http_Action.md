@@ -50,7 +50,7 @@ but we'll get back to that later. For now, lets create a route definition and re
 
 ## Adding a Route Definition
 
-By default, all HTTP route definitions can be found in the `src/Http/Routing/routes.php` file:
+By default, all HTTP route definitions can be found in the `config/routes.php` file:
 
 ```php
 <?php

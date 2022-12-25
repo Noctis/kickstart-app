@@ -21,6 +21,6 @@ $app = WebApplication::boot(
 );
 
 /** @var list<RouteInterface> $routes */
-$routes = require_once __DIR__ . '/../src/Http/Routing/routes.php';
+$routes = require_once __DIR__ . '/../config/routes.php';
 $app->setRoutes($routes);
 $app->run();
