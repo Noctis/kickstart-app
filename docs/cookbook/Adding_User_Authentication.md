@@ -255,7 +255,7 @@ $app = WebApplication::boot(
 );
 
 /** @var list<RouteInterface> $routes */
-$routes = require_once __DIR__ . '/../src/Http/Routing/routes.php';
+$routes = require_once __DIR__ . '/../config/routes.php';
 $app->setRoutes($routes);
 $app->run();
 ```
@@ -346,7 +346,7 @@ final class SignInFormAction implements ActionInterface
 }
 ```
 
-Define a route for the action you've just created, in the `src/Http/Routing/routes.php` file:
+Define a route for the action you've just created, in the `config/routes.php` file:
 
 ```php
 <?php
@@ -455,7 +455,7 @@ final class SignInAction implements ActionInterface
 }
 ```
 
-Define a new route for this action, in the `src/Http/Routing/routes.php` file:
+Define a new route for this action, in the `config/routes.php` file:
 
 ```php
 <?php
@@ -524,7 +524,7 @@ final class SignOutAction implements ActionInterface
 }
 ```
 
-Add it to the routes list, in the `src/Http/Routing/routes.php` file:
+Add it to the routes list, in the `config/routes.php` file:
 
 ```php
 <?php
@@ -601,7 +601,7 @@ final class IsLoggedInGuard implements MiddlewareInterface
 ```
 
 Next, assign it to any actions only signed-in uses should have access to, by modifying their routes, in 
-`src/Http/Routing/routes.php` file, for example:
+`config/routes.php` file, for example:
 
 ```php
 <?php

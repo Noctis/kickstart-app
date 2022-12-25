@@ -1,8 +1,8 @@
 # Routing
 
 Every Kickstart application has a collection of routes, each of which map to a specific HTTP action. Said collection can 
-be found in the application's `src/Http/Routing/routes.php` file. The file contains an PHP array, where each element is 
-an `Noctis\KickStart\Http\Routing\Route` object. 
+be found in the application's `config/routes.php` file. The file contains an PHP array, where each element is an
+`Noctis\KickStart\Http\Routing\Route` object. 
 
 Each `Route` object specifies:
 

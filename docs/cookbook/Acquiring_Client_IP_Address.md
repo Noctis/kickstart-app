@@ -11,7 +11,7 @@ application:
 $ composer require middlewares/client-ip
 ```
 
-Now, edit the routes list (`src/Http/Routing/routes.php` file by default) and add `Middlewares\ClientIp` to the
+Now, edit the routes list (`config/routes.php` file by default) and add `Middlewares\ClientIp` to the
 middlewares list of the appropriate action. For example, if you wish that the `App\Http\Action\DummyAction` could fetch
 the client's IP address from the request object:
 

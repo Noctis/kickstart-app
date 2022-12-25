@@ -25,7 +25,7 @@ final class DummyRequest extends Request implements ServerRequestInterface
 ```
 
 You must then provide your custom request's class name in the route definition for your action. Routes list can be found
-in your application's `src/Http/Routing/routes.php` file. Custom request's class name must be provided as the route's
+in your application's `config/routes.php` file. Custom request's class name must be provided as the route's
 4th argument, for example:
 
 ```php

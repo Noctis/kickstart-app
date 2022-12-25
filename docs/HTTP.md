@@ -1,6 +1,9 @@
 # HTTP-based application
 
-Files related to an HTTP application can be found in the `public`, `src/Http` and `templates` folders.
+Files related to an HTTP application can be found in the `config`, `public`, `src/Http` and `templates` folders.
+
+The `config` folder contains the `routes.php` file, which contains the list of routes, i.e. mappings between URLs and
+HTTP actions available in the application.
 
 The `public` folder contains the `index.php` file, which acts as an 
 ["entry" point](https://martinfowler.com/eaaCatalog/frontController.html) for every incoming HTTP request. Should you
@@ -11,8 +14,7 @@ The `src/Http` folder contains the "meat" of an HTTP application. Here you will 
 
 * HTTP actions, located in the `src/Http/Action` folder,
 * custom HTTP requests, located in the `src/Http/Request` folder,
-* HTTP middleware, located in the `src/Http/Middleware/Guard` folder,
-* HTTP routes list, in the `src/Http/Routing/routes.php` file.
+* HTTP middleware, located in the `src/Http/Middleware/Guard` folder.
 
 The `templates` folder, in the root directory of your project, contains the template files, a.k.a. views.
 
@@ -22,9 +24,8 @@ Here's how it all ties together.
 
 Once a browser sends an HTTP request, the WWW server will forward it to the `public/index.php` file. This file will call
 Kickstart's request handler and pass it an object representing the request. The request handler will use Kickstart's
-router to check which of the routes in the `src/Http/Routing/routes.php` file matches the requested path. If a 
-matching route is found, the `process()` method of the HTTP action class, referenced in the matching route will be 
-called. 
+router to check which of the routes in the `config/routes.php` file matches the requested path. If a matching route is
+found, the `process()` method of the HTTP action class, referenced in the matching route will be called. 
 
 The action will generate an object representing the HTTP response. That object will be returned to the request handler,
 which will emit it to the Web browser, that made the original request.
@@ -48,7 +49,7 @@ If the HTTP action needs to get some data from the incoming HTTP request, the fo
   using the HTTP's `POST` method (equivalent of PHP's `$_POST` super-global),
 * `getAttribute()` - returns an attribute of the given name, from the request. Request attributes can be set by:
   * Kickstart's router - [FastRoute](https://github.com/nikic/FastRoute), if named requested params were used in the
-    route definition (see: `src/Http/Routing/routes.php` file),
+    route definition (see: [`config/routes.php`](../config/routes.php) file),
   * HTTP middleware, e.g. [`middlewares/client-ip`](https://github.com/middlewares/client-ip).
 * `getUploadedFiles()` - returns an array of uploaded files, i.e. instances of 
   `Psr\Http\Message\UploadedFileInterface` objects (sorta equivalent of PHP's `$_FILES` super-global).
