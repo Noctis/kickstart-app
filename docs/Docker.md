@@ -2,11 +2,11 @@
 
 Docker functionality has been introduced in Kickstart as early as 
 [version 2.3.0](https://github.com/Noctis/kickstart-app/releases/tag/2.3.0) (in experimental form), but it wasn't until
-[version 3.1.2](https://github.com/Noctis/kickstart-app/releases/tag/3.1.2) that it became actually stable.
+[version 3.1.2](https://github.com/Noctis/kickstart-app/releases/tag/3.1.2) that it became actually usable.
 
 [Docker](https://www.docker.com/) helps you develop your Kickstart-based application without having a copy of 
 [PHP](https://www.php.net/), a web server (e.g. [Apache HTTP](https://httpd.apache.org/)) or a database server 
-([MariaDB](https://mariadb.org/) or [MySQL](https://www.mysql.com/)) installed locally, i.e. on your computer, or on a 
+([MariaDB](https://mariadb.org/)/[MySQL](https://www.mysql.com/)) installed locally, i.e. on your computer, or on a 
 remote machine.
 
 In this document, I describe a couple of things you need to know if you decide to develop your Kickstart-based
@@ -20,8 +20,8 @@ By default, Kickstart's application comes bundled with two Docker-related files:
 * `Dockerfile`.
 
 The `Dockerfile` contains information pertaining to the configuration of PHP & Apache's httpd (Web) server. Using this 
-file you'll be able to launch a single container, with the latest PHP 8.0 & Apache 2.4 server available (w. PHP running 
-in mod_php mode).
+file you'll be able to launch a single container, with the latest PHP 8.1 & Apache 2.4 server available (w. PHP running 
+in `mod_php` mode).
 
 The `docker-compose.yml` file is more interesting, as it contains information regarding the MariaDB (database) server
 and allows you to launch a set of two containers simultaneously: one with PHP & Apache, and one with MariaDB, both of 
@@ -32,27 +32,27 @@ Those two containers are called:
 * `web`, and
 * `db`.
 
-I think you can tell which one contains which services. To launch this container set, enter the root directory of your
-Kickstart-based application in the command line (CLI) and execute the following command:
+I think you can tell which one contains which services. To start these containers, enter the root directory of your
+application and execute the following command in the command line (CLI):
 
 ```shell
 $ docker-compose up -d
 ```
 
 If the Docker daemon is running and the `docker-compose` command is available, Docker should launch the two 
-aforementioned containers. If the `docker-compose` command is not recognized, try running it like so:
+aforementioned containers. If the `docker-compose` command is not recognized, try the command without the dash, like so:
 
 ```shell
 $ docker compose up -d
 ```
 
-If there were no problems building & running the two containers, then:
+If there were no problems building & running the two containers:
 
-* Apache's httpd (Web) server will be available under [http://localhost:8008](http://localhost:8008),
+* Apache's httpd (Web) server will be available under [http://localhost:8008](http://localhost:8008) URL,
 * MariaDB server will be available under localhost:6603 (TCP).
 
-Below you'll find a couple of mini-cookbook recipes, which will be helpful should you decide to develop your 
-Kickstart-based application using Docker.
+Below you'll find a couple of mini-cookbook recipes, which will be helpful should you decide to develop your application 
+using Docker.
 
 ## Database Credentials in `.env`
 
@@ -67,14 +67,14 @@ db_name=dbname
 db_port=3306
 ```
 
-Why `db` as the hostname? Because that's the name of the container running the MariaDB server and also the network name
-under which that container is visible from the `web` container, from which the PHP code will be run.
+Why `db` as the hostname? Because that's the name of the container running the MariaDB server and also the hostname
+under which that container is visible from the `web` container, where PHP code is being run.
 
 As for the username, password and database name - those three are defined in the `docker-compose.yml` file:
 
 ```yaml
 db:
-  image: mariadb:10.7-focal
+  image: mariadb:10.10-jammy
   environment:
     MARIADB_RANDOM_ROOT_PASSWORD: yesplease
     MARIADB_USER: dbuser
@@ -95,18 +95,18 @@ discussing this here.
 ## Populating the Database With Data on Start
 
 When the `db` container is started, it only contains a single database (named `dbname` by default), which is empty. If
-you wish to populate that database with some data, i.e. have some queries be run on it as the container is started, 
-there is a way to do it.
+you wish to populate that database with some data on startup, i.e. have some queries be run on it as the container is 
+started, there is a way to do it.
 
 By default, when this container is starting, it will look in its local `/docker-entrypoint-initdb.d` directory and
-execute any files it finds there. So, if you have a directory with some .sql files you wish to run against the database, 
-you should mount it to the `/docker-entrypoint-initdb.d` directory. To do it, you need to modify your application's
-`docker-compose.yml` file and add a `volumes` section to it. For example, if your .sql files reside in the `db/scripts`
-directory inside your application's root directory, the `volumes` section you add should look like so:
+execute any files it finds there. So, if you have a directory with some `.sql` files you wish to run against the 
+database, you should mount it to the `/docker-entrypoint-initdb.d` directory. To do it, you need to modify your 
+application's `docker-compose.yml` file and add a `volumes` section to it. For example, if your .sql files reside in the 
+`db/scripts` directory inside your application's root directory, the `volumes` section you add should look like so:
 
 ```yaml
 db:
-  image: mariadb:10.7-focal
+  image: mariadb:10.10-jammy
   volumes:
     - ./db/scripts:/docker-entrypoint-initdb.d
 ```
@@ -120,7 +120,7 @@ example, only the `db/scripts/core.sql` file), you should modify your `docker-co
 
 ```yaml
 db:
-  image: mariadb:10.7-focal
+  image: mariadb:10.10-jammy
   volumes:
     - ./db/scripts/core.sql:/docker-entrypoint-initdb.d
 ```
@@ -130,13 +130,13 @@ container is removed.** The data will not be lost if the container is stopped, w
 
 ## Running CLI Commands
 
-If your Kickstart-based application has [console commands](Console.md), executable in CLI, running them will require
-access to a PHP CLI interpreter, i.e. `php` executable. If you have PHP installed locally, on your computer, then 
-running a console command is as simple as opening a CLI window, entering your application's root directory and executing
-a command like so:
+If your application has [console commands](Console.md), executable through CLI, running them will require access to the 
+PHP CLI interpreter, i.e. `php` executable. If you have PHP installed locally, on your computer, then running a console 
+command is as simple as opening a CLI window, entering your application's root directory and executing a command like 
+so:
 
 ```shell
-php bin/console dummy:command
+$ php bin/console dummy:command
 ```
 
 In this scenario, if the command you're attempting to run does require a database connection, you will run into trouble,
@@ -144,8 +144,8 @@ if the database credentials in your applications `.env` file point to the `db` c
 point of view, there is no host called `db` in your network.
 
 To connect to the MariaDB instance running in the `db` container you'd need to change the `db_host` to `localhost`, and
-`db_port` to `6033`. Then it'll work. But now your application no longer works in the Web browser. Why is that? When you
-run your application in a Web browser, the code is executed inside the `web` container, not on your local (host) 
+`db_port` to `6033`. Then it'll work. But now your application no longer works in the Web browser. Why, you ask? When 
+you run your application in a Web browser, the code is executed inside the `web` container, not on your local (host) 
 computer. And from that container's point of view, the database credentials inside `.env` (`localhost:6603`) are 
 invalid. So now your application runs fine in CLI, from your local computer, but won't run in your Web browser. 
 Now what?
@@ -155,23 +155,17 @@ Now what?
 
 There are two ways of doing it: you could tell Docker to execute a command inside the container and return the control
 to you once it's done (the "one-off" method), or you could tell Docker to start a shell (terminal) session for you, 
-inside the `web` container and let you have it, sort of like connecting to that container _via_ SSH.
+inside the `web` container and let you take control of it, sort of like connecting to that container _via_ SSH.
 
 ### The "One-off" Method of Running Commands
 
-If you just wish to execute a single command and return to your computer's CLI, execute the following command:
+If you just wish to execute a single command execute the following command in your computer's CLI:
 
 ```shell
-$ docker container exec -it kickstart-app-web-1 php bin/console
+$ docker-compose exec -it web php bin/console
 ```
 
-The `kickstart-app-web-1` name is the full name of the `web` container. This name changes depending on the name of the
-directory in which your Kickstart application resides. To find out which container name you should use in your case,
-look for it in the running containers list:
-
-```shell
-$ docker container ls
-```
+**Reminder:** if `docker-compose` doesn't work, try `docker compose` (without the dash).
 
 ### Running Commands Inside a Container Terminal Session
 
@@ -181,10 +175,8 @@ inside the container. It'll be as if you're connected _via_ SSH, i.e. more famil
 To do it, execute the following command in your CLI:
 
 ```shell
-$ docker container exec -it kickstart-app-web-1 /bin/bash
+$ docker-compose exec -it web /bin/bash
 ```
-
-If you're not sure why the `kickstart-app-web-1` name here - look above. I've explained it in detail there.
 
 Once you're in, you can run your commands as if you'd normally do:
 
@@ -192,33 +184,49 @@ Once you're in, you can run your commands as if you'd normally do:
 $ php bin/console dummy:command
 ```
 
-## XDebug
+## Composer
 
-By default, I've designed the `Dockerfile` and `docker-compose.yml` files that ship with the Kickstart application to 
-help you develop & debug your application, hence why I've enabled [Xdebug 3](https://xdebug.org/) by default.
+Since Kickstart 4.0.0, the Docker's `web` container comes with the latest currently available version of 
+[Composer](https://getcomposer.org/) installed by default. To use it, simply use the `composer` name, for example:
 
-For example, Xdebug's [remote debugging](https://xdebug.org/docs/step_debug) is enabled by default.
-
-If there's anything you wish to change regarding Xdebug's configuration, you should modify the 
-`docker/php/conf.d/xdebug.ini` file inside your Kickstart application's root directory. Any changes you make there will 
-be visible the next time you run `docker-composer up -d`.
-
-## Disabling Xdebug
-
-As great and helpful Xdebug is, it does add a significant overhead to running your PHP code. If you wish to run your
-application in Docker, but without Xdebug, edit the `docker/php/conf.d/xdebug.ini` file and comment out the 
-`zend_extension=xdebug` line:
-
-```ini
-#zend_extension=xdebug
-
-[xdebug]
-xdebug.mode=develop,debug
-xdebug.client_host=host.docker.internal
-xdebug.start_with_request=yes
+```shell
+$ docker-compose exec -it web composer install
 ```
 
-Once you start your `web` container, Xdebug will no longer be visible and everything should run much, much faster.
+to run `composer install` inside the container from your host's CLI, or:
+
+```shell
+$ composer install
+```
+
+to run same command from inside the container (in its shell).
+
+## XDebug
+
+I've designed the `Dockerfile` and `docker-compose.yml` files that ship with the default Kickstart application to help 
+you with developing your application. If you want to, you can also enable [Xdebug 3](https://xdebug.org/) to utilize its
+[remote debugging](https://xdebug.org/docs/step_debug) functionality. 
+
+XDebug is **NOT** enabled by default. To enable it:
+
+* edit the `Dockerfile` and uncomment the following part:
+  ```dockerfile
+  RUN pecl install xdebug && \
+      docker-php-ext-enable xdebug
+  ```
+* edit the `docker-compose.yml` file and uncomment the following lines (mind the indents):
+  ```yaml
+  - type: bind
+    source: ./docker/php/conf.d/xdebug.ini
+    target: /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+  - type: bind
+    source: ./docker/php/conf.d/error_reporting.ini
+    target: /usr/local/etc/php/conf.d/error_reporting.ini
+  ```
+
+If there's anything you wish to change regarding Xdebug's configuration, you should modify the 
+`docker/php/conf.d/xdebug.ini` file inside your application's root directory. Any changes you make there will be visible
+the next time you run `docker-composer up -d`.
 
 ## Problems When Trying to Start the `web` Container
 
