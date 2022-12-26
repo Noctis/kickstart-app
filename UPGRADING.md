@@ -3,6 +3,8 @@
 Refer to the following, version-specific documents to learn how to upgrade your application between different versions 
 of Kickstart:
 
+* From 3.2.2:
+  * [From 3.2.2 to 4.0.0](docs/upgrading/3.2.2_to_4.0.0.md)
 * From 3.1.6:
   * [From 3.1.6 to 3.2.2](docs/upgrading/3.1.6_to_3.2.2.md)
 * From 3.0.0:
