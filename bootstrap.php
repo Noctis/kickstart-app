@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Debugging;
 use Dotenv\Dotenv;
 use Noctis\KickStart\Configuration\Configuration;
+use Noctis\KickStart\Debugging;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
