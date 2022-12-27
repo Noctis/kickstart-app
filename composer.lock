@@ -847,18 +847,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "8e9b0bbf28437b2622ac1c1072c44d20a645a354"
+                "reference": "172d993929e8c7e447e950c6b6c5a406c5567f9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/8e9b0bbf28437b2622ac1c1072c44d20a645a354",
-                "reference": "8e9b0bbf28437b2622ac1c1072c44d20a645a354",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/172d993929e8c7e447e950c6b6c5a406c5567f9b",
+                "reference": "172d993929e8c7e447e950c6b6c5a406c5567f9b",
                 "shasum": ""
             },
             "require": {
                 "azjezz/psl": "^2.3",
                 "composer-runtime-api": "^2",
                 "fig/http-message-util": "^1.1",
+                "filp/whoops": "^2.14",
                 "laminas/laminas-diactoros": "^2.24",
                 "laminas/laminas-httphandlerrunner": "^2.4",
                 "laminas/laminas-session": "^2.16",
@@ -911,7 +912,7 @@
                 "issues": "https://github.com/Noctis/kickstart/issues",
                 "source": "https://github.com/Noctis/kickstart/tree/4.0.x"
             },
-            "time": "2022-12-27T17:50:06+00:00"
+            "time": "2022-12-27T19:12:38+00:00"
         },
         {
             "name": "paragonie/corner",
