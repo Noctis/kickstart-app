@@ -8,13 +8,14 @@ services:
         source: .
         target: /var/www/kickstart-app
 
-      - type: bind
-        source: ./docker/php/conf.d/xdebug.ini
-        target: /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
-      - type: bind
-        source: ./docker/php/conf.d/error_reporting.ini
-        target: /usr/local/etc/php/conf.d/error_reporting.ini
+      # Uncomment the following lines to enable XDebug's remote debugging
+      #
+      #- type: bind
+      #  source: ./docker/php/conf.d/xdebug.ini
+      #  target: /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      #- type: bind
+      #  source: ./docker/php/conf.d/error_reporting.ini
+      #  target: /usr/local/etc/php/conf.d/error_reporting.ini
     ports:
       - "8008:80"
     depends_on:
@@ -23,7 +24,7 @@ services:
       - kickstart-net
 
   db:
-    image: mariadb:10.7-focal
+    image: mariadb:10.10-jammy
     environment:
       MARIADB_RANDOM_ROOT_PASSWORD: yesplease
       MARIADB_USER: dbuser

@@ -37,7 +37,7 @@ version: "3.9"
 
 services:
   db:
-    image: mariadb:10.7-focal
+    image: mariadb:10.10-jammy
     environment:
       MARIADB_RANDOM_ROOT_PASSWORD: yesplease
       MARIADB_USER: dbuser
