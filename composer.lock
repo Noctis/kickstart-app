@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f99db244eb7c25430e4074d935e3fa8e",
+    "content-hash": "d50cec05613eb927a765812b61e08360",
     "packages": [
         {
             "name": "azjezz/psl",
@@ -847,18 +847,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "8e9b0bbf28437b2622ac1c1072c44d20a645a354"
+                "reference": "172d993929e8c7e447e950c6b6c5a406c5567f9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/8e9b0bbf28437b2622ac1c1072c44d20a645a354",
-                "reference": "8e9b0bbf28437b2622ac1c1072c44d20a645a354",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/172d993929e8c7e447e950c6b6c5a406c5567f9b",
+                "reference": "172d993929e8c7e447e950c6b6c5a406c5567f9b",
                 "shasum": ""
             },
             "require": {
                 "azjezz/psl": "^2.3",
                 "composer-runtime-api": "^2",
                 "fig/http-message-util": "^1.1",
+                "filp/whoops": "^2.14",
                 "laminas/laminas-diactoros": "^2.24",
                 "laminas/laminas-httphandlerrunner": "^2.4",
                 "laminas/laminas-session": "^2.16",
@@ -911,7 +912,7 @@
                 "issues": "https://github.com/Noctis/kickstart/issues",
                 "source": "https://github.com/Noctis/kickstart/tree/4.0.x"
             },
-            "time": "2022-12-27T17:50:06+00:00"
+            "time": "2022-12-27T19:12:38+00:00"
         },
         {
             "name": "paragonie/corner",
@@ -1541,16 +1542,16 @@
         },
         {
             "name": "psr/log",
-            "version": "2.0.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "ef29f6d262798707a9edd554e2b82517ef3a9376"
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/ef29f6d262798707a9edd554e2b82517ef3a9376",
-                "reference": "ef29f6d262798707a9edd554e2b82517ef3a9376",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
                 "shasum": ""
             },
             "require": {
@@ -1559,7 +1560,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "3.x-dev"
                 }
             },
             "autoload": {
@@ -1585,9 +1586,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/2.0.0"
+                "source": "https://github.com/php-fig/log/tree/3.0.0"
             },
-            "time": "2021-07-14T16:41:46+00:00"
+            "time": "2021-07-14T16:46:02+00:00"
         },
         {
             "name": "revolt/event-loop",

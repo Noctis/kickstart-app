@@ -14,7 +14,6 @@
     "require": {
         "php": "~8.1.0",
         "composer-runtime-api": "^2",
-        "filp/whoops": "^2.14",
         "laminas/laminas-diactoros": "^2.24",
         "noctis/kickstart": "~4.0.0",
         "paragonie/easydb": "^3.0",
