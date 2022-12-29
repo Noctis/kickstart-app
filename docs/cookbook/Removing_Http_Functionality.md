@@ -22,6 +22,8 @@ Edit the `.env` file and remove the following lines:
 basehref=/
 ```
 
+Lastly, delete the `config/routes.php` file.
+
 ## Docker
 
 If you wish to, you can also modify the Docker files that came with your application, removing any Web-based 
@@ -30,7 +32,7 @@ functionality.
 First, remove `Dockerfile` and the `docker` directory from your application's root directory.
 
 Next, modify the `docker-compose.yml` file, also in the application's root directory. Remove the entire definition of
-the `web` service. In the end, this is what the file should look like:
+the `web` service. In the end, this is what the `docker-compose.yml` file should look like:
 
 ```yaml
 version: "3.9"
