@@ -4,7 +4,7 @@
 
 Service providers act as a registry, which Kickstart uses to build the DIC - the 
 [Dependency Injection Container](https://medium.com/tech-tajawal/dependency-injection-di-container-in-php-a7e5d309ccc6). 
-DIC automatically provides classes with any dependencies they required, so that they may be properly instantiated.
+DIC automatically provides classes with any dependencies they require, so that they may be properly instantiated.
 
 ## Requirements
 
@@ -35,10 +35,9 @@ use Noctis\KickStart\Http\Action\ActionInterface;
 
 final class DummyAction implements ActionInterface
 {
-    private DummyServiceInterface $service;
-
-    public function __construct(DummyServiceInterface $service)
-    {
+    public function __construct(
+        private readonly DummyServiceInterface $service
+    ) {
         $this->service = $service;
     }
 
@@ -62,8 +61,8 @@ final class DummyService implements DummyServiceInterface
 }
 ```
 
-To inform DIC that when some class needs an implementation of `DummyServiceInterface`, they should be provided with an 
-instance of `DummyService`, the following definition should be added to a service provider:
+To tell DIC that when some class needs an implementation of `DummyServiceInterface`, that class should be provided with 
+an instance of `DummyService`, the following definition should be added to a service provider:
 
 ```php
 <?php
@@ -103,18 +102,16 @@ namespace App\Service;
 
 final class DummyService implements DummyServiceInterface
 {
-    private int $limit;
-
-    public function __construct(int $limit)
-    {
-        $this->limit = $limit;
+    public function __construct(
+        private int $limit
+    ) {
     }
 
     // ...
 }
 ```
 
-How do you tell the DIC, what should it provide as the `$limit` value when instantiating the `DummyService` class?
+How do you tell the DIC what should it provide as the `$limit` value when instantiating the `DummyService` class?
 
 If you want to specify a specific value, for a specific constructor parameter, your service definition should look 
 like so:
@@ -170,10 +167,9 @@ use ParagonIE\EasyDB\EasyDB;
 
 final class DummyRepository implements DummyRepositoryInterface
 {
-    private EasyDB $db;
-
-    public function __construct(EasyDB $db)
-    {
+    public function __construct(
+        private readonly EasyDB $db
+    ) {
         $this->db = $db;
     }
 
