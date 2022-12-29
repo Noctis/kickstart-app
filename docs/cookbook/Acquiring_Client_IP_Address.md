@@ -8,7 +8,7 @@ First, install the `middlewares/client-ip` package. Execute the following comman
 application:
 
 ```shell
-$ composer require middlewares/client-ip
+$ composer require middlewares/client-ip:^2.0
 ```
 
 Now, edit the routes list (`config/routes.php` file by default) and add `Middlewares\ClientIp` to the
