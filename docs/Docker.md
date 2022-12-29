@@ -9,38 +9,42 @@ Docker functionality has been introduced in Kickstart as early as
 ([MariaDB](https://mariadb.org/)/[MySQL](https://www.mysql.com/)) installed locally, i.e. on your computer, or on a 
 remote machine.
 
-In this document, I describe a couple of things you need to know if you decide to develop your Kickstart-based
-application using Docker's containers.
+In this document, I describe a couple of things you need to know if you decide to develop your application using 
+Docker containers.
 
 ## Kickstart's Default Docker Configuration
 
-By default, Kickstart's application comes bundled with two Docker-related files:
+By default, a Kickstart application comes bundled with two Docker-related files, both of which can be found in the
+application's root directory:
 
 * `docker-compose.yml`, and
 * `Dockerfile`.
 
-The `Dockerfile` contains information pertaining to the configuration of PHP & Apache's httpd (Web) server. Using this 
-file you'll be able to launch a single container, with the latest PHP 8.1 & Apache 2.4 server available (w. PHP running 
-in `mod_php` mode).
+The `Dockerfile` contains information pertaining to the configuration of the container containing PHP & Apache's httpd 
+(Web) server. Using this file you'll be able to launch a single container, with the latest PHP 8.1 & Apache 2.4 server 
+available (with PHP running in `mod_php` mode).
 
 The `docker-compose.yml` file is more interesting, as it contains information regarding the MariaDB (database) server
 and allows you to launch a set of two containers simultaneously: one with PHP & Apache, and one with MariaDB, both of 
-which will be able to communicate with each other over Docker's internal network.
+which will be able to see and communicate with each other over Docker's internal network.
 
 Those two containers are called:
 
 * `web`, and
 * `db`.
 
-I think you can tell which one contains which services. To start these containers, enter the root directory of your
-application and execute the following command in the command line (CLI):
+I think you can tell which one contains which services. 
+
+To start these containers, enter the root directory of your application and execute the following command in the command 
+line (CLI):
 
 ```shell
 $ docker-compose up -d
 ```
 
 If the Docker daemon is running and the `docker-compose` command is available, Docker should launch the two 
-aforementioned containers. If the `docker-compose` command is not recognized, try the command without the dash, like so:
+aforementioned containers. If the `docker-compose` command is not recognized, try executing the command without the
+dash, like so:
 
 ```shell
 $ docker compose up -d
@@ -48,8 +52,8 @@ $ docker compose up -d
 
 If there were no problems building & running the two containers:
 
-* Apache's httpd (Web) server will be available under [http://localhost:8008](http://localhost:8008) URL,
-* MariaDB server will be available under localhost:6603 (TCP).
+* Your application will be available in your Web browser, under the [http://localhost:8008](http://localhost:8008) URL,
+* MariaDB server will be available under `localhost:6603` (TCP).
 
 Below you'll find a couple of mini-cookbook recipes, which will be helpful should you decide to develop your application 
 using Docker.
