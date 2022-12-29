@@ -38,16 +38,23 @@ To add a new command, you must:
   ```
 * register the new command in the `bin/console` file, by including its fully qualified class name, in the array passed 
   to the `ConsoleApplication`'s `setCommands()` method:
-  ```php
+  ```shell
+  #!/usr/bin/env php
+  <?php
+  
+  declare(strict_types=1);
+  
   use App\Console\Command\DummyCommand;
   use Noctis\KickStart\Console\ConsoleApplication;
-  
   // ...
   
-  /** @var ConsoleApplication $app */
-  $app = $container->get(ConsoleApplication::class);
+  require_once __DIR__ . '/../bootstrap.php';
+  
+  $app = ConsoleApplication::boot(
+      //...
+  );
   $app->setCommands([
-      DummyCommand::class
+      DummyCommand::class,
   ]);
   $app->run();
   ```
