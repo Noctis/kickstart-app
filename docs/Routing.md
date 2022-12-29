@@ -1,18 +1,19 @@
 # Routing
 
-Every Kickstart application has a collection of routes, each of which map to a specific HTTP action. Said collection can 
-be found in the application's `config/routes.php` file. The file contains an PHP array, where each element is an
+Every Kickstart application has a collection of routes, each of which map URLs to specific HTTP actions. Said collection 
+can be found in the `config/routes.php` file. The file contains an PHP array, where each element is an
 `Noctis\KickStart\Http\Routing\Route` object. 
 
 Each `Route` object specifies:
 
-* the URL path, e.g. `/foo` and
-* the corresponding action which should be executed if a request matches this specific path.
+* the HTTP method (`GET`, `POST`, etc.),
+* the URL (path), e.g. `/foo` and
+* the corresponding action which should be executed if a request matches this specific path and method.
 
 A route object may also contain a few additional pieces of information, all of which are optional:
 
 * a list of [PSR-7](https://www.php-fig.org/psr/psr-7/)-compliant HTTP middleware, through which the request object 
-  should pass through, before reaching the action, and
+  should be passed through, before being handed over to the HTTP action, and
 * the custom request class which should be used, instead of Kickstart's standard one.
 
 The `Route` class offers a few static factory methods, which define the HTTP method for a given route. Those are:
@@ -58,15 +59,15 @@ Route::get('/document/{id}/show', \App\Http\Action\ShowDocumentAction::class),
 This route will match any of the following requests:
 
 ```
-GET /document/1/show HTTP/1.1
+GET /document/1/show
 ```
 
 ```
-GET /document/13/show HTTP/1.1
+GET /document/13/show
 ```
 
 ```
-GET /document/foo/show HTTP/1.1
+GET /document/foo/show
 ```
 
 In the above example, you can the find the value the `id` path parameter in the request object, by calling the 
@@ -125,37 +126,69 @@ Route::get('/', \App\Http\Action\DummyAction::class);
 
 **IMPORTANT:** Each action class must meet **all** of the following requirements:
 
-* it must implement the `Noctis\KickStart\Http\Action\ActionInterface` interface, and
-* it must be PSR-15 compliant, i.e. have a public method called `process`, with the following signature:
+* must implement the `Noctis\KickStart\Http\Action\ActionInterface` interface, and
+* must be [PSR-15 compliant](https://www.php-fig.org/psr/psr-15/#22-psrhttpservermiddlewareinterface), i.e. have a 
+  public method called `process`, with the following signature:
   ```php
+  <?php
+  
+  declare(strict_types=1);
+  
+  namespace App\Http\Action;
+  
+  use Noctis\KickStart\Http\Action\ActionInterface;
   use Psr\Http\Message\ResponseInterface;
   use Psr\Http\Message\ServerRequestInterface;
   use Psr\Http\Server\RequestHandlerInterface;
-
-  public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+  
+  final class DummyAction implements ActionInterface
   {
-      // ...
+      /**
+       * @inheritDoc
+       */
+      public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+      {
+          // ...
+      }
   }
   ```
 
 If the action has dependencies, they should be injected through the action's constructor, e.g.:
   ```php
-  use App\Service\DummyServiceInterface;
+  <?php
 
-  private DummyServiceInterface $dummyService;
-
-  public function __construct(DummyServiceInterface $dummyService)
-  {
-      $this->dummyService = $dummyService
-  }
+  declare(strict_types=1);
   
-  // ...
+  namespace App\Http\Action;
+  
+  use App\Service\DummyServiceInterface;
+  use Noctis\KickStart\Http\Action\ActionInterface;
+  use Psr\Http\Message\ResponseInterface;
+  use Psr\Http\Message\ServerRequestInterface;
+  use Psr\Http\Server\RequestHandlerInterface;
+  
+  final class DummyAction implements ActionInterface
+  {
+      public function __construct(
+          private readonly DummyServiceInterface $dummyService
+      ) {      
+      }
+  
+      /**
+       * @inheritDoc
+       */
+      public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+      {
+          // ...
+      }
+  }
   ```
 
 ### Third Parameter: List of Middlewares (optional)
 
-The middlewares list should be provided as a list of class names, all of which must implement the 
-`Psr\Http\Server\MiddlewareInterface` interface (see: [PSR-15](https://www.php-fig.org/psr/psr-15/)), e.g:
+The middlewares list should be provided as a list of class names, all of which must implement 
+[PSR-15's](https://www.php-fig.org/psr/psr-15/#22-psrhttpservermiddlewareinterface) 
+`Psr\Http\Server\MiddlewareInterface`, e.g:
 
 ```php
 Route::get('/', \App\Http\Action\DummyAction::class, , [\App\Http\Middleware\Guard\DummyMiddleware::class]);
@@ -169,10 +202,10 @@ is always the last one to get the request object.
 
 **IMPORTANT:** Please remember that:
 
-* each middleware has the right to modify the request object, before passing it on to the next middleware in line,
-* each middleware has the right to generate and return an object representing an HTTP response; in such case, all the
-  following middlewares in the list and the HTTP action itself **will NOT be called**, they will not receive the request 
-  object.
+* each middleware has the right to modify the request object, before passing it on to the next middleware in chain,
+* each middleware has the right to generate and return an object representing an HTTP response; if that happens, all the
+  following middlewares in the chain and the HTTP action itself **will NOT be called**, they will not receive the 
+  request object.
 
 ### Fourth Parameter: Custom Request Class
 
@@ -368,7 +401,7 @@ use Noctis\KickStart\Service\PathGeneratorInterface;
 final class DummyService implements DummyServiceInterface
 {
     public function __construct(
-        private PathGeneratorInterface $pathGenerator
+        private readonly PathGeneratorInterface $pathGenerator
     ) {
     }
     
