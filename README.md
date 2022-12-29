@@ -24,7 +24,7 @@ Kickstart was created to be a base for building micro and small PHP applications
 
 **IMPORTANT:** Kickstart has two major platform requirements:
 
-* PHP 8.0.x,
+* PHP 8.1.x,
 * Composer 2.0.x.
 
 To create a new project Kickstart-based project, run the following command in your CLI and let Composer do its thing:
