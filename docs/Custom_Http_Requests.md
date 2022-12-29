@@ -1,9 +1,9 @@
 # Custom HTTP Requests
 
 If you wish to add your own, additional methods to a request object, you can do so by creating a custom HTTP request
-object, which acts as decorator around the original request. Your custom HTTP request class must extend the
+class, which acts as decorator around the original request. Your custom request class must extend the
 `Noctis\KickStart\Http\Request\Request` class and implement [PSR-7's](https://www.php-fig.org/psr/psr-7/) 
-`Psr\Http\Message\ServerRequestInterface` interface:
+`Psr\Http\Message\ServerRequestInterface` interface, for example:
 
 ```php
 <?php
@@ -24,9 +24,9 @@ final class DummyRequest extends Request implements ServerRequestInterface
 }
 ```
 
-You must then provide your custom request's class name in the route definition for your action. Routes list can be found
-in your application's `config/routes.php` file. Custom request's class name must be provided as the route's
-4th argument, for example:
+You must then reference your custom request class name in the route definition for your action. Routes list can be 
+found in your application's `config/routes.php` file. The class name must be provided as the route's 4th argument, 
+for example:
 
 ```php
 <?php
@@ -43,8 +43,7 @@ return [
 ];
 ```
 
-An instance of your custom request's class will be provided to the HTTP action through its `process()` method, as the
-`$request` variable:
+An instance of your custom request class will be provided as the `$request` argument of the HTTP action's class:
 
 ```php
 <?php
@@ -73,8 +72,8 @@ final class DummyAction implements ActionInterface
 }
 ```
 
-If a route has no custom request class name declared, that route's HTTP action will be provided with an instance of
-`Noctis\KickStart\Http\Request\Request` class.
+If a route has no custom request class name defined, that HTTP action's `process()` method will be provided with an 
+instance of `Noctis\KickStart\Http\Request\Request` as its `$request` parameter.
 
 ## Available Methods
 
@@ -86,7 +85,7 @@ methods the `Psr\Http\Message\ServerRequestInterface` interface declares, i.e.:
 * `getQueryParams()` - for fetching request's query parameters (used in requests sent _via_ HTTP's `GET` method),
 * `getUploadedFiles()` - for getting a list of uploaded files, if there were any.
 
-In addition to the above-mentioned methods, the `Request` class offers two more, helper/shortcut methods:
+In addition to the above-mentioned methods, Kickstart's `Request` class offers two more, helper/shortcut methods:
 
 * `fromQueryString()` - a wrapper method for the `getQueryParams()` method; returns the value of a given query string 
   parameter or the provided default value (`null` by default),
@@ -95,8 +94,8 @@ In addition to the above-mentioned methods, the `Request` class offers two more,
 
 ## Custom Methods
 
-A custom request class can have its own, additional methods available. For example, if one of your request's query 
-string parameters is a string representing a date, named `date`, you could fetch it like so:
+A custom request class can have its own, additional methods added. For example, if one of your request's query string 
+parameters is a string representing a date, named `date`, you could fetch it like so:
 
 ```php
 /** @var string */
@@ -126,7 +125,6 @@ final class DummyRequest extends Request implements ServerRequestInterface
         );
     }
 }
-
 ```
 
 and then use it like so, in your action:
