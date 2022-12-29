@@ -34,7 +34,9 @@ $dotenv->safeLoad();
 
 // ...
 
-$dotenv->required('secondary_db_port')->isInteger();
+$dotenv->required('secondary_db_port')
+    ->notEmpty()
+    ->isInteger();
 ```
 
 Now, edit the `src/Provider/DatabaseConnectionProvider.php` file and add a factory for the new database connection to
