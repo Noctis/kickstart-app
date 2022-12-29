@@ -3,24 +3,24 @@
 To add a new HTTP action, you need to do two things:
 
 * create an HTTP action class,
-* add a route definition, referencing the action class.
+* add a route definition, mapping a specific URL to the action class.
 
 Optionally, you can also:
 
-* create a template (view) for said action,
+* create a template (view) for said action if it's going to return a HTML response,
 * create a [custom HTTP request class](../Custom_Http_Requests.md) for the action, if the action takes any request 
   parameters.
 
 ## Creating an HTTP Action Class
 
-All HTTP action classes:
+All HTTP action classes must:
 
-* reside in the `src/Http/Action` folder,
 * implement the `Noctis\KickStart\Http\Action\ActionInterface` interface,
-* contain a method named `process()` which returns an object of a class implementing the 
-  `Psr\Http\Message\ResponseInterface` interface.
+* implement a method named `process()` which returns a response object, i.e. an implementation of the
+  `Psr\Http\Message\ResponseInterface`.
 
-Let's start by creating a class named `FormAction` in the `src/Http/Action` folder:
+Let's start by creating a class named `FormAction` in the `src/Http/Action` folder, which is the standard location for
+HTTP action classes:
 
 ```php
 <?php
@@ -86,15 +86,15 @@ return [
 ```
 
 OK, now whenever someone tries to visit the `/form` URL of your website, the `FormAction::process()` method will be 
-called. But... remember that the action's `process()` method still lacks its definition, i.e. it's empty. Let's fix 
-that.
+called. But... remember that the action's is still missing the body of the `process()` method. Let's do something about
+that. But first...
 
-## Creating a Template (View) For an HTTP Action
+## Creating a Template (View) for an HTTP Action
 
-An HTTP action's `process()` method must always return an object implementing the `Psr\Http\Message\ResponseInterface` 
-interface, so we'll need to create it somehow. The `Noctis\KickStart\Http\Helper\RenderTrait` trait offers a `render()` 
-method which does just that - creates a `Laminas\Diactoros\Response\HtmlResponse` object, which implements the 
-aforementioned `ResponseInterface` interface.
+An HTTP action's `process()` method must always return an object implementing the `Psr\Http\Message\ResponseInterface`, 
+so we'll need to create it somehow. The `Noctis\KickStart\Http\Helper\RenderTrait` trait offers a `render()` method
+which does just that - creates a `Laminas\Diactoros\Response\HtmlResponse` object, which implements the aforementioned
+`ResponseInterface` interface.
 
 What the `render()` method does is, it takes the given template (view) file, generates HTML from it and wraps it in 
 a `HtmlResponse` object. Let's create a simple template file, make `FormAction::process()` method render it and return 
