@@ -10,11 +10,12 @@ An out-of-the-box Kickstart project has the following folder structure:
 ```
 |- bin
 |- config
+|- docker
 |- docs
-|- \- cookbook
+|- |- cookbook
+|  \- upgrading
 |- public
 |- src
-|  |- Configuration
 |  |- Console
 |  |  \- Command
 |  |- Database
@@ -31,7 +32,6 @@ An out-of-the-box Kickstart project has the following folder structure:
 |- templates
 |- var
 |  \- cache
-|     |- container
 |     \- templates
 \- vendor 
 ```
@@ -50,6 +50,11 @@ php bin/console command:name
 ### `config`
 
 This folder contains the `routes.php` file with a list of routes for HTTP actions.
+
+### `docker`
+
+This folder contains additional [Xdebug](https://xdebug.org/) PHP configuration files, used for running your application
+in Docker containers.
 
 ### `docs`
 
@@ -119,10 +124,8 @@ This folder contains Twig templates, which are usually used to generate HTML, se
 It is recommended to use this folder for storing auto-generated files, which the user will have no interest in, i.e. 
 cache files.
 
-Out-of-the-box:
-* the `var/cache/container` folder is used to store DIC's (dependency injection container) compiled configuration,
-  which speeds up running the application,
-* the `var/cache/templates` folder is used to store compiled Twig templates, which speeds up generating HTML.
+Out-of-the-box the `var/cache/templates` folder is used to store compiled Twig templates, which speeds up generating 
+HTML.
 
 ### vendor
 
