@@ -32,14 +32,14 @@ final class DummyAction implements ActionInterface
 }
 ```
 
-From now on, the action class has access to a couple of methods, all of which return an `AttachmentResponse` object. The
+From now on, the action will have access to a couple of methods, all of which return an `AttachmentResponse` object. The
 difference between them is what they create that response object from:
 
-* `sendAttachment()` - creates a response object from an instance of 
+* `sendAttachment()` - creates a response from an instance of 
   `Noctis\KickStart\Http\Response\Attachment\AttachmentInterface`,
-* `sendFile()` - creates a response object from an existing, on-disk file,
-* `sendContent()` - creates a response object from an in-memory string,
-* `sendResource()` - creates a response object from a 
+* `sendFile()` - creates a response from an existing, on-disk file,
+* `sendContent()` - creates a response from an in-memory string,
+* `sendResource()` - creates a response from a 
   [PHP resource](https://www.php.net/manual/en/language.types.resource.php).
 
 ## Sending an Instance of `AttachmentInterface`
@@ -211,7 +211,7 @@ namespace App\Http\Action;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\AttachmentTrait;
 use Noctis\KickStart\Http\Response\AttachmentResponse;
-use Noctis\KickStart\Http\Response\Headers\Disposition
+use Noctis\KickStart\Http\Response\Headers\Disposition;
 use Noctis\KickStart\Http\Service\AttachmentServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

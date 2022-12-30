@@ -2,7 +2,7 @@
 
 By default, all console commands are lazily loaded, i.e. the command class is instantiated only when the given command
 is actually called. To do this, Kickstart uses Symfony's 
-[`ContainerCommandLoader` class](https://symfony.com/doc/5.3/console/lazy_commands.html#containercommandloader). 
+[`ContainerCommandLoader` class](https://symfony.com/doc/current/console/lazy_commands.html#containercommandloader). 
 
 It is possible to use a different command loader. To do that, you can use the 
 `ConsoleApplication`'s `setCommandLoaderFactory()` method:
@@ -16,24 +16,20 @@ declare(strict_types=1);
 use App\Console\Command\DummyCommand;
 use App\Console\Loader\CustomConsoleCommandLoader;
 use Noctis\KickStart\Console\ConsoleApplication;
-use Noctis\KickStart\Console\ContainerBuilder;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-$containerBuilder = new ContainerBuilder();
-// ...
-$container = $containerBuilder->build();
-
-/** @var ConsoleApplication $app */
-$app = $container->get(ConsoleApplication::class);
+$app = ConsoleApplication::boot(
+    // ...
+);
 $app->setCommandLoaderFactory(
     function (ContainerInterface $container): CommandLoaderInterface {
         $commandLoader = new CustomConsoleCommandLoader($container);
         $commandLoader->setCommandMap([
-                'dummy:command' => DummyCommand::class,
-            ]);
+            'dummy:command' => DummyCommand::class,
+        ]);
 
         return $commandLoader;
     }
@@ -42,7 +38,7 @@ $app->run();
 ```
 
 The `setCustomCommandLoaderFactory()` method accepts a single argument - a callable (factory method). Said factory 
-method callable:
+method:
 
 * will be given one argument - an instance of a Dependency Injection container implementing the 
   `\Psr\Container\ContainerInterface`,
@@ -109,7 +105,7 @@ final class CustomConsoleCommandLoader implements CommandLoaderInterface
     /**
      * @inheritDoc
      */
-    public function getNames()
+    public function getNames(): array
     {
         return array_keys($this->commandMap);
     }

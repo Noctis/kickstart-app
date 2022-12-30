@@ -3,10 +3,10 @@
 The following recipe describes step-by-step how to add simple user authentication to your Kickstart application. All
 the user information will be stored in a `.htpasswd` file and the application will have a custom sign-in form.
 
-The `App\Service\Security\AuthServiceInterface` interface will offer a few basic methods which use can use:
+The `App\Service\Security\AuthServiceInterface` interface will offer a few basic methods:
 
 * `isSignedIn()` - tells you whether you're dealing with a signed-in user (`true`), or an anonymous one (`false`),
-* `signOut()` - causes the currently signed-in user to be signed-out, forgotten so to speak,
+* `signOut()` - causes the currently signed-in user to be signed-out, _forgotten_ so to speak,
 * `getIdentity()` - returns the username of the currently signed-in user, or `null` if we're dealing with an
   anonymous one; you can modify this method to return an object (doesn't have to be a string).
 
@@ -15,7 +15,7 @@ The `App\Service\Security\AuthServiceInterface` interface will offer a few basic
 Firstly, install the two required dependencies:
 
 ```shell
-$ composer require laminas/laminas-authentication:^2.11 laminas/laminas-crypt:^3.8
+$ composer require laminas/laminas-authentication:^2.13 laminas/laminas-crypt:^3.9
 ```
 
 ## Services
@@ -195,8 +195,6 @@ use Laminas\Authentication\Storage\Session;
 use Laminas\Authentication\Storage\StorageInterface;
 use Noctis\KickStart\Configuration\Configuration;
 use Noctis\KickStart\Provider\ServicesProviderInterface;
-use Noctis\KickStart\Service\Container\Definition\Autowire;
-use Noctis\KickStart\Service\Container\Definition\Reference;
 
 use function Noctis\KickStart\Service\Container\autowire;
 use function Noctis\KickStart\Service\Container\reference;
@@ -283,8 +281,8 @@ be safe than sorry.
 **IMPORTANT:** If you decide to keep your `.htpasswd` file in your application's directory, make sure to add it to
 `.gitignore`. You *don't* want to commit sensitive information to your repository!
 
-Define the two new configuration options as required, by modifying your the `bootstrap.php` file, in your application's
-root directory:
+Define the two new configuration options as required, by modifying the `bootstrap.php` file, in your application's root
+directory:
 
 ```php
 <?php
@@ -376,16 +374,18 @@ form, for example:
             <div class="col-4 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="u">User:</label>
+                        <div class="mb-3">
+                            <label for="u" class="form-label">User:</label>
                             <input type="text" class="form-control" id="u" name="u">
                         </div>
-                        <div class="form-group">
-                            <label for="p">Password:</label>
+                        <div class="mb-3">
+                            <label for="p" class="form-label">Password:</label>
                             <input type="password" class="form-control" id="p" name="p">
                         </div>
-            
-                        <button type="submit" class="btn btn-success">Sign In</button>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-success">Sign In</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -412,6 +412,7 @@ use App\Service\Security\AuthServiceInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Noctis\KickStart\Http\Action\ActionInterface;
 use Noctis\KickStart\Http\Helper\RedirectTrait;
+use Noctis\KickStart\Http\Request\Request;
 use Noctis\KickStart\Http\Service\RedirectServiceInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -420,27 +421,22 @@ final class SignInAction implements ActionInterface
 {
     use RedirectTrait;
 
-    private AuthServiceInterface $authService;
-
     public function __construct(
-        AuthServiceInterface $authService,
-        RedirectServiceInterface $redirectService
+        private readonly AuthServiceInterface $authService,
+        RedirectServiceInterface              $redirectService
     ) {
-        $this->authService = $authService;
         $this->redirectService = $redirectService;
     }
 
     /**
-     * @inheritDoc
+     * @param Request $request
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): RedirectResponse
     {
-        /** @var array $body */
-        $body = $request->getParsedBody();
         /** @var string $username */
-        $username = $body['u'];
+        $username = $request->fromBody('u');
         /** @var string $password */
-        $password = $body['p'];
+        $password = $request->fromBody('p');
 
         $authResult = $this->authService
             ->authenticate($username, $password);
@@ -501,13 +497,10 @@ final class SignOutAction implements ActionInterface
 {
     use RedirectTrait;
 
-    private AuthServiceInterface $authService;
-
     public function __construct(
-        AuthServiceInterface $authService,
-        RedirectServiceInterface $redirectService
+        private readonly AuthServiceInterface $authService,
+        RedirectServiceInterface              $redirectService
     ) {
-        $this->authService = $authService;
         $this->redirectService = $redirectService;
     }
 
@@ -579,13 +572,10 @@ final class IsLoggedInGuard implements MiddlewareInterface
 {
     use RedirectTrait;
 
-    private AuthServiceInterface $authService;
-
     public function __construct(
-        AuthServiceInterface $authService,
-        RedirectServiceInterface $redirectService
+        private readonly AuthServiceInterface $authService,
+        RedirectServiceInterface              $redirectService
     ) {
-        $this->authService = $authService;
         $this->redirectService = $redirectService;
     }
 

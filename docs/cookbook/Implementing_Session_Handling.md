@@ -8,7 +8,7 @@ You can read more about how to use this package [here](https://docs.laminas.dev/
 To install it, execute the following command at the root directory of your application:
 
 ```shell
-$ composer require laminas/laminas-session
+$ composer require laminas/laminas-session:^2.16
 ```
 
 You should see Composer modifying your `composer.json`/`composer.lock` files, but not install any new files. This is 
@@ -16,7 +16,7 @@ fine. This is because `laminas/laminas-session` is one of Kickstart's own depend
 Kickstart does not offer any methods that expose it, so it's up to you to integrate it into your application.
 
 To do so, register Laminas' `Laminas\Session\SessionManager` class in one of the application's existing 
-[service providers](docs/Service_Providers.md), or in a new one. Here's an example of the latter:
+[service providers](../Service_Providers.md), or in a new one. Here's an example of the latter:
 
 ```php
 <?php
@@ -57,7 +57,7 @@ use Noctis\KickStart\Http\WebApplication;
 require_once __DIR__ . '/../bootstrap.php';
 
 $app = WebApplication::boot(
-    // ... ,
+    // ...
     new SessionProvider()
 );
 
