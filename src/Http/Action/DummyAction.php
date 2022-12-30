@@ -28,7 +28,7 @@ final class DummyAction implements ActionInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): HtmlResponse
     {
         /** @var string $name */
-        $name = $request->getQueryParams()['name'] ?? 'World';
+        $name = $request->fromQueryString('name') ?? 'World';
 
         return $this->render('dummy.html.twig', [
             'name' => $name,
