@@ -8,7 +8,7 @@ Two reasons:
 * it was created by the [Paragon Initiative Enterprises](https://paragonie.com/), which means it has an added layer of
   security on top of itself.
   
-### OK, it's lightweight & secure, great, but writing more complex SQL queries "by hand" is a pain in the _you-know-what-!
+### OK, it's lightweight & secure, great, but writing more complex SQL queries "by hand" is a pain in the _you-know-what_!
 
 Yes, it is. EasyDB ain't that great when you need to build your SQL query based on a number of variables, I agree. If
 you need the flexibility that [Doctrine](https://www.doctrine-project.org/) or [Laravel's Eloquent](https://laravel.com/)
