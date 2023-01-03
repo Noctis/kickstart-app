@@ -843,7 +843,7 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "4.0.x-dev",
+            "version": "4.0.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
@@ -882,7 +882,6 @@
                 "symfony/var-dumper": "^6.2",
                 "vimeo/psalm": "^5.4"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -910,7 +909,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/4.0.x"
+                "source": "https://github.com/Noctis/kickstart/tree/4.0.0-RC1"
             },
             "time": "2023-01-03T09:47:33+00:00"
         },
