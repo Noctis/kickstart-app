@@ -239,18 +239,18 @@ Not every route needs to have a name, but every name must be unique, i.e. no two
 Route names are optional, i.e. a route will work perfectly fine without a name specified, it's just that you won't be 
 able to refer to that route by its name.
 
-Named routes can be references in Twig templates and in code.
+Named routes can be referenced in Twig templates and in your PHP code.
 
 ### Referencing Named Routes in Twig Templates
 
-You can refer to a route by its name in a Twig template by using the `path()` function, eg.:
+You can refer to a route by its name in a Twig template by using the `route()` function, eg.:
 
 ```html
 {% extends "layout.html.twig" %}
 
 {% block content %}
     <div class="container">
-        <a href="{{ path('sign-in-form') }}" class="btn btn-small btn-primary">Sign-In</a>
+        <a href="{{ route('sign-in-form') }}" class="btn btn-small btn-primary">Sign-In</a>
     </div>
 {% endblock %}
 ```
@@ -279,14 +279,14 @@ return [
 ];
 ```
 
-you can provide their values by passing an array as the second argument of the `path()` function, like so:
+you can provide their values by passing an array as the second argument of the `route()` function, like so:
 
 ```html
 {% extends "layout.html.twig" %}
 
 {% block content %}
     <div class="container">
-        <a href="{{ path('show-document', { id: '1' }) }}" class="btn btn-small btn-primary">Show</a>
+        <a href="{{ route('show-document', { id: '1' }) }}" class="btn btn-small btn-primary">Show</a>
     </div>
 {% endblock %}
 ```
@@ -298,7 +298,7 @@ or, if you want to use a variable which is available in the view:
 
 {% block content %}
     <div class="container">
-        <a href="{{ path('show-document', { id: document.id }) }}" class="btn btn-small btn-primary">Show</a>
+        <a href="{{ route('show-document', { id: document.id }) }}" class="btn btn-small btn-primary">Show</a>
     </div>
 {% endblock %}
 ```
@@ -311,7 +311,7 @@ generated path as a query string, for example:
 
 {% block content %}
     <div class="container">
-        <a href="{{ path('show-document', { id: '1', foo: 'bar' }) }}" class="btn btn-small btn-primary">Show</a>
+        <a href="{{ route('show-document', { id: '1', foo: 'bar' }) }}" class="btn btn-small btn-primary">Show</a>
     </div>
 {% endblock %}
 ```
@@ -424,3 +424,6 @@ $path = $this->pathGenerator
     ->toRoute('welcome')
     ->toString();
 ```
+
+**IMPORTANT:** if you provide an invalid route name, due to a typo for example, a 
+`\Noctis\KickStart\Exception\RouteNotFoundException` exception will be thrown.
