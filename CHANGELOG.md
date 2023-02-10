@@ -10,7 +10,7 @@
 * Psalm inspection now includes looking for leftover calls to `dump()` function,
 * Added a "switch" for enabling/disabling debugging settings & extended the list of PHP configuration options it changes,
 * Introduced [named routes](docs/Routing.md#named-routes) functionality,
-* New method now available in Twig templates: `path()`, for generating URLs from route name,
+* New method now available in Twig templates: `route()`, for generating URLs from route name,
 * Removed `get()` method from HTTP request class & replaced it with two new methods: `fromQueryString()` & `fromBody()`,
 * HTTP helper traits: `renderTrait()`, `redirectionTrait()` & `attachmentTrait()` now require different dependencies,
 * Moved routes list from `src/Http/Routing/routes.php` to `config/routes.php`,
