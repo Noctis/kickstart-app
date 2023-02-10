@@ -1,7 +1,11 @@
 FROM php:8.1-apache
 
 RUN apt-get update && \
-    apt-get install -y git libzip-dev unzip && \
+    apt-get install -y git libicu-dev libzip-dev unzip && \
+    docker-php-ext-configure bcmath && \
+    docker-php-ext-install -j$(nproc) bcmath && \
+    docker-php-ext-configure intl && \
+    docker-php-ext-install -j$(nproc) intl && \
     docker-php-ext-configure pdo_mysql && \
     docker-php-ext-install -j$(nproc) pdo_mysql && \
     docker-php-ext-configure zip && \
