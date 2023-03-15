@@ -40,7 +40,6 @@
             "@php -r \"file_exists('.env') || copy('.env-example', '.env');\""
         ],
         "psalm": "psalm --config=psalm.xml.dist",
-        "psalm-ci": "psalm --config=psalm.xml.dist --shepherd",
         "phpcs": "phpcs --exclude=Generic.Files.LineEndings",
         "reset": "rm -rf ./var/cache/templates/*"
     },
