@@ -116,6 +116,34 @@ GET /project
 GET /project/foo
 ```
 
+**IMPORTANT:** Named route parameters' values, returned by the `getAttribute()` method, are always
+[URL-encoded](http://www.faqs.org/rfcs/rfc3986.html). For example, in case of the following route:
+
+```php
+Route::get('/document/{name}/show', \App\Http\Action\ShowDocumentAction::class),
+```
+
+when the following URL is called:
+
+```
+GET /document/foo bar/show
+```
+
+the following will happen, when you call `getAttribute()`:
+
+```php
+$name = $request->getAttribute('name');     // will return "foo%20name"
+```
+
+In such case, you should use PHP's either [`urldecode()`](https://www.php.net/urldecode) or
+[`rawurldecode()`](https://www.php.net/manual/en/function.rawurldecode.php) functions, for example:
+
+```php
+$name = urldecode(      // will return "foo name"
+    $request->getAttribute('name')
+);
+```
+
 ### Second Parameter: Action Name
 
 To specify an action in a route definition, you should reference it by its full class name, e.g.:
