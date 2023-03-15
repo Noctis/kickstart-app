@@ -8,6 +8,8 @@
 
     <file>src</file>
     <file>bootstrap.php</file>
+    <file>public/index.php</file>
+    <file>bin/console</file>
 
     <arg name="basepath" value="."/>
     <arg name="colors"/>
