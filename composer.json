@@ -41,7 +41,7 @@
         ],
         "psalm": "psalm --config=psalm.xml.dist",
         "psalm-ci": "psalm --config=psalm.xml.dist --shepherd",
-        "phpcs": "phpcs --standard=PSR12",
+        "phpcs": "phpcs --exclude=Generic.Files.LineEndings",
         "reset": "rm -rf ./var/cache/templates/*"
     },
     "config": {
