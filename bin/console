@@ -8,6 +8,7 @@ use App\Provider\DatabaseConnectionProvider;
 use App\Provider\DummyServicesProvider;
 use App\Provider\RepositoryProvider;
 use Noctis\KickStart\Console\ConsoleApplication;
+use Noctis\KickStart\Http\Routing\RouteInterface;
 
 require_once __DIR__ . '/../bootstrap.php';
 
@@ -16,6 +17,11 @@ $app = ConsoleApplication::boot(
     new DummyServicesProvider(),
     new RepositoryProvider()
 );
+
+/** @var list<RouteInterface> $routes */
+$routes = require_once $_ENV['basepath'] . '/config/routes.php';
+$app->setRoutes($routes);
+
 $app->setCommands([
     DummyCommand::class
 ]);
