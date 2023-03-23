@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f95451ce30cf6d7f30d9d9e3b8fc52fd",
+    "content-hash": "2805726e625415941d65d0be494da819",
     "packages": [
         {
             "name": "azjezz/psl",
@@ -843,16 +843,16 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "4.0.0-RC4",
+            "version": "dev-bugfix/twig-renderer-in-console-commands",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "1ba71e392036dae229008238540c0d8a27b49d03"
+                "reference": "1ae13d7904d4707258abe05b94437735d3364070"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/1ba71e392036dae229008238540c0d8a27b49d03",
-                "reference": "1ba71e392036dae229008238540c0d8a27b49d03",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/1ae13d7904d4707258abe05b94437735d3364070",
+                "reference": "1ae13d7904d4707258abe05b94437735d3364070",
                 "shasum": ""
             },
             "require": {
@@ -909,9 +909,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/4.0.0-RC4"
+                "source": "https://github.com/Noctis/kickstart/tree/bugfix/twig-renderer-in-console-commands"
             },
-            "time": "2023-03-15T11:50:51+00:00"
+            "time": "2023-03-23T09:55:04+00:00"
         },
         {
             "name": "paragonie/corner",
@@ -4593,6 +4593,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "noctis/kickstart": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
