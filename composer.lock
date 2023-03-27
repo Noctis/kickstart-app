@@ -847,12 +847,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "1ae13d7904d4707258abe05b94437735d3364070"
+                "reference": "49291c9a477a21c08eecdd4c4bc158fb99b51923"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/1ae13d7904d4707258abe05b94437735d3364070",
-                "reference": "1ae13d7904d4707258abe05b94437735d3364070",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/49291c9a477a21c08eecdd4c4bc158fb99b51923",
+                "reference": "49291c9a477a21c08eecdd4c4bc158fb99b51923",
                 "shasum": ""
             },
             "require": {
@@ -911,7 +911,7 @@
                 "issues": "https://github.com/Noctis/kickstart/issues",
                 "source": "https://github.com/Noctis/kickstart/tree/bugfix/twig-renderer-in-console-commands"
             },
-            "time": "2023-03-23T09:55:04+00:00"
+            "time": "2023-03-27T10:05:03+00:00"
         },
         {
             "name": "paragonie/corner",
