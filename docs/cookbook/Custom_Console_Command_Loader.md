@@ -16,6 +16,7 @@ declare(strict_types=1);
 use App\Console\Command\DummyCommand;
 use App\Console\Loader\CustomConsoleCommandLoader;
 use Noctis\KickStart\Console\ConsoleApplication;
+use Noctis\KickStart\Http\Routing\RouteInterface;
 use Noctis\KickStart\Service\Container\SettableContainerInterface;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 
@@ -24,6 +25,11 @@ require_once __DIR__ . '/../bootstrap.php';
 $app = ConsoleApplication::boot(
     // ...
 );
+
+/** @var list<RouteInterface> $routes */
+$routes = require_once $_ENV['basepath'] . '/config/routes.php';
+$app->setRoutes($routes);
+
 $app->setCommandLoaderFactory(
     function (SettableContainerInterface $container): CommandLoaderInterface {
         $commandLoader = new CustomConsoleCommandLoader($container);
