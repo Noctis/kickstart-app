@@ -46,6 +46,7 @@ To add a new command, you must:
   
   use App\Console\Command\DummyCommand;
   use Noctis\KickStart\Console\ConsoleApplication;
+  use Noctis\KickStart\Http\Routing\RouteInterface;
   // ...
   
   require_once __DIR__ . '/../bootstrap.php';
@@ -53,6 +54,11 @@ To add a new command, you must:
   $app = ConsoleApplication::boot(
       //...
   );
+  
+  /** @var list<RouteInterface> $routes */
+  $routes = require_once $_ENV['basepath'] . '/config/routes.php';
+  $app->setRoutes($routes);
+  
   $app->setCommands([
       DummyCommand::class,
   ]);

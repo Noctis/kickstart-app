@@ -16,7 +16,8 @@ declare(strict_types=1);
 use App\Console\Command\DummyCommand;
 use App\Console\Loader\CustomConsoleCommandLoader;
 use Noctis\KickStart\Console\ConsoleApplication;
-use Psr\Container\ContainerInterface;
+use Noctis\KickStart\Http\Routing\RouteInterface;
+use Noctis\KickStart\Service\Container\SettableContainerInterface;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 
 require_once __DIR__ . '/../bootstrap.php';
@@ -24,8 +25,13 @@ require_once __DIR__ . '/../bootstrap.php';
 $app = ConsoleApplication::boot(
     // ...
 );
+
+/** @var list<RouteInterface> $routes */
+$routes = require_once $_ENV['basepath'] . '/config/routes.php';
+$app->setRoutes($routes);
+
 $app->setCommandLoaderFactory(
-    function (ContainerInterface $container): CommandLoaderInterface {
+    function (SettableContainerInterface $container): CommandLoaderInterface {
         $commandLoader = new CustomConsoleCommandLoader($container);
         $commandLoader->setCommandMap([
             'dummy:command' => DummyCommand::class,
@@ -40,8 +46,8 @@ $app->run();
 The `setCustomCommandLoaderFactory()` method accepts a single argument - a callable (factory method). Said factory 
 method:
 
-* will be given one argument - an instance of a Dependency Injection container implementing the 
-  `\Psr\Container\ContainerInterface`,
+* will be given one argument - an instance of a Dependency Injection container implementing Kickstart's 
+  `\Noctis\KickStart\Service\Container\SettableContainerInterface`,
 * must return an instance of a class implementing the `Symfony\Component\Console\CommandLoader\CommandLoaderInterface`.
 
 Here's an example of a custom console command loader class, implementing the aforementioned interface:
@@ -53,21 +59,19 @@ declare(strict_types=1);
 
 namespace App\Console\Loader;
 
-use Psr\Container\ContainerInterface;
+use Noctis\KickStart\Service\Container\SettableContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Symfony\Component\Console\Exception\CommandNotFoundException;
 
 final class CustomConsoleCommandLoader implements CommandLoaderInterface
 {
-    private ContainerInterface $container;
-
     /** @var array<string, class-string<Command>>  */
     private array $commandMap = [];
 
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
+    public function __construct(
+        private readonly SettableContainerInterface $container
+    ) {
     }
 
     /**
