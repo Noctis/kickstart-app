@@ -50,7 +50,7 @@
         }
     },
     "extra": {
-        "app-version": "4.0.0-RC4"
+        "app-version": "4.0.0-RC5"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
