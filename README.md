@@ -36,7 +36,7 @@ $ composer create-project noctis/kickstart-app app-name
 **IMPORTANT:** replace `app-name` in the command above with whatever name you want. `app-name` is the name of the folder 
 which will be created in the current working directory.
 
-### Developing Your App Using Docker
+### Developing Your App using Docker
 
 Everything you should know about developing your Kickstart-based application can be found in 
 [this document](docs/Docker.md).
