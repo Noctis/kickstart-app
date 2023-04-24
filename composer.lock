@@ -843,16 +843,16 @@
         },
         {
             "name": "noctis/kickstart",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Noctis/kickstart.git",
-                "reference": "70375bdab8e6429fd1fc3c741a537de23cecfed9"
+                "reference": "7de401683479725ffb4567ee5d3176f159719798"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/70375bdab8e6429fd1fc3c741a537de23cecfed9",
-                "reference": "70375bdab8e6429fd1fc3c741a537de23cecfed9",
+                "url": "https://api.github.com/repos/Noctis/kickstart/zipball/7de401683479725ffb4567ee5d3176f159719798",
+                "reference": "7de401683479725ffb4567ee5d3176f159719798",
                 "shasum": ""
             },
             "require": {
@@ -909,9 +909,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Noctis/kickstart/issues",
-                "source": "https://github.com/Noctis/kickstart/tree/4.0.0"
+                "source": "https://github.com/Noctis/kickstart/tree/4.0.1"
             },
-            "time": "2023-04-03T10:58:21+00:00"
+            "time": "2023-04-24T11:28:41+00:00"
         },
         {
             "name": "paragonie/corner",
