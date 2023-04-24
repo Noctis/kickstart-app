@@ -1,3 +1,9 @@
+# 4.0.1
+
+* Fixed a bug where URLs generated in Twig templates, using the `route()` function, were absolute, i.e. always had a
+  forward slash (`/`) in front of them; all routes generated this way will now always have their leading slash trimmed,
+  except for the root route (`/`).
+
 # 4.0.0
 
 * Min. required version of PHP is now 8.1,
