@@ -1,3 +1,8 @@
+# 4.0.2
+
+* Updated `laminas/laminas-diactoros` to `2.25.2` due to a
+  [security issue](https://github.com/advisories/GHSA-xv3h-4844-9h36).
+
 # 4.0.1
 
 * Fixed a bug where URLs generated in Twig templates, using the `route()` function, were absolute, i.e. always had a
