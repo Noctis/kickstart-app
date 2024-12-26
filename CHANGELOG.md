@@ -1,3 +1,13 @@
+# 4.0.3
+
+* Bumped `twig/twig` version to `3.17.1` due to security issues:
+  * [CVE-2024-45411](https://github.com/advisories/GHSA-6j75-5wfj-gh66) (medium),
+  * [CVE-2024-51755](https://github.com/advisories/GHSA-jjxq-ff2g-95vh) (low),
+  * [CVE-2024-51754](https://github.com/advisories/GHSA-6377-hfv9-hqf6) (low).
+* Bumped min. required version of `symfony/var-dumper` to `6.4.x`
+* Bumped min. required version of `symfony/console` to `6.4.x`
+* Upgraded to `noctis/kickstart` version `4.0.3`
+
 # 4.0.2
 
 * Updated `laminas/laminas-diactoros` to `2.25.2` due to a
